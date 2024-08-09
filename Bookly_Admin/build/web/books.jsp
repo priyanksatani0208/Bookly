@@ -32,6 +32,7 @@
         <link rel="stylesheet" href="css/style1.css" />
         <link rel="stylesheet" href="css/style2.css" />
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     </head>
 
@@ -113,7 +114,7 @@
                                             <td><%= c.getBookTopic()%></td>
                                             <td><%= c.getBookDescription()%></td>                                                                                       
                                             <td><img src="books_img/<%= c.getBookImg()%>" alt="Book 1" width="50"></td>
-                                            <td><a href="category_update.jsp" class="status_btn">Update</a></td>                                
+                                            <td><a href="book_update.jsp?bookId=<%= c.getBookId() %>" class="status_btn">Update</a></td>                                
                                             <td><a href="#" class="status_btn1">Delete</a></td> 
                                         </tr>          
                                         <%
@@ -161,5 +162,22 @@
         <script src="js/custom.js"></script>
 
     </body>
+    <script>
+            // Function to get URL parameter
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            // Check for the 'msg' parameter and show alert if it exists
+            var msg = getUrlParameter('msg');
+            if (msg === 's') {
+                swal('Book updated successfully', '', 'success');
+            } else if (msg === 'e') {
+                swal('Error', 'An error occurred', 'error');
+            }
+        </script>
 
 </html>

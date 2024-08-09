@@ -13,6 +13,10 @@
         <servlet-name>CategoryServlet</servlet-name>
         <servlet-class>com.servlet.CategoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BooksUpdateServlet</servlet-name>
+        <servlet-class>com.servlet.BooksUpdateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
@@ -106,7 +110,10 @@
         <servlet-name>CategoryServlet</servlet-name>
         <url-pattern>/CategoryServlet</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>BooksUpdateServlet</servlet-name>
+        <url-pattern>/BooksUpdateServlet</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>

@@ -53,6 +53,7 @@ public class Categorydao {
         return categories;
     }
     
+    //fethch Category Id
     public Category getCategoryById(int catId) {
         Category category = null;
         try {
@@ -73,6 +74,7 @@ public class Categorydao {
         return category;
     }
 
+    //update Category
     public boolean updateCategory(Category category) {
         boolean updated = false;
         try {
