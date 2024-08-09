@@ -59,8 +59,6 @@ public class BooksUpdateServlet extends HttpServlet {
             String bookLanguage = request.getParameter("bookLanguage");
             String bookTopic = request.getParameter("bookTopic");
             String bookDescription = request.getParameter("bookDescription");
-
-            // Get the book image
             Part part = request.getPart("bookImg");
             String bookImg = part.getSubmittedFileName();
             
@@ -76,7 +74,7 @@ public class BooksUpdateServlet extends HttpServlet {
                 Helper.saveFile(part.getInputStream(), path);  // Save the new image file
             }
             
-            Books books = new Books(catId, bookName, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, bookLanguage, bookTopic, bookDescription, bookName);
+            Books books = new Books(bookId, catId, bookName, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, bookLanguage, bookTopic, bookDescription, bookImg);
             if(booksdao.updateBook(books)){
                 
                 response.sendRedirect("books?msg=s");

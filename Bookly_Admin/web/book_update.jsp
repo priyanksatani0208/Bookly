@@ -38,7 +38,7 @@
                                     Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
                                     Books book = booksdao.getCategoryById(bookId);
 
-                                    if (book != null) {
+                                    
                                 %>
                                 <form action="BooksUpdateServlet" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="bookId" value="<%= book.getBookId() %>">
@@ -105,7 +105,7 @@
                                                 <label for="bookImg">Upload Image</label>
                                                 <input type="file" class="form-control" id="bookImg" name="bookImg">
                                                 <br>
-                                                <img src="book_img/<%= book.getBookImg() %>" alt="Book Image" width="100">
+                                                <img src="books_img/<%= book.getBookImg() %>" alt="Book Image" width="100">
                                             </div>
                                         </div>
                                         <div class="col-12 text-center">
@@ -113,9 +113,7 @@
                                         </div>
                                     </div>
                                 </form>
-                                <% } else { %>
-                                    <p>Book not found.</p>
-                                <% } %>
+                               
                             </div>
                         </div>
                     </div>

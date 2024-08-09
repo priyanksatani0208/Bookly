@@ -84,7 +84,8 @@ public class Categorydao {
             ps.setString(1, category.getCatName());
             ps.setString(2, category.getCatImg());
             ps.setInt(3, category.getCatId());
-            updated = ps.executeUpdate() > 0;
+            ps.executeUpdate();
+            updated = true;
             
         } catch (SQLException e) {
             e.printStackTrace();
