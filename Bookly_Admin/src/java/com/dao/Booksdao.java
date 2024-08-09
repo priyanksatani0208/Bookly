@@ -1,7 +1,6 @@
 package com.dao;
 
 import com.entities.Books;
-import com.entities.Category;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +14,10 @@ public class Booksdao {
     }
 
     //books add in database 
-    public boolean insertBooks(Books books) {
+        public boolean insertBooks(Books books) {
         boolean success = false;
         try {
-            String query = "INSERT INTO books(catId,bookName,bookAuthor,bookEdition,bookPublisher,bookPrice,bookDiscount,bookLength,BookLanguage,BookTopic,bookDescription,bookImg) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO books(catId,bookName,bookAuthor,bookEdition,bookPublisher,bookPrice,bookDiscount,bookLength,BookLanguage,BookTopic,bookDescription,bookImg) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, books.getCatId());
@@ -26,8 +25,8 @@ public class Booksdao {
             ps.setString(3, books.getBookAuthor());
             ps.setString(4, books.getBookEdition());
             ps.setString(5, books.getBookPublisher());
-            ps.setString(6, books.getBookPrice());
-            ps.setString(7, books.getBookDiscount());
+            ps.setInt(6, books.getBookPrice());
+            ps.setInt(7, books.getBookDiscount());
             ps.setString(8, books.getBookLength());
             ps.setString(9, books.getBookLanguage());
             ps.setString(10, books.getBookTopic());
@@ -59,8 +58,8 @@ public class Booksdao {
                 String bookAuthor = rs.getString("bookAuthor");
                 String bookEdition = rs.getString("bookEdition");
                 String bookPublisher = rs.getString("bookPublisher");
-                String bookPrice = rs.getString("bookPrice");
-                String bookDiscount = rs.getString("bookDiscount");
+                int bookPrice = rs.getInt("bookPrice");
+                int bookDiscount = rs.getInt("bookDiscount");
                 String bookLength = rs.getString("bookLength");
                 String BookLanguage = rs.getString("BookLanguage");
                 String BookTopic = rs.getString("BookTopic");

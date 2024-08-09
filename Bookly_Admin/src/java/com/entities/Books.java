@@ -9,8 +9,8 @@ public class Books {
     private String bookAuthor;
     private String bookEdition;
     private String bookPublisher;
-    private String bookPrice;    
-    private String bookDiscount;    
+    private int bookPrice;    
+    private int bookDiscount;    
     private String bookLength;
     private String BookLanguage;
     private String BookTopic;
@@ -20,7 +20,7 @@ public class Books {
     public Books() {
     }
 
-    public Books(int bookId, int catId, String bookName, String bookAuthor, String bookEdition, String bookPublisher, String bookPrice, String bookDiscount, String bookLength, String BookLanguage, String BookTopic, String bookDescription, String bookImg) {
+    public Books(int bookId, int catId, String bookName, String bookAuthor, String bookEdition, String bookPublisher, int bookPrice, int bookDiscount, String bookLength, String BookLanguage, String BookTopic, String bookDescription, String bookImg) {
         this.bookId = bookId;
         this.catId = catId;
         this.bookName = bookName;
@@ -36,7 +36,7 @@ public class Books {
         this.bookImg = bookImg;
     }
 
-    public Books(int catId, String bookName, String bookAuthor, String bookEdition, String bookPublisher, String bookPrice, String bookDiscount, String bookLength, String BookLanguage, String BookTopic, String bookDescription, String bookImg) {
+    public Books(int catId, String bookName, String bookAuthor, String bookEdition, String bookPublisher, int bookPrice, int bookDiscount, String bookLength, String BookLanguage, String BookTopic, String bookDescription, String bookImg) {
         this.catId = catId;
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;
@@ -51,11 +51,11 @@ public class Books {
         this.bookImg = bookImg;
     }
 
-    public String getBookDiscount() {
+    public int getBookDiscount() {
         return bookDiscount;
     }
 
-    public void setBookDiscount(String bookDiscount) {
+    public void setBookDiscount(int bookDiscount) {
         this.bookDiscount = bookDiscount;
     }
    
@@ -108,11 +108,11 @@ public class Books {
         this.bookPublisher = bookPublisher;
     }
 
-    public String getBookPrice() {
+    public int getBookPrice() {
         return bookPrice;
     }
 
-    public void setBookPrice(String bookPrice) {
+    public void setBookPrice(int bookPrice) {
         this.bookPrice = bookPrice;
     }    
 

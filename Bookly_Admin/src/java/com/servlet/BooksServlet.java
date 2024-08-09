@@ -42,15 +42,16 @@ public class BooksServlet extends HttpServlet {
             String bookAuthor = request.getParameter("bookAuthor");
             String bookEdition = request.getParameter("bookEdition");
             String bookPublisher = request.getParameter("bookPublisher");
-            String bookPrice = request.getParameter("bookPrice");
-            String bookDiscount = request.getParameter("bookDiscount");
+            int bookPrice = Integer.parseInt(request.getParameter("bookPrice"));
+            int bookDiscount = Integer.parseInt(request.getParameter("bookDiscount"));
             String bookLength = request.getParameter("bookLength");
             String bookLanguage = request.getParameter("bookLanguage");
             String bookTopic = request.getParameter("bookTopic");
             String bookDescription = request.getParameter("bookDescription");
              Part part = request.getPart("bookImg");
-            String bookImg =  part.getSubmittedFileName();
-                                    
+            String bookImg =  part.getSubmittedFileName();      
+                              
+            
             
             Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
             Books books = new Books(catId, bookName, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, bookLanguage, bookTopic, bookDescription, bookImg);

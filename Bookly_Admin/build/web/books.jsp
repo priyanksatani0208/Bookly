@@ -83,6 +83,7 @@
                                             <th>Book Edition</th>
                                             <th>Book Publisher</th>
                                             <th>Book Price</th>
+                                            <th>Book Discount</th>
                                             <th>Book Length</th>
                                             <th>Book Language</th>
                                             <th>Book Topic</th>
@@ -106,6 +107,7 @@
                                             <td><%= c.getBookEdition()%></td>
                                             <td><%= c.getBookPublisher()%></td>
                                             <td><%= c.getBookPrice() %></td>
+                                            <td><%= c.getBookDiscount() %></td>
                                             <td><%= c.getBookLength()%></td>
                                             <td><%= c.getBookLanguage()%></td>
                                             <td><%= c.getBookTopic()%></td>
