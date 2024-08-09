@@ -1,20 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.servlet;
 
+import com.dao.Categorydao;
+import com.entities.Category;
+import com.helper.ConnectionProvider;
+import com.helper.Helper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 
 /**
  *
  * @author Priyank
  */
+@MultipartConfig
 public class UpdateCategoryServlet extends HttpServlet {
 
     /**
@@ -37,7 +41,36 @@ public class UpdateCategoryServlet extends HttpServlet {
             out.println("<title>Servlet UpdateCategoryServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateCategoryServlet at " + request.getContextPath() + "</h1>");
+            
+             // Fetch form data
+            int catId = Integer.parseInt(request.getParameter("catId"));
+            String catName = request.getParameter("catName");
+            Part part = request.getPart("catImg");
+            String catImg = part.getSubmittedFileName();
+
+            // Get the existing category details
+            Categorydao categorydao = new Categorydao(ConnectionProvider.getConnection());
+            Category existingCategory = categorydao.getCategoryById(catId);
+
+            // Check if a new image was uploaded
+            if (catImg.isEmpty()) {
+                catImg = existingCategory.getCatImg();  // Use the old image if no new image was uploaded
+            } else {
+                String path = getServletContext().getRealPath("/") + "category_img" + File.separator + catImg;
+                Helper.saveFile(part.getInputStream(), path);  // Save the new image file
+            }
+
+            // Update the category details
+            Category category = new Category(catId, catName, catImg);
+            if (categorydao.updateCategory(category)) {
+                
+                response.sendRedirect("categories?msg=s");
+                out.println("<script>swal('Update Successfully..', '', 'success');</script>");
+                
+            } else {
+                out.println("<script>swal('Error', 'please try agin...', 'error');</script>");
+            }
+            
             out.println("</body>");
             out.println("</html>");
         }
