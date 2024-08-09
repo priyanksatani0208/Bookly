@@ -1,0 +1,68 @@
+ #sign{
+    color: orangered;
+}
+#heding{
+    color: black;            
+}
+.signup-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+    margin-top: 120px;
+}
+.signup-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+}
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.signup-container .form-row {
+    margin-bottom: 15px;
+}
+.signup-container .form-row label {
+    display: block;
+    margin-bottom: 5px;
+}
+.signup-container .form-row input,
+.signup-container .form-row textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.signup-container .form-row input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+.signup-container .form-row .gender-label {
+    display: inline-block;
+    margin-right: 20px;
+}
+.signup-container .button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+.signup-container .button:hover {
+    background-color: #0056b3;
+}
+.signup-container .form-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+.signup-container .form-footer a {
+    color: #007bff;
+}
