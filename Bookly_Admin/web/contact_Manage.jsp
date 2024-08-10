@@ -76,19 +76,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%            
-                                            int page1 = 1;
-                                            int recordsPerPage1 = 10;
-                                            if (request.getParameter("page1") != null) {
-                                                page1 = Integer.parseInt(request.getParameter("page1"));
+                                        <%        
+                                            int pageid = 1;
+                                            int total = 5; // Records per page
+                                            if (request.getParameter("page") != null) {
+                                                pageid = Integer.parseInt(request.getParameter("page"));
                                             }
-
-                                            int start = (page1 - 1) * recordsPerPage1;
+                                            int start = (pageid - 1) * total;                                     
+                                            
+                                            
+                                            
+                                           
                                             Contactdao contactdao = new Contactdao(ConnectionProvider.getConnection());
-                                            List<Contact> contactList = contactdao.getContactsByPage(start, recordsPerPage1);
-                                            int totalRecords = contactdao.getContactCount();
-                                            int totalPage1s = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage1);
-
+                                            List<Contact> contactList = contactdao.getContactsByPage(start, total);
+                                            
+                                            
                                             for (Contact c : contactList) {
                                         %>
                                         <tr>
@@ -109,37 +111,33 @@
                             </div>
 
                             <!-- Pagination controls -->
-                            <!-- Pagination controls -->
-                            <nav aria-label="Page1 navigation example" style="margin-bottom: 50px;">
-                                <ul class="pagination justify-content-center">
-                                    <% if (page1 > 1) {%>
-                                    <li class="page1-item">
-                                        <a class="page1-link btn btn-primary" href="?page1=<%= page1 - 1%>">Previous</a>
-                                    </li>
-                                    <% } %>
-
-                                    <% for (int i = 1; i <= totalPage1s; i++) {%>
-                                    <li class="page1-item <%= (i == page1) ? "active" : ""%>">
-                                        <a class="page1-link btn <%= (i == page1) ? "btn-success" : "btn-outline-primary"%>" href="?page1=<%= i%>"><%= i%></a>
-                                    </li>
-                                    <% } %>
-
-                                    <% if (page1 < totalPage1s) {%>
-                                    <li class="page1-item">
-                                        <a class="page1-link btn btn-primary" href="?page1=<%= page1 + 1%>">Next</a>
-                                    </li>
-                                    <% }%>
-                                </ul>
+                            <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="contact_Manage.jsp?page=<%= pageid - 1%>">Previous</a></li>
+                                            <%
+                                                int numberOfRecords = contactdao.getContactsByPage(start, total).size();
+                                                int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                                                for (int i = 1; i <= numberOfPages; i++) {
+                                            %>
+                                                <li class="page-item"><a class="page-link" href="contact_Manage.jsp?page=<%= i%>"><%= i%></a></li>
+          
+                                            <%
+                                                }
+                                            %>
+                                        <li class="page-item"><a class="page-link" href="contact_Manage.jsp?page=<%= pageid + 1%>">Next</a></li>
+                                    </ul>
                             </nav>
 
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-
+        </div>                                    
     </div>
+    
+    <!--footer start-->
+        <%@include file="footer.jsp" %>
+    <!--footer end-->
 
 
     <!-- Include your JS files here -->
@@ -169,32 +167,7 @@
     <script src="vendors/text_editor/summernote-bs4.js"></script>
     <script src="vendors/apex_chart/apexcharts.js"></script>
     <script src="js/custom.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#pagination-container').on('click', '.page1-link', function (e) {
-                e.preventDefault();
-                var page = $(this).data('page');
-
-                $.ajax({
-                    url: 'contact_management.jsp',
-                    type: 'GET',
-                    data: {page1: page},
-                    success: function (response) {
-                        // Update the table content and pagination controls
-                        var newContent = $(response).find('.QA_section').html();
-                        $('.QA_section').html(newContent);
-
-                        var newPagination = $(response).find('#pagination-container').html();
-                        $('#pagination-container').html(newPagination);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error fetching page:', status, error);
-                    }
-                });
-            });
-        });
-    </script>
+   
 
 
 

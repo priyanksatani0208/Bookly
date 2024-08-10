@@ -44,11 +44,14 @@ public class Booksdao {
     }
 
     // Method to fetch all categories
-    public List<Books> getAllbooks() {
+    public List<Books> getBooksByPage(int start, int total) {
         List<Books> list = new ArrayList<>();
-        try {
-            String query = "SELECT * FROM books";
+        try 
+        {            
+            String query = "SELECT * FROM books LIMIT ? OFFSET ?";
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, total);  // Number of records to fetch
+            ps.setInt(2, start);  // Starting point (offset)
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -106,7 +109,7 @@ public class Booksdao {
         return books;
     }
 
-     // Method to update book details in the database
+    // Method to update book details in the database
     public boolean updateBook(Books books) {
         boolean success = false;
         try {

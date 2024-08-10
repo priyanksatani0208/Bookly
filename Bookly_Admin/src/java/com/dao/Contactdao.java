@@ -15,7 +15,6 @@ public class Contactdao {
     }
 
     // Method to fetch all Contact
-    // In Contactdao.java
     public List<Contact> getContactsByPage(int start, int total) {
         List<Contact> list = new ArrayList<>();
         try {
@@ -41,20 +40,5 @@ public class Contactdao {
         return list;
     }
 
-    public int getContactCount() {
-        int count = 0;
-        try {
-            String query = "SELECT COUNT(*) FROM contact";
-            PreparedStatement pstmt = this.con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                count = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
 
 }

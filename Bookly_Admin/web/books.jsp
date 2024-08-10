@@ -96,8 +96,16 @@
                                     </thead>
                                     <tbody>
                                         <%  //fetch data 
+                                            
+                                            int pageid = 1;
+                                            int total = 10; // Records per page
+                                            if (request.getParameter("page") != null) {
+                                                pageid = Integer.parseInt(request.getParameter("page"));
+                                            }
+                                            int start = (pageid - 1) * total;
+                                            
                                             Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
-                                            List<Books> list = booksdao.getAllbooks();
+                                            List<Books> list = booksdao.getBooksByPage(start, total);
                                             for (Books c : list) {
                                         %>
                                         <tr>
@@ -122,8 +130,25 @@
                                         %>
                                         <!-- Additional rows as needed -->
                                     </tbody>
-                                </table>
+                                </table>             
                             </div>
+                                        
+                                <!--pagination button-->        
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid - 1%>">Previous</a></li>
+                                            <%
+                                                int numberOfRecords = booksdao.getBooksByPage(start, total).size();
+                                                int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                                                for (int i = 1; i <= numberOfPages; i++) {
+                                            %>
+                                        <li class="page-item"><a class="page-link" href="books.jsp?page=<%= i%>"><%= i%></a></li>
+                                            <%
+                                                }
+                                            %>
+                                        <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid + 1%>">Next</a></li>
+                                    </ul>
+                                </nav>
                         </div>
                     </div>
                 </div>
