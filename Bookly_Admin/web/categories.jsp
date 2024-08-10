@@ -97,7 +97,7 @@
                                 </table>
 
                                 <nav aria-label="Page navigation example">
-                                    <br> <ul class="pagination">
+                                    <br> <ul class="pagination justify-content-center">
                                         <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= pageid - 1%>">Previous</a></li>
                                             <%
                                                 int numberOfRecords = categorydao.getCategoriesWithPagination(start, total).size();

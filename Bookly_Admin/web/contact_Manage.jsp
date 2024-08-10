@@ -112,7 +112,7 @@
 
                             <!-- Pagination controls -->
                             <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
+                                    <ul class="pagination justify-content-center">
                                         <li class="page-item"><a class="page-link" href="contact_Manage.jsp?page=<%= pageid - 1%>">Previous</a></li>
                                             <%
                                                 int numberOfRecords = contactdao.getContactsByPage(start, total).size();
