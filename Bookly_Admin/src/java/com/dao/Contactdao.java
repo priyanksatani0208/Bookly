@@ -13,31 +13,48 @@ public class Contactdao {
     public Contactdao(Connection con) {
         this.con = con;
     }
-    
-   // Method to fetch all Contact
-    public List<Contact> getAllContacts()
-    {
-        List<Contact> contacts = new ArrayList<>();
+
+    // Method to fetch all Contact
+    // In Contactdao.java
+    public List<Contact> getContactsByPage(int start, int total) {
+        List<Contact> list = new ArrayList<>();
         try {
-            String query = "SELECT * FROM contact";
-            PreparedStatement ps = con.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            String query = "SELECT * FROM contact LIMIT ?, ?";
+            PreparedStatement pstmt = this.con.prepareStatement(query);
+            pstmt.setInt(1, start);
+            pstmt.setInt(2, total);
+            ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int contid = rs.getInt("contId");
-                String contFname = rs.getString("contFname");
-                String contLname = rs.getString("contLname");
-                String contEmail = rs.getString("contEmail");
-                int contPhone = rs.getInt("contPhone");
-                String contMessage = rs.getString("contMessage");
-
-                Contact contact = new Contact(contid, contFname, contLname, contEmail, contPhone, contMessage);
-                contacts.add(contact);
+                Contact contact = new Contact();
+                contact.setContId(rs.getInt("contId"));
+                contact.setContFname(rs.getString("contFname"));
+                contact.setContLname(rs.getString("contLname"));
+                contact.setContEmail(rs.getString("contEmail"));
+                contact.setContPhone(rs.getInt("contPhone"));
+                contact.setContMessage(rs.getString("contMessage"));
+                list.add(contact);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return contacts;
+        return list;
     }
-    
+
+    public int getContactCount() {
+        int count = 0;
+        try {
+            String query = "SELECT COUNT(*) FROM contact";
+            PreparedStatement pstmt = this.con.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
 }

@@ -74,6 +74,7 @@ public class BooksUpdateServlet extends HttpServlet {
                 Helper.saveFile(part.getInputStream(), path);  // Save the new image file
             }
             
+            //add data(column - name)
             Books books = new Books(bookId, catId, bookName, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, bookLanguage, bookTopic, bookDescription, bookImg);
             if(booksdao.updateBook(books)){
                 

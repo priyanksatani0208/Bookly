@@ -11,12 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/project/Mini-Project_2/Bookly_Admin/src/java/com/servlet/BooksServlet.java</file>
-            <file>file:/D:/project/Mini-Project_2/Bookly_Admin/src/java/com/dao/Contactdao.java</file>
-            <file>file:/D:/project/Mini-Project_2/Bookly_Admin/web/add_categories.jsp</file>
-            <file>file:/D:/project/Mini-Project_2/Bookly_Admin/web/add_books.jsp</file>
-            <file>file:/D:/project/Mini-Project_2/Bookly_Admin/src/java/com/servlet/CategoryServlet.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
