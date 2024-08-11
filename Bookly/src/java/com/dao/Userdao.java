@@ -77,6 +77,7 @@ public class Userdao {
         return user;
     }
     
+    //update profile
     public boolean updateProfile(User user)
     {
         boolean f = false;

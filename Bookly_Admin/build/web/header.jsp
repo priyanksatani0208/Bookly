@@ -47,22 +47,22 @@
                     </a>
                 </li>
 
-                <li class="<%= currentPage.contains("customer_Manage.jsp") ? "mm-active" : ""%>">
-                    <a href="customer_Manage.jsp" aria-expanded="false">
+                <li class="<%= currentPage.contains("view_customer.jsp") ? "mm-active" : ""%>">
+                    <a href="view_customer.jsp" aria-expanded="false">
                         <img src="img/menu-icon/customer.svg" alt>
                         <span>View Customer</span>
                     </a>
                 </li>
 
-                <li class="<%= currentPage.contains("contact_Manage.jsp") ? "mm-active" : ""%>">
-                    <a href="contact_Manage.jsp" aria-expanded="false">
+                <li class="<%= currentPage.contains("view_contact.jsp") ? "mm-active" : ""%>">
+                    <a href="view_contact.jsp" aria-expanded="false">
                         <img src="img/menu-icon/contact.svg" alt>
                         <span>View Contact</span>
                     </a>
                 </li>
 
-                <li class="<%= currentPage.contains("manage_Feedback.jsp") ? "mm-active" : ""%>">
-                    <a href="manage_Feedback.jsp" aria-expanded="false">
+                <li class="<%= currentPage.contains("view_Feedback.jsp") ? "mm-active" : ""%>">
+                    <a href="view_Feedback.jsp" aria-expanded="false">
                         <img src="img/menu-icon/feedback.svg" alt>
                         <span>View Feedback</span>
                     </a>

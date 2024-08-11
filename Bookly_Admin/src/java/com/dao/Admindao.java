@@ -36,4 +36,30 @@ public class Admindao {
         return admin;
     }
     
+    // Method to update user password
+    public boolean updatePassword(int admin_id, String newPassword) 
+    {
+        boolean f = false;
+
+        try  
+        {
+            String query = "UPDATE admin SET admin_password = ? WHERE admin_id = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            
+            ps.setString(1, newPassword);
+            ps.setInt(2, admin_id);
+            
+            ps.executeUpdate();
+           
+            f = true;
+            
+        } 
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return f;
+    }        
+    
 }

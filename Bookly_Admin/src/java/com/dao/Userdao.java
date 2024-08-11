@@ -7,21 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Userdao {
-    
-      private final Connection con;
+
+    private final Connection con;
 
     public Userdao(Connection con) {
         this.con = con;
     }
-        
-     
+
     // Method to fetch all User
-    public List<User> getAllUser()
-    {
+    public List<User> getUsersByPage(int start, int total) {
         List<User> users = new ArrayList<>();
         try {
-            String query = "SELECT * FROM user";
+            String query = "SELECT * FROM user LIMIT ?, ?";
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, start);
+            ps.setInt(2, total);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -42,6 +42,5 @@ public class Userdao {
         }
         return users;
     }
-        
-    
+
 }
