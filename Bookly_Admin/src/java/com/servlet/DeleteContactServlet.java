@@ -4,10 +4,8 @@
  */
 package com.servlet;
 
-import com.dao.Admindao;
-import com.dao.Userdao;
-import com.entities.Admin;
-import com.entities.User;
+import com.dao.Booksdao;
+import com.dao.Contactdao;
 import com.helper.ConnectionProvider;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,11 +13,22 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
-public class ChangePasswordServlet extends HttpServlet {
+/**
+ *
+ * @author Priyank
+ */
+public class DeleteContactServlet extends HttpServlet {
 
- 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -28,50 +37,21 @@ public class ChangePasswordServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePasswordServlet</title>");
+            out.println("<title>Servlet DeleteContactServlet</title>");
             out.println("</head>");
             out.println("<body>");
             
-             String currentPassword = request.getParameter("currentPassword");
-            String newPassword = request.getParameter("newPassword");
-            String confirmNewPassword = request.getParameter("confirmNewPassword");
-            
-             Admindao admindao = new Admindao(ConnectionProvider.getConnection());
-           
+            int contId = Integer.parseInt(request.getParameter("contid"));
+            Contactdao contactdao = new Contactdao(ConnectionProvider.getConnection());
+            boolean deleted = contactdao.deleteContact(contId);
 
-             
-             HttpSession hs = request.getSession();
-             Admin admin = (Admin)hs.getAttribute("currentAdmin");
-             
-              if(newPassword.equals(confirmNewPassword))
-             {
-                 if(admin != null && admin.getAdmin_password().equals(currentPassword))
-                 {
-                     boolean isPasswordChange = admindao.updatePassword(admin.getAdmin_id(), newPassword);
-                     
-                     if(isPasswordChange)
-                     {
-                         admin.setAdmin_password(newPassword);
-                         
-                         response.sendRedirect("change_password.jsp?msg=s");
-                     }
-                     else
-                     {
-                         response.sendRedirect("change_password.jsp?msg=s");
-                     }
-                 }
-                 else
-                 {
-                       response.sendRedirect("change_password.jsp?msg=s");
-                 }
-             }
-             else
-             {
-                  response.sendRedirect("change_password.jsp?msg=s");
-              
-             }
-            
-            
+            if (deleted) {
+                response.sendRedirect("view_contact.jsp?msg=ds"); // Success message
+            } else {
+                response.sendRedirect("view_contact.jsp?msg=de"); // Error message
+            }
+
+
             out.println("</body>");
             out.println("</html>");
         }

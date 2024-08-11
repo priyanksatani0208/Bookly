@@ -74,8 +74,7 @@
                                             <th>Review</th>
                                             <th>Customer ID</th>
                                             <th>Book ID</th>
-                                            <th>Feedback Date</th>
-                                            <th>Update</th>
+                                            <th>Feedback Date</th>                                         
                                             <th>Delete</th>
                                         </tr>
                                     </thead>

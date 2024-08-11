@@ -123,7 +123,7 @@
                                             <td><%= c.getBookDescription()%></td>                                                                                       
                                             <td><img src="books_img/<%= c.getBookImg()%>" alt="Book 1" width="50"></td>
                                             <td><a href="book_update.jsp?bookId=<%= c.getBookId() %>" class="status_btn">Update</a></td>                                
-                                            <td><a href="#" class="status_btn1">Delete</a></td> 
+                                           <td><a href="DeleteBookServlet?bookId=<%=c.getBookId()%>" class="status_btn1">Delete</a></td>
                                         </tr>          
                                         <%
                                             }
@@ -197,12 +197,25 @@
             }
 
             // Check for the 'msg' parameter and show alert if it exists
+            //update code
             var msg = getUrlParameter('msg');
             if (msg === 's') {
                 swal('Book updated successfully', '', 'success');
             } else if (msg === 'e') {
                 swal('Error', 'An error occurred', 'error');
             }
+            
+            
+            //delete code
+            
+            var msg = getUrlParameter('msg');
+            if (msg === 'ds') {
+                swal('Book deleted successfully', '', 'success');
+            } else if (msg === 'de') {
+                swal('Error', 'Failed to delete Book', 'error');
+            }
         </script>
+        
+        
 
 </html>

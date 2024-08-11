@@ -33,6 +33,8 @@
         <link rel="stylesheet" href="css/style1.css" />
         <link rel="stylesheet" href="css/style2.css" />
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     </head>
 
     <body class="crm_body_bg">
@@ -101,7 +103,7 @@
                                             <td><%= c.getContEmail()%></td>
                                             <td><%= c.getContPhone()%></td>
                                             <td><%= c.getContMessage()%></td>
-                                            <td><a href="contact_delete.jsp?id=<%= c.getContId()%>" class="status_btn1">Delete</a></td>
+                                            <td><a href="DeleteContactServlet?contid=<%= c.getContId()%>" class="status_btn1">Delete</a></td>
                                         </tr>
                                         <%
                                             }
@@ -113,18 +115,18 @@
                             <!-- Pagination controls -->
                             <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">
-                                        <li class="page-item"><a class="page-link" href="contact_Manage.jsp?page=<%= pageid - 1%>">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="view_contact.jsp?page=<%= pageid - 1%>">Previous</a></li>
                                             <%
                                                 int numberOfRecords = contactdao.getContactsByPage(start, total).size();
                                                 int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
                                                 for (int i = 1; i <= numberOfPages; i++) {
                                             %>
-                                                <li class="page-item"><a class="page-link" href="contact_Manage.jsp?page=<%= i%>"><%= i%></a></li>
+                                        <li class="page-item"><a class="page-link" href="view_contact.jsp.jsp?page=<%= i%>"><%= i%></a></li>
           
                                             <%
                                                 }
                                             %>
-                                        <li class="page-item"><a class="page-link" href="contact_Manage.jsp?page=<%= pageid + 1%>">Next</a></li>
+                                            <li class="page-item"><a class="page-link" href="view_contact.jsp?page=<%= pageid + 1%>">Next</a></li>
                                     </ul>
                             </nav>
 
@@ -170,7 +172,24 @@
    
 
 
-
+    <script>
+        // Function to get URL parameter
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+            
+        //delete code            
+        var msg = getUrlParameter('msg');
+        if (msg === 'ds') {
+            swal('Contact deleted successfully', '', 'success');
+        } else if (msg === 'de') {
+            swal('Error', 'Failed to delete Contact', 'error');
+        }
+        
+    </script>
 </body>
 
 </html>

@@ -95,4 +95,19 @@ public class Categorydao {
         return updated;
     }
 
+    // Method to delete a category by ID
+    public boolean deleteCategory(int catId) {
+        boolean deleted = false;
+        try {
+            String query = "DELETE FROM category WHERE catId=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, catId);
+            ps.executeUpdate();
+            deleted = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+
 }

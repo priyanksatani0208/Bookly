@@ -41,4 +41,18 @@ public class Contactdao {
     }
 
 
+     // Method to delete a Contact by ID
+    public boolean deleteContact(int contId) {
+        boolean deleted = false;
+        try {
+            String query = "DELETE FROM contact WHERE contId =?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, contId);
+            ps.executeUpdate();
+            deleted = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
 }

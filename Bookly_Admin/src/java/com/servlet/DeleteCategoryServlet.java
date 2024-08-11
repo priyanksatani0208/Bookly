@@ -4,10 +4,7 @@
  */
 package com.servlet;
 
-import com.dao.Admindao;
-import com.dao.Userdao;
-import com.entities.Admin;
-import com.entities.User;
+import com.dao.Categorydao;
 import com.helper.ConnectionProvider;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,11 +12,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
-public class ChangePasswordServlet extends HttpServlet {
+public class DeleteCategoryServlet extends HttpServlet {
 
- 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -28,50 +23,20 @@ public class ChangePasswordServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePasswordServlet</title>");
+            out.println("<title>Servlet DeleteCategoryServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            
-             String currentPassword = request.getParameter("currentPassword");
-            String newPassword = request.getParameter("newPassword");
-            String confirmNewPassword = request.getParameter("confirmNewPassword");
-            
-             Admindao admindao = new Admindao(ConnectionProvider.getConnection());
-           
 
-             
-             HttpSession hs = request.getSession();
-             Admin admin = (Admin)hs.getAttribute("currentAdmin");
-             
-              if(newPassword.equals(confirmNewPassword))
-             {
-                 if(admin != null && admin.getAdmin_password().equals(currentPassword))
-                 {
-                     boolean isPasswordChange = admindao.updatePassword(admin.getAdmin_id(), newPassword);
-                     
-                     if(isPasswordChange)
-                     {
-                         admin.setAdmin_password(newPassword);
-                         
-                         response.sendRedirect("change_password.jsp?msg=s");
-                     }
-                     else
-                     {
-                         response.sendRedirect("change_password.jsp?msg=s");
-                     }
-                 }
-                 else
-                 {
-                       response.sendRedirect("change_password.jsp?msg=s");
-                 }
-             }
-             else
-             {
-                  response.sendRedirect("change_password.jsp?msg=s");
-              
-             }
-            
-            
+            int catId = Integer.parseInt(request.getParameter("catId"));
+            Categorydao categorydao = new Categorydao(ConnectionProvider.getConnection());
+            boolean deleted = categorydao.deleteCategory(catId);
+
+            if (deleted) {
+                response.sendRedirect("categories.jsp?msg=ds"); // Success message
+            } else {
+                response.sendRedirect("categories.jsp?msg=de"); // Error message
+            }
+
             out.println("</body>");
             out.println("</html>");
         }

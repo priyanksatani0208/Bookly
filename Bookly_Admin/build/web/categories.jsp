@@ -102,7 +102,7 @@
                                             <td><%= c.getCatName()%></td>
                                             <td><img src="category_img/<%= c.getCatImg()%>" alt="Category Image"></td>
                                             <td><a href="category_update.jsp?catId=<%= c.getCatId()%>" class="status_btn">Update</a></td>                               
-                                            <td><a href="#" class="status_btn1">Delete</a></td>                                
+                                            <td><a href="DeleteCategoryServlet?catId=<%=c.getCatId()%>" class="status_btn1">Delete</a></td>                              
                                         </tr>
                                         <%
                                             }
@@ -176,12 +176,23 @@
             }
 
             // Check for the 'msg' parameter and show alert if it exists
+            //update code
             var msg = getUrlParameter('msg');
             if (msg === 's') {
                 swal('Category updated successfully', '', 'success');
             } else if (msg === 'e') {
                 swal('Error', 'An error occurred', 'error');
             }
+            
+            //delete code
+            
+            var msg = getUrlParameter('msg');
+            if (msg === 'ds') {
+                swal('Category deleted successfully', '', 'success');
+            } else if (msg === 'de') {
+                swal('Error', 'Failed to delete category', 'error');
+            }
+
         </script>
 
     </body>

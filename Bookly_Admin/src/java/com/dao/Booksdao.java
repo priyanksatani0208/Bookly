@@ -137,4 +137,19 @@ public class Booksdao {
         }
         return success;
     }
+    
+    // Method to delete a book by ID
+    public boolean deleteBook(int bookId) {
+        boolean deleted = false;
+        try {
+            String query = "DELETE FROM books WHERE bookId=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, bookId);
+            ps.executeUpdate();
+            deleted = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
 }
