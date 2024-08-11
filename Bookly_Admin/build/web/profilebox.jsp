@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="vendors/morris/morris.css">
     <link rel="stylesheet" href="vendors/material_icon/material-icons.css" />
     <link rel="stylesheet" href="css/metisMenu.css">
-    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/style2.css" />
     <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
 </head>
 
@@ -40,23 +40,12 @@
     <div class="main_content_iner">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-12">
-                    <div class="dashboard_header mb_50">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <!-- Title can be added here if needed -->
-                            </div>
-                            <!-- Breadcrumb can be added here if needed -->
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-md-6">
                     <div class="white_box mb_30">
-                        <div class="box_header">
-                            <div class="main-title">
-                                <h3 class="mb-0">Profile</h3>
-                            </div>
+<!--                        <div class="box_header">-->
+                            <div>
+                                <center><h2>Profile</h2></center>
+                            <!--</div>-->
                         </div>
                         <div class="profile_box_1">
                             <div class="profile-cover-image">

@@ -9,18 +9,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/clock.css" />
+        
+        
         <title>JSP Page</title>
     </head>
     <body>
         <nav class="sidebar">
-            <div class="logo d-flex justify-content-between">
-                <a href="index">                      
-                    <h3>Admin Panel</h3>
-                </a>
-                <div class="sidebar_close_icon d-lg-none">
+            <!--<div class="logo d-flex justify-content-between">-->
+            
+            <br><center><h3>Admin Panel</h3></center><hr><br>
+              
+<!--                <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
-                </div>
-            </div>
+                </div>-->
+            <!--</div>-->
 
             <ul id="sidebar_menu">
                 <li class="<%= currentPage.contains("index") ? "mm-active" : ""%>">
@@ -47,21 +50,28 @@
                 <li class="<%= currentPage.contains("customer_Manage.jsp") ? "mm-active" : ""%>">
                     <a href="customer_Manage.jsp" aria-expanded="false">
                         <img src="img/menu-icon/customer.svg" alt>
-                        <span>Customer Manage</span>
+                        <span>View Customer</span>
                     </a>
                 </li>
 
                 <li class="<%= currentPage.contains("contact_Manage.jsp") ? "mm-active" : ""%>">
                     <a href="contact_Manage.jsp" aria-expanded="false">
                         <img src="img/menu-icon/contact.svg" alt>
-                        <span>Contact Manage</span>
+                        <span>View Contact</span>
                     </a>
                 </li>
 
                 <li class="<%= currentPage.contains("manage_Feedback.jsp") ? "mm-active" : ""%>">
                     <a href="manage_Feedback.jsp" aria-expanded="false">
                         <img src="img/menu-icon/feedback.svg" alt>
-                        <span>Feedback Manage</span>
+                        <span>View Feedback</span>
+                    </a>
+                </li>
+
+                <li class="<%= currentPage.contains("profilebox.jsp") ? "mm-active" : ""%>">
+                    <a href="profilebox.jsp" aria-expanded="false">
+                        <img src="img/menu-icon/profile.svg" alt>
+                        <span>View Profile</span>
                     </a>
                 </li>
 
@@ -85,43 +95,64 @@
         <section class="main_content dashboard_part">
             <div class="container-fluid g-0">
                 <div class="row">
-                    <div class="col-lg-12 p-0 ">
+                    <div class="col-lg-12 p-0">
                         <div class="header_iner d-flex justify-content-between align-items-center">
-<!--                            <div class="sidebar_icon d-lg-none">
+                            <div class="sidebar_icon d-lg-none">
                                 <i class="ti-menu"></i>
-                            </div>-->
+                            </div>
 
                             <div class="serach_field-area">
                                 <div class="search_inner">
+                                    <!--blank-->
 
-                                    <form action="#">
-                                        <div class="search_field">
-                                            <!--<input type="text" placeholder="Search here...">-->
-                                        </div>
-                                        <!--<button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>-->
-                                    </form>
                                 </div>
                             </div>
 
                             <div class="header_right d-flex justify-content-between align-items-center">
-                                <div class="profile_info">
-                                    <img src="img/admin.jpg" alt="#">
-
-                                    <div class="profile_info_iner">
-                                        <div class="profile_author_name">
-
-                                        </div>
-
-                                        <div class="profile_info_details">
-                                            <a href="profile">My Profile </a>
-                                            <a href="LogoutServlet">Log Out </a>
-                                        </div>
-                                    </div>
+                                <div class="profile_info">                                            
+                                    <!-- Digital Clock -->
+                                    <div id="MyClockDisplay" class="clock"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </body>
+        </div>
+
+
+
+
+
+</body>
+<script>
+    function showTime() {
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        var session = "AM";
+
+        if (h == 0) {
+            h = 12;
+        }
+        if (h > 12) {
+            h = h - 12;
+            session = "PM";
+        }
+
+        h = (h < 10) ? "0" + h : h;
+        m = (m < 10) ? "0" + m : m;
+        s = (s < 10) ? "0" + s : s;
+
+        var time = h + ":" + m + ":" + s + " " + session;
+        document.getElementById("MyClockDisplay").innerText = time;
+        document.getElementById("MyClockDisplay").textContent = time;
+
+        setTimeout(showTime, 1000);
+    }
+
+    showTime();
+
+</script>
 </html>

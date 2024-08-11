@@ -56,6 +56,20 @@
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <!-- Dashboard header -->
+                        <div class="dashboard_header mb_50">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="dashboard_header_title">
+                                        <h3>Categories Table</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="dashboard_breadcam text-end">
+                                        <p><a href="index">Dashboard</a> <i class="fas fa-caret-right"></i>Categories</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-12">
@@ -69,7 +83,7 @@
                             </div>
 
                             <div class="QA_table mb_30 table-responsive">
-                                <table class="table table-striped">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th scope="col">Category Id</th>
@@ -96,6 +110,7 @@
                                     </tbody>
                                 </table>
 
+                           <!--pagination start-->
                                 <nav aria-label="Page navigation example">
                                     <br> <ul class="pagination justify-content-center">
                                         <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= pageid - 1%>">Previous</a></li>
@@ -111,6 +126,7 @@
                                         <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= pageid + 1%>">Next</a></li>
                                     </ul>
                                 </nav>
+                            <!--pagination end--> 
                             </div>
                         </div>
                     </div>
