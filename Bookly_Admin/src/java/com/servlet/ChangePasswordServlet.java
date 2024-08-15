@@ -36,7 +36,7 @@ public class ChangePasswordServlet extends HttpServlet {
             String newPassword = request.getParameter("newPassword");
             String confirmNewPassword = request.getParameter("confirmNewPassword");
             
-             Admindao admindao = new Admindao(ConnectionProvider.getConnection());
+            Admindao admindao = new Admindao(ConnectionProvider.getConnection());
            
 
              
@@ -57,17 +57,17 @@ public class ChangePasswordServlet extends HttpServlet {
                      }
                      else
                      {
-                         response.sendRedirect("change_password.jsp?msg=s");
+                         response.sendRedirect("change_password.jsp?msg=e");
                      }
                  }
                  else
                  {
-                       response.sendRedirect("change_password.jsp?msg=s");
+                       response.sendRedirect("change_password.jsp?msg=e");
                  }
              }
              else
              {
-                  response.sendRedirect("change_password.jsp?msg=s");
+                  response.sendRedirect("change_password.jsp?msg=e");
               
              }
             

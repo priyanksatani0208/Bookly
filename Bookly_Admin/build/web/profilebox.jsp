@@ -1,5 +1,6 @@
 <%@page import="com.entities.Admin"%>
 <%@page import="java.sql.*" %>
+<%@page errorPage="error_400.jsp" %>
 <%
     Admin a = (Admin)session.getAttribute("currentAdmin");
 %>

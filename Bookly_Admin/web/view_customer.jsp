@@ -9,7 +9,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>User Management</title>
+        <title>View Customer</title>
         <link rel="stylesheet" href="css/bootstrap1.min.css">
         <link rel="stylesheet" href="css/style2.css">
         <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css">
@@ -31,12 +31,12 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="dashboard_header_title">
-                                        <h3>Customer Management</h3>
+                                        <h3>View Customer</h3>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="dashboard_breadcam text-end">
-                                        <p><a href="index.jsp">Dashboard</a> <i class="fas fa-caret-right"></i> Users</p>
+                                        <p><a href="index.jsp">Dashboard</a> <i class="fas fa-caret-right"></i>View Customer</p>
                                     </div>
                                 </div>
                             </div>

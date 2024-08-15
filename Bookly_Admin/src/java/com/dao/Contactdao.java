@@ -55,4 +55,20 @@ public class Contactdao {
         }
         return deleted;
     }
+    
+     //total Contatct method
+    public int getTotalContact() {
+        int totalContact = 0;
+        try {
+            String query = "SELECT COUNT(*) AS total FROM contact";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalContact = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalContact;
+    }
 }

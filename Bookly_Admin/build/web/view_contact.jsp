@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Contact Management</title>
+        <title>View Contact</title>
         <link rel="icon" href="img/logo.png" type="image/png">
         <!-- Include your CSS files here -->
         <link rel="icon" href="img/logo.png" type="image/png">
@@ -50,12 +50,12 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="dashboard_header_title">
-                                        <h3>Contact Management</h3>
+                                        <h3>View Contact</h3>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="dashboard_breadcam text-end">
-                                        <p><a href="index">Dashboard</a> <i class="fas fa-caret-right"></i> Contacts</p>
+                                        <p><a href="index">Dashboard</a> <i class="fas fa-caret-right"></i>View Contacts</p>
                                     </div>
                                 </div>
                             </div>

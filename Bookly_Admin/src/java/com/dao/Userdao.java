@@ -43,4 +43,20 @@ public class Userdao {
         return users;
     }
 
+    
+     //total User method
+    public int getTotalUser() {
+        int totalUser = 0;
+        try {
+            String query = "SELECT COUNT(*) AS total FROM user";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalUser = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalUser;
+    }
 }

@@ -55,8 +55,9 @@ public class LoginServlet extends HttpServlet {
                 out.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js' integrity='sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==' crossorigin='anonymous' referrerpolicy='no-referrer'></script>");
                 out.println("<script>swal('Login UnSuccessfully..', 'Please try agin', 'error')</script>");
            
+
                 RequestDispatcher rd = request.getRequestDispatcher("login");
-                rd.forward(request, response);
+                rd.include(request, response);
             }
             else
             {
@@ -66,9 +67,9 @@ public class LoginServlet extends HttpServlet {
                 out.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js' integrity='sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==' crossorigin='anonymous' referrerpolicy='no-referrer'></script>");
                 out.println("<script>swal('Login Successfully', 'Welcome to Bookly', 'success')</script>");
            
-                response.sendRedirect("index?msg=s");
-//                RequestDispatcher rd = request.getRequestDispatcher("index");
-//                rd.forward(request, response);
+
+                RequestDispatcher rd = request.getRequestDispatcher("index");
+                rd.include(request, response);
             }
             
             out.println("</body>");

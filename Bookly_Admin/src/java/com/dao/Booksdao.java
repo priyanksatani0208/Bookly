@@ -46,8 +46,7 @@ public class Booksdao {
     // Method to fetch all categories
     public List<Books> getBooksByPage(int start, int total) {
         List<Books> list = new ArrayList<>();
-        try 
-        {            
+        try {
             String query = "SELECT * FROM books LIMIT ? OFFSET ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, total);  // Number of records to fetch
@@ -137,7 +136,7 @@ public class Booksdao {
         }
         return success;
     }
-    
+
     // Method to delete a book by ID
     public boolean deleteBook(int bookId) {
         boolean deleted = false;
@@ -152,4 +151,21 @@ public class Booksdao {
         }
         return deleted;
     }
+
+    //total books method
+    public int getTotalBooks() {
+        int totalBooks = 0;
+        try {
+            String query = "SELECT COUNT(*) AS total FROM books";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalBooks = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalBooks;
+    }
+
 }

@@ -40,7 +40,8 @@
                                                 <label for="category">Category</label>
                                                 <select class="form-control" id="category" name="catId" required>
                                                     <option>Select Category</option>
-                                                    <%                                                 //fetch data 
+                                                    <%                                               
+                                                        //fetch data 
                                                         Categorydao categorydao = new Categorydao(ConnectionProvider.getConnection());
                                                         List<Category> list = categorydao.getAllCategories();
                                                         for (Category c : list) {

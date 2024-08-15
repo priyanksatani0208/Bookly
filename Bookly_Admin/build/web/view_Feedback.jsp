@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Feedback Management</title>
+        <title>View Feedback</title>
         <link rel="icon" href="img/logo.png" type="image/png">
         <link rel="stylesheet" href="css/bootstrap1.min.css" />
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
@@ -43,12 +43,12 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="dashboard_header_title">
-                                        <h3>Feedback Management</h3>
+                                        <h3>View Feedback</h3>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="dashboard_breadcam text-end">
-                                        <p><a href="index">Dashboard</a> <i class="fas fa-caret-right"></i>Feedback</p>
+                                        <p><a href="index">Dashboard</a> <i class="fas fa-caret-right"></i>View Feedback</p>
                                     </div>
                                 </div>
                             </div>
@@ -58,11 +58,11 @@
                     <div class="col-12">
                         <div class="QA_section">
                             <div class="white_box_tittle list_header">
-                                <div class="box_right d-flex lms_block">
+<!--                                <div class="box_right d-flex lms_block">
                                     <div class="add_button ms-2">
                                         <a href="add_feedback.jsp" class="btn_1" style="margin-left: 900%;">Add New Feedback</a>               
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
 
                             <div class="QA_table mb_30 table-responsive">

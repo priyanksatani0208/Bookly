@@ -53,4 +53,20 @@ public class Feedbackdao {
         }
         return deleted;
     }
+    
+     //total Feedback method
+    public int getTotalFeedback() {
+        int totalfeedback = 0;
+        try {
+            String query = "SELECT COUNT(*) AS total FROM  feedback";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalfeedback = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalfeedback;
+    }
 }

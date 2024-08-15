@@ -31,8 +31,8 @@ public class Categorydao {
         }
         return success;
     }
-
-    // Method to fetch all categories
+    
+     // Method to fetch all categories
     public List<Category> getCategoriesWithPagination(int start, int total) {
         List<Category> list = new ArrayList<>();
         try {
@@ -40,6 +40,27 @@ public class Categorydao {
             PreparedStatement pstmt = this.con.prepareStatement(query);
             pstmt.setInt(1, start);
             pstmt.setInt(2, total);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Category c = new Category();
+                c.setCatId(rs.getInt("catId"));
+                c.setCatName(rs.getString("catName"));
+                c.setCatImg(rs.getString("catImg"));
+                list.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Method to fetch all categories
+    public List<Category> getAllCategories() {
+        List<Category> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM category ";
+            PreparedStatement pstmt = this.con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -108,6 +129,22 @@ public class Categorydao {
             e.printStackTrace();
         }
         return deleted;
+    }
+    
+     //total Category method
+    public int getTotalCategory() {
+        int totalCategory = 0;
+        try {
+            String query = "SELECT COUNT(*) AS total FROM category";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalCategory = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalCategory;
     }
 
 }

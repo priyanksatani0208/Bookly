@@ -53,6 +53,13 @@
                         <span>View Customer</span>
                     </a>
                 </li>
+                
+                 <li class="<%= currentPage.contains("#") ? "mm-active" : ""%>">
+                    <a href="#" aria-expanded="false">
+                        <img src="img/menu-icon/booking.svg" alt>
+                        <span>View Booking</span>
+                    </a>
+                </li>
 
                 <li class="<%= currentPage.contains("view_contact.jsp") ? "mm-active" : ""%>">
                     <a href="view_contact.jsp" aria-expanded="false">
