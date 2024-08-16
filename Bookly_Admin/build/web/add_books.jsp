@@ -79,7 +79,7 @@
                                                 <input type="text" class="form-control" id="bookLength" name="bookDiscount" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="bookLength">Length</label>
+                                                <label for="bookLength">Pages</label>
                                                 <input type="text" class="form-control" id="bookLength" name="bookLength" required>
                                             </div>
                                             <div class="form-group">

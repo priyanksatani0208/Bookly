@@ -6,9 +6,7 @@
 <%@page errorPage="error_400.jsp" %>
 <!DOCTYPE html>
 <html lang="zxx">
-
-    <!-- Mirrored from demo.dashboardpack.com/directory-html/data_table.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Jul 2024 17:04:20 GMT -->
-    <head>
+      <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Books</title>
@@ -21,18 +19,14 @@
         <link rel="stylesheet" href="vendors/owl_carousel/css/owl.carousel.css" />
         <link rel="stylesheet" href="vendors/gijgo/gijgo.min.css" />
         <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css" />
-        <link rel="stylesheet" href="vendors/tagsinput/tagsinput.css" />
-        <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
-        <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
-        <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-        <link rel="stylesheet" href="vendors/text_editor/summernote-bs4.css" />
-        <link rel="stylesheet" href="vendors/morris/morris.css">
-        <link rel="stylesheet" href="vendors/material_icon/material-icons.css" />
-        <link rel="stylesheet" href="css/metisMenu.css">
+        <link rel="stylesheet" href="vendors/tagsinput/tagsinput.css" />      
         <link rel="stylesheet" href="css/style1.css" />
         <link rel="stylesheet" href="css/style2.css" />
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+           
+        </style>
 
     </head>
 
@@ -85,7 +79,7 @@
                                             <th>Book Publisher</th>
                                             <th>Book Price</th>
                                             <th>Book Discount</th>
-                                            <th>Book Length</th>
+                                            <th>Book Pages</th>
                                             <th>Book Language</th>
                                             <th>Book Topic</th>
                                             <th>Book Description</th>
@@ -95,15 +89,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%  //fetch data 
-                                            
+                                        <%       
                                             int pageid = 1;
                                             int total = 10; // Records per page
                                             if (request.getParameter("page") != null) {
                                                 pageid = Integer.parseInt(request.getParameter("page"));
                                             }
                                             int start = (pageid - 1) * total;
-                                            
+
                                             Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
                                             List<Books> list = booksdao.getBooksByPage(start, total);
                                             for (Books c : list) {
@@ -115,40 +108,46 @@
                                             <td><%= c.getBookAuthor()%></td>
                                             <td><%= c.getBookEdition()%></td>
                                             <td><%= c.getBookPublisher()%></td>
-                                            <td><%= c.getBookPrice() %></td>
-                                            <td><%= c.getBookDiscount() %></td>
+                                            <td><%= c.getBookPrice()%></td>
+                                            <td><%= c.getBookDiscount()%></td>
                                             <td><%= c.getBookLength()%></td>
                                             <td><%= c.getBookLanguage()%></td>
                                             <td><%= c.getBookTopic()%></td>
-                                            <td><%= c.getBookDescription()%></td>                                                                                       
-                                            <td><img src="books_img/<%= c.getBookImg()%>" alt="Book 1" width="50"></td>
-                                            <td><a href="book_update.jsp?bookId=<%= c.getBookId() %>" class="status_btn">Update</a></td>                                
-                                           <td><a href="DeleteBookServlet?bookId=<%=c.getBookId()%>" class="status_btn1">Delete</a></td>
+                                            <td>
+                                                <div class="book-description">
+                                                    <%= c.getBookDescription().substring(0, 50)%>...
+                                                    <span class="more-text" style="display: none;"><%= c.getBookDescription().substring(100)%></span>
+                                                    <a href="javascript:void(0);" class="read-more-link">Read more</a>
+                                                </div>
+                                            </td>                                                                                       
+                                            <td><img src="books_img/<%= c.getBookImg()%>" alt="Book Image" width="50"></td>
+                                            <td><a href="book_update.jsp?bookId=<%= c.getBookId()%>" class="status_btn">Update</a></td>                                
+                                            <td><a href="DeleteBookServlet?bookId=<%=c.getBookId()%>" class="status_btn1">Delete</a></td>
                                         </tr>          
                                         <%
                                             }
                                         %>
-                                        <!-- Additional rows as needed -->
                                     </tbody>
+
                                 </table>             
                             </div>
-                                        
-                                <!--pagination button-->        
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid - 1%>">Previous</a></li>
-                                            <%
-                                                int numberOfRecords = booksdao.getBooksByPage(start, total).size();
-                                                int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
-                                                for (int i = 1; i <= numberOfPages; i++) {
-                                            %>
-                                        <li class="page-item"><a class="page-link" href="books.jsp?page=<%= i%>"><%= i%></a></li>
-                                            <%
-                                                }
-                                            %>
-                                        <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid + 1%>">Next</a></li>
-                                    </ul>
-                                </nav>
+
+                            <!--pagination button-->        
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid - 1%>">Previous</a></li>
+                                        <%
+                                            int numberOfRecords = booksdao.getBooksByPage(start, total).size();
+                                            int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                                            for (int i = 1; i <= numberOfPages; i++) {
+                                        %>
+                                    <li class="page-item"><a class="page-link" href="books.jsp?page=<%= i%>"><%= i%></a></li>
+                                        <%
+                                            }
+                                        %>
+                                    <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid + 1%>">Next</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -169,16 +168,7 @@
         <script src="vendors/swiper_slider/js/swiper.min.js"></script>
         <script src="vendors/niceselect/js/jquery.nice-select.min.js"></script>
         <script src="vendors/owl_carousel/js/owl.carousel.min.js"></script>
-        <script src="vendors/gijgo/gijgo.min.js"></script>
-        <script src="vendors/datatable/js/jquery.dataTables.min.js"></script>
-        <script src="vendors/datatable/js/dataTables.responsive.min.js"></script>
-        <script src="vendors/datatable/js/dataTables.buttons.min.js"></script>
-        <script src="vendors/datatable/js/buttons.flash.min.js"></script>
-        <script src="vendors/datatable/js/jszip.min.js"></script>
-        <script src="vendors/datatable/js/pdfmake.min.js"></script>
-        <script src="vendors/datatable/js/vfs_fonts.js"></script>
-        <script src="vendors/datatable/js/buttons.html5.min.js"></script>
-        <script src="vendors/datatable/js/buttons.print.min.js"></script>
+        <script src="vendors/gijgo/gijgo.min.js"></script>       
         <script src="js/chart.min.js"></script>
         <script src="vendors/progressbar/jquery.barfiller.js"></script>
         <script src="vendors/tagsinput/tagsinput.js"></script>
@@ -188,34 +178,52 @@
 
     </body>
     <script>
-            // Function to get URL parameter
-            function getUrlParameter(name) {
-                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-                var results = regex.exec(location.search);
-                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-            }
+        // Function to get URL parameter
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
 
-            // Check for the 'msg' parameter and show alert if it exists
-            //update code
-            var msg = getUrlParameter('msg');
-            if (msg === 's') {
-                swal('Book updated successfully', '', 'success');
-            } else if (msg === 'e') {
-                swal('Error', 'An error occurred', 'error');
-            }
-            
-            
-            //delete code
-            
-            var msg = getUrlParameter('msg');
-            if (msg === 'ds') {
-                swal('Book deleted successfully', '', 'success');
-            } else if (msg === 'de') {
-                swal('Error', 'Failed to delete Book', 'error');
-            }
-        </script>
-        
-        
+        // Check for the 'msg' parameter and show alert if it exists
+        //update code
+        var msg = getUrlParameter('msg');
+        if (msg === 's') {
+            swal('Book updated successfully', '', 'success');
+        } else if (msg === 'e') {
+            swal('Error', 'An error occurred', 'error');
+        }
 
+
+        //delete code
+        var msg = getUrlParameter('msg');
+        if (msg === 'ds') {
+            swal('Book deleted successfully', '', 'success');
+        } else if (msg === 'de') {
+            swal('Error', 'Failed to delete Book', 'error');
+        }
+
+    </script>
+    
+    <!--read more script-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var readMoreLinks = document.querySelectorAll('.read-more-link');
+
+            readMoreLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    var moreText = this.previousElementSibling;
+
+                    if (moreText.style.display === 'none') {
+                        moreText.style.display = 'inline';
+                        this.innerText = 'Read less';
+                    } else {
+                        moreText.style.display = 'none';
+                        this.innerText = 'Read more';
+                    }
+                });
+            });
+        });
+    </script>
 </html>
