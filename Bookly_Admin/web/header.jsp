@@ -109,11 +109,13 @@
                             </div>
 
                             <div class="serach_field-area">
-                                <div class="search_inner">
-                                    <!--blank-->
+<!--                                <div class="search_inner">
+                                    blank
 
-                                </div>
+                                </div>-->
+                                
                             </div>
+
 
                             <div class="header_right d-flex justify-content-between align-items-center">
                                 <div class="profile_info">                                            

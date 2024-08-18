@@ -187,23 +187,40 @@
         }
 
         // Check for the 'msg' parameter and show alert if it exists
+        //Bookes added code
+        var msg = getUrlParameter('msg');
+        if (msg === 'abc') 
+        {
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book are Added Successfully..', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+        }
+        else if (msg === 'def') 
+        { 
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+        }
+        
         //update code
         var msg = getUrlParameter('msg');
-        if (msg === 's') {
-            swal('Book updated successfully', '', 'success');
-        } else if (msg === 'e') {
-            swal('Error', 'An error occurred', 'error');
+        if (msg === 's') 
+        {
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book Update successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
         }
+        else if (msg === 'e') 
+        { 
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+        }
+        
 
 
         //delete code
-        var msg = getUrlParameter('msg');
-        if (msg === 'ds') {
-            swal('Book deleted successfully', '', 'success');
-        } else if (msg === 'de') {
-            swal('Error', 'Failed to delete Book', 'error');
+         if (msg === 'ds') 
+        {
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book deleted successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
         }
-
+        else if (msg === 'de') 
+        { 
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+        }
+        
     </script>
     
     <!--read more script-->

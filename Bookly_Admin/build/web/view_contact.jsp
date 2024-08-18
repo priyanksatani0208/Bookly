@@ -181,12 +181,16 @@
                 return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
             }
             
-        //delete code            
+        //delete code   
+        
         var msg = getUrlParameter('msg');
-        if (msg === 'ds') {
-            swal('Contact deleted successfully', '', 'success');
-        } else if (msg === 'de') {
-            swal('Error', 'Failed to delete Contact', 'error');
+         if (msg === 'ds') 
+        {
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Delete successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+        }
+        else if (msg === 'de') 
+        { 
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
         }
         
     </script>

@@ -62,13 +62,10 @@ public class UpdateCategoryServlet extends HttpServlet {
 
             // Update the category details
             Category category = new Category(catId, catName, catImg);
-            if (categorydao.updateCategory(category)) {
-                
+            if (categorydao.updateCategory(category)) {                
                 response.sendRedirect("categories?msg=s");
-                out.println("<script>swal('Update Successfully..', '', 'success');</script>");
-                
             } else {
-                out.println("<script>swal('Error', 'please try agin...', 'error');</script>");
+                response.sendRedirect("categories?msg=e");
             }
             
             out.println("</body>");

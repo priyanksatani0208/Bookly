@@ -44,13 +44,13 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="categoryName">Category Name</label>
-                                            <input type="text" class="form-control" id="categoryName" name="catName" value="<%= category.getCatName() %>" required>
+                                            <input type="text" class="form-control" id="categoryName" name="catName" value="<%= category.getCatName() %>" >
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="categoryImg">Category Image</label>
-                                            <input type="file" class="form-control" id="categoryImg" name="catImg"required>
+                                            <input type="file" class="form-control" id="categoryImg" name="catImg">
                                             <br>
                                             <img src="category_img/<%= category.getCatImg() %>" alt="Category Image" style="width: 100px; height: auto;">
                                         </div>
@@ -68,31 +68,12 @@
     </div>
 
     <!-- Footer -->
-    <%@include file="footer.jsp" %>
+      <%@include file="footer.jsp" %>
     <!-- Footer End -->
 
     <script src="js/jquery1-3.4.1.min.js"></script>
     <script src="js/bootstrap1.min.js"></script>
-    <script src="js/custom.js"></script>
-
-    <script>
-        // Function to get URL parameter
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-
-        // Check for the 'msg' parameter and show alert if it exists
-        var msg = getUrlParameter('msg');
-        if (msg === 's') {
-            swal('Category updated successfully', '', 'success');
-        } else if (msg === 'e') {
-            swal('Error', 'An error occurred', 'error');
-        }
-    </script>
-    
+    <script src="js/custom.js"></script>    
     <script src="js/jquery1-3.4.1.min.js"></script>
     <script src="js/bootstrap1.min.js"></script>
 

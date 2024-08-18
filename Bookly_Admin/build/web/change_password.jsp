@@ -72,12 +72,14 @@
 
             // Check for the 'msg' parameter and show alert if it exists
             var msg = getUrlParameter('msg');
-            if (msg === 's') {
-                swal('Password Changed Successfully', '', 'success');
-            } else if (msg === 'e') {
-                swal('Error', 'An error occurred', 'error');
-            }
-        </script>
+             if (msg === 's') 
+           {
+               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Update successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+           }
+           else if (msg === 'e') 
+           { 
+               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+           }        </script>
 
         <script src="js/jquery1-3.4.1.min.js"></script>
         <script src="js/bootstrap1.min.js"></script>

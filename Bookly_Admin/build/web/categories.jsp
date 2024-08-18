@@ -177,22 +177,28 @@
 
             // Check for the 'msg' parameter and show alert if it exists
             //update code
-            var msg = getUrlParameter('msg');
-            if (msg === 's') {
-                swal('Category updated successfully', '', 'success');
-            } else if (msg === 'e') {
-                swal('Error', 'An error occurred', 'error');
-            }
-            
-            //delete code
-            
-            var msg = getUrlParameter('msg');
-            if (msg === 'ds') {
-                swal('Category deleted successfully', '', 'success');
-            } else if (msg === 'de') {
-                swal('Error', 'Failed to delete category', 'error');
-            }
+           var msg = getUrlParameter('msg');
+           if (msg === 's') 
+           {
+               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Update successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+           }
+           else if (msg === 'e') 
+           { 
+               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+           }
 
+            
+            //delete code            
+            var msg = getUrlParameter('msg');
+            if (msg === 'ds') 
+           {
+               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Category deleted successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+           }
+           else if (msg === 'de') 
+           { 
+               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+           }
+            
         </script>
 
     </body>

@@ -64,14 +64,13 @@ public class BooksServlet extends HttpServlet {
                
                 if (Helper.saveFile(part.getInputStream(), path))
                 {
-                    out.println("<script>swal('Book are Added Successfully..', '', 'success');</script>");
-                    
+                   response.sendRedirect("books.jsp?msg=abc");
                 } 
                 else
                 { 
-                    out.println("<script>swal('Book are Not Added..', 'Please try Again', 'error');</script>");
+                   response.sendRedirect("add_books?msg=def");
                 }
-                response.sendRedirect("add_books?msg=s");
+                
                 
             }
             

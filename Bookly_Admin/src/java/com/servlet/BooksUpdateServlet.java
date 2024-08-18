@@ -79,10 +79,10 @@ public class BooksUpdateServlet extends HttpServlet {
             if(booksdao.updateBook(books)){
                 
                 response.sendRedirect("books?msg=s");
-                out.println("<script>swal('Update Successfully..', '', 'success');</script>");
+              
                 
             } else {
-                out.println("<script>swal('Error', 'please try agin...', 'error');</script>");
+                 response.sendRedirect("books?msg=s");
             }
                 
             
