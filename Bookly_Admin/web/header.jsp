@@ -74,13 +74,7 @@
                         <span>View Feedback</span>
                     </a>
                 </li>
-
-                <li class="<%= currentPage.contains("profilebox.jsp") ? "mm-active" : ""%>">
-                    <a href="profilebox.jsp" aria-expanded="false">
-                        <img src="img/menu-icon/profile.svg" alt>
-                        <span>View Profile</span>
-                    </a>
-                </li>
+               
 
                 <li class="<%= currentPage.contains("change_password.jsp") ? "mm-active" : ""%>">
                     <a href="change_password.jsp" aria-expanded="false">

@@ -1,12 +1,13 @@
 <%@page import="com.entities.Books"%>
 <%@page import="com.dao.Categorydao"%>
+<%@page import="com.entities.Category"%>
 <%@page import="com.helper.ConnectionProvider"%>
 <%@page import="com.dao.Booksdao"%>
 <%@page import="java.util.List"%>
 <%@page errorPage="error_400.jsp" %>
 <!DOCTYPE html>
 <html lang="zxx">
-      <head>
+    <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Books</title>
@@ -25,7 +26,7 @@
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <style>
-           
+
         </style>
 
     </head>
@@ -48,6 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
+
                                     <div class="dashboard_breadcam text-end">
                                         <p><a href="index">Dashboard</a> <i class="fas fa-caret-right"></i>Books</p>
                                     </div>
@@ -59,10 +61,10 @@
                     <div class="col-12">
                         <div class="QA_section">
                             <div class="white_box_tittle list_header">
-
-                                <div class="box_right d-flex lms_block">
-                                    <div class="add_button ms-2">
-                                        <a href="add_books" class="btn_1" style="margin-left: 900%;">Add New</a>               
+                                <div class="box_right d-flex lms_block" >
+                                    <input type="text" id="searchInput" placeholder="Search by name, author, or topic" class="form-control">
+                                    <div class="add_button">
+                                        <a href="add_books" class="btn_1"style="margin-left: 730%;">Add New</a>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +74,7 @@
                                     <thead>
                                         <tr>
                                             <th>Book-Id</th>
-                                            <th>Category-Id</th>
+                                            <th>Category-name</th>
                                             <th>Book Name</th>
                                             <th>Book Author</th>
                                             <th>Book Edition</th>
@@ -89,8 +91,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%       
-                                            int pageid = 1;
+                                        <%                                            int pageid = 1;
                                             int total = 10; // Records per page
                                             if (request.getParameter("page") != null) {
                                                 pageid = Integer.parseInt(request.getParameter("page"));
@@ -98,12 +99,16 @@
                                             int start = (pageid - 1) * total;
 
                                             Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
+                                            Categorydao categorydao = new Categorydao(ConnectionProvider.getConnection());
                                             List<Books> list = booksdao.getBooksByPage(start, total);
                                             for (Books c : list) {
+
+                                                // Fetch the category name based on the category ID
+                                                String categoryName = categorydao.getCategoryNameById(c.getCatId());
                                         %>
                                         <tr>
                                             <td><%= c.getBookId()%></td>
-                                            <td><%= c.getCatId()%></td>
+                                            <td><%= categoryName%></td>
                                             <td><%= c.getBookName()%></td>
                                             <td><%= c.getBookAuthor()%></td>
                                             <td><%= c.getBookEdition()%></td>
@@ -176,71 +181,95 @@
         <script src="vendors/apex_chart/apexcharts.js"></script>
         <script src="js/custom.js"></script>
 
-    </body>
-    <script>
-        // Function to get URL parameter
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
 
-        // Check for the 'msg' parameter and show alert if it exists
-        //Bookes added code
-        var msg = getUrlParameter('msg');
-        if (msg === 'abc') 
-        {
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book are Added Successfully..', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-        }
-        else if (msg === 'def') 
-        { 
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-        }
-        
-        //update code
-        var msg = getUrlParameter('msg');
-        if (msg === 's') 
-        {
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book Update successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-        }
-        else if (msg === 'e') 
-        { 
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-        }
-        
+        <script>
+            // Function to get URL parameter
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+// Check for the 'msg' parameter and show alert if it exists
+//Bookes added code
+            var msg = getUrlParameter('msg');
+            if (msg === 'abc')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book are Added Successfully..', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            } else if (msg === 'def')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            }
+
+//update code
+            var msg = getUrlParameter('msg');
+            if (msg === 's')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book Update successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            } else if (msg === 'e')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            }
 
 
-        //delete code
-         if (msg === 'ds') 
-        {
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book deleted successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-        }
-        else if (msg === 'de') 
-        { 
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-        }
-        
-    </script>
-    
-    <!--read more script-->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var readMoreLinks = document.querySelectorAll('.read-more-link');
 
-            readMoreLinks.forEach(function (link) {
-                link.addEventListener('click', function () {
-                    var moreText = this.previousElementSibling;
+//delete code
+            if (msg === 'ds')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Book deleted successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            } else if (msg === 'de')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            }
 
-                    if (moreText.style.display === 'none') {
-                        moreText.style.display = 'inline';
-                        this.innerText = 'Read less';
-                    } else {
-                        moreText.style.display = 'none';
-                        this.innerText = 'Read more';
-                    }
+//Table discription read more and read less..... script
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var readMoreLinks = document.querySelectorAll('.read-more-link');
+
+                readMoreLinks.forEach(function (link) {
+                    link.addEventListener('click', function () {
+                        var moreText = this.previousElementSibling;
+
+                        if (moreText.style.display === 'none') {
+                            moreText.style.display = 'inline';
+                            this.innerText = 'Read less';
+                        } else {
+                            moreText.style.display = 'none';
+                            this.innerText = 'Read more';
+                        }
+                    });
                 });
             });
-        });
+
+
+            //Filter by serching
+            document.addEventListener('DOMContentLoaded', function () {
+                var searchInput = document.getElementById('searchInput');
+                var table = document.querySelector('.QA_table table tbody');
+                var rows = table.querySelectorAll('tr');
+
+                searchInput.addEventListener('keyup', function () {
+                    var filter = searchInput.value.toLowerCase();
+
+                    rows.forEach(function (row) {
+                        var bookName = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                        var bookAuthor = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+                        var bookTopic = row.querySelector('td:nth-child(11)').textContent.toLowerCase();
+
+                        if (bookName.includes(filter) || bookAuthor.includes(filter) || bookTopic.includes(filter)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+        </script>
+
+
+
     </script>
 </html>

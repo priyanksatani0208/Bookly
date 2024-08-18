@@ -64,6 +64,11 @@
 
                     <div class="col-12">
                         <div class="QA_section">
+                                                    <div class="white_box_tittle list_header">
+                            <div class="box_right d-flex lms_block">
+                                <input type="text" id="searchInput" placeholder="Search by Name, Email, or Phone" class="form-control">
+                            </div>
+                        </div>
                             <div class="QA_table mb_30 table-responsive">
                                 <table class="table">
                                     <thead>
@@ -173,6 +178,31 @@
 
 
     <script>
+        
+        //search by contact
+        document.addEventListener('DOMContentLoaded', function () {
+            var searchInput = document.getElementById('searchInput');
+            var table = document.querySelector('.QA_table table tbody');
+            var rows = table.querySelectorAll('tr');
+
+            searchInput.addEventListener('keyup', function () {
+                var filter = searchInput.value.toLowerCase();
+
+                rows.forEach(function (row) {
+                    var firstName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    var lastName = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                    var email = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+                    var phone = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
+
+                    if (firstName.includes(filter) || lastName.includes(filter) || email.includes(filter) || phone.includes(filter)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
         // Function to get URL parameter
             function getUrlParameter(name) {
                 name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');

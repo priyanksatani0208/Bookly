@@ -75,9 +75,10 @@
                     <div class="col-12">
                         <div class="QA_section">
                             <div class="white_box_tittle list_header">                       
-                                <div class="box_right d-flex lms_block">                            
-                                    <div class="add_button ms-2">
-                                        <a href="add_categories" class="btn_1" style="margin-left: 900%;">Add New</a>               
+                                <div class="box_right d-flex lms_block" >
+                                    <input type="text" id="searchInput" placeholder="Search by Categories" class="form-control">
+                                    <div class="add_button">
+                                        <a href="add_books" class="btn_1"style="margin-left: 730%;">Add New</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,8 +95,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%                                 
-                                              for (Category c : list) {
+                                        <%                                            for (Category c : list) {
                                         %>
                                         <tr>
                                             <td><%= c.getCatId()%></td>
@@ -110,7 +110,7 @@
                                     </tbody>
                                 </table>
 
-                           <!--pagination start-->
+                                <!--pagination start-->
                                 <nav aria-label="Page navigation example">
                                     <br> <ul class="pagination justify-content-center">
                                         <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= pageid - 1%>">Previous</a></li>
@@ -126,14 +126,14 @@
                                         <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= pageid + 1%>">Next</a></li>
                                     </ul>
                                 </nav>
-                            <!--pagination end--> 
+                                <!--pagination end--> 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-                                    
+
         <!--footer start-->
         <%@include file="footer.jsp" %>
         <!--footer end-->
@@ -166,6 +166,7 @@
         <script src="vendors/text_editor/summernote-bs4.js"></script>
         <script src="vendors/apex_chart/apexcharts.js"></script>
         <script src="js/custom.js"></script>
+        <script src="js/filter.js"></script>
         <script>
             // Function to get URL parameter
             function getUrlParameter(name) {
@@ -177,28 +178,47 @@
 
             // Check for the 'msg' parameter and show alert if it exists
             //update code
-           var msg = getUrlParameter('msg');
-           if (msg === 's') 
-           {
-               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Update successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-           }
-           else if (msg === 'e') 
-           { 
-               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-           }
+            var msg = getUrlParameter('msg');
+            if (msg === 's')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Update successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            } else if (msg === 'e')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            }
 
-            
+
             //delete code            
             var msg = getUrlParameter('msg');
-            if (msg === 'ds') 
-           {
-               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Category deleted successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-           }
-           else if (msg === 'de') 
-           { 
-               document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-           }
-            
+            if (msg === 'ds')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Category deleted successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            } else if (msg === 'de')
+            {
+                document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var searchInput = document.getElementById('searchInput');
+                var table = document.querySelector('.QA_table table tbody');
+                var rows = table.querySelectorAll('tr');
+
+                searchInput.addEventListener('keyup', function () {
+                    var filter = searchInput.value.toLowerCase();
+
+                    rows.forEach(function (row) {
+                        var categoryName = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Assuming Category Name is in the 2nd column
+
+                        if (categoryName.includes(filter)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+
         </script>
 
     </body>

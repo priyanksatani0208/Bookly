@@ -146,5 +146,23 @@ public class Categorydao {
         }
         return totalCategory;
     }
+    
+    //category name fetch 
+    public String getCategoryNameById(int catId) {
+    String categoryName = "";
+    try {
+        String query = "SELECT catName FROM category WHERE catId=?";
+        PreparedStatement pstmt = this.con.prepareStatement(query);
+        pstmt.setInt(1, catId);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            categoryName = rs.getString("catName");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return categoryName;
+}
+
 
 }
