@@ -203,7 +203,7 @@
         <!-- End: Welcome Section -->
         
         <!-- Start: Category Filter -->
-        <section class="category-filter section-padding">
+<!--        <section class="category-filter section-padding">
             <div class="container">
                 <div class="center-content">
                     <div class="row">
@@ -616,7 +616,7 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-        </section>
+        </section>-->
         <!-- Start: Category Filter -->
         
         <!-- Start: Features -->
@@ -688,147 +688,12 @@
         </section>
         <!-- End: Features -->
         
-<!--         Start: Newsletter 
-        <section class="newsletter section-padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="center-content">
-                            <h2 class="section-title">Subscribe to our Newsletters</h2>
-                            <span class="underline center"></span>
-                            <p class="lead">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.</p>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Enter your Email!" id="newsletter" name="newsletter" type="email">
-                            <input class="form-control" value="Subscribe" type="submit">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-         End: Newsletter -->
+
         
-        <!-- Start: Meet Staff -->
-        <section class="team section-padding">
-            <div class="container">
-                <div class="center-content">
-                    <h2 class="section-title">Meet Our Staff</h2>
-                    <span class="underline center"></span>
-                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-                <div class="team-list">
-                    <div class="team-member">
-                        <figure>
-                            <img src="images/team-img-01.jpg" alt="team" />
-                        </figure>
-<!--                        <div class="content-block">
-                            <div class="member-info">
-                                <h4>David J. Seleb</h4>
-                                <span class="designation">Executive Director</span>
-                                <ul class="social">
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-linkedin"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-skype"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here...</p>
-                                <a class="btn btn-primary" href="#">Read More</a>
-                            </div>
-                        </div>-->
-                    </div>
-                    <div class="team-member">
-                        <figure>
-                            <img src="images/team-img-02.jpg" alt="team" />
-                        </figure>
-                        <div class="content-block">
-                            <div class="member-info">
-                                <h4>Robert Simmons</h4>
-                                <span class="designation">Deputy Director</span>
-                                <ul class="social">
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-linkedin"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-skype"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here...</p>
-                                <a class="btn btn-primary" href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-<!--                    <div class="team-member">
-                        <figure>
-                            <img src="images/team-img-03.jpg" alt="team" />
-                        </figure>
-                        <div class="content-block">
-                            <div class="member-info">
-                                <h4>Anna Delpan</h4>
-                                <span class="designation">Librarian</span>
-                                <ul class="social">
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-linkedin"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank">
-                                            <i class="fa fa-skype"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here...</p>
-                                <a class="btn btn-primary" href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>-->
-                </div>
-            </div>
-        </section>
-        <!-- End: Meet Staff -->
+      
         
         <!-- Start: Latest Blog -->
-        <section class="latest-blog section-padding banner">
+<!--        <section class="latest-blog section-padding banner">
             <div class="container">
                 <div class="center-content">
                     <h2 class="section-title">Latest from Blog</h2>
@@ -893,36 +758,10 @@
                             <article>
                                 <figure>
                                     <img src="images/latest-blog-img-home-v1.jpg" alt="Latest Blog">
-                                    <figcaption>
-                                        <a href="#.">
-                                            <span class="date">07</span>
-                                            <span class="month">Mar</span>
-                                        </a>
-                                    </figcaption>
+                                    
                                 </figure>
                                 <div class="post-detail">
-                                    <div class="info-bar">
-                                        <div class="comments">
-                                            <a href="#">
-                                                <i class="fa fa-comment"></i> 37
-                                            </a>
-                                        </div>
-                                        <div class="likes">
-                                            <a href="#">
-                                                <i class="fa fa-thumbs-o-up"></i> 110
-                                            </a>
-                                        </div>
-                                        <div class="viewed">
-                                            <a href="#">
-                                                <i class="fa fa-eye"></i> 180
-                                            </a>
-                                        </div>
-                                        <div class="share">
-                                            <a href="#">
-                                                <i class="fa fa-share-alt"></i> Share
-                                            </a>
-                                        </div>
-                                    </div>
+                                    
                                     <h4>It uses dictionary over 200 Latin</h4>
                                     <div class="author">
                                         <a href="#">
@@ -930,7 +769,7 @@
                                         </a>
                                     </div>
                                     <p>Etiam posuere ultrices mauris vitae tincidunt. Cras lacinia, lectus quis ullamcorper auctor, mauris lacus imperdiet turpis, et semper enim massa ut diam. Sed at malesuada urna. Mauris quis venenatis leo. Proin a malesuada purus. Suspendisse odio diam, ornare sit amet interdum ut, vehicula a lorem. Donec a sem erat. Etiam condimentum semper mauris vitae porttitor.</p>
-                                    <a class="btn btn-dark-gray">Read More</a>
+                                   
                                 </div>
                             </article>
                         </div>
@@ -1162,7 +1001,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
         <!-- End: Latest Blog -->
         
         <!-- Start: Our Community Section -->

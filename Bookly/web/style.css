@@ -4280,7 +4280,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar-collapse {
-    width: auto;
+    width: 752px;
     border-top: 0;
     box-shadow: none;
   }
@@ -4314,7 +4314,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .container-fluid > .navbar-header,
 .container > .navbar-collapse,
 .container-fluid > .navbar-collapse {
-  margin-right: -15px;
+  /*margin-right: px;*/
   margin-left: -15px;
 }
 @media (min-width: 768px) {

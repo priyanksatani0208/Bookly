@@ -81,9 +81,10 @@
                                                 <div class="error-info bg-light margin-right">
                                                     <h2>OOPS <small>Page Not Found!</small></h2>
                                                     <form class="search-404" method="post">                                            
-                                                        <input class="input-text" placeholder="First Name" name="search" type="text" />
+                                                        
+                                                        <br><br><br><br><br><br>
                                                         <span>Can't find what you need? Take a moment and do a search below or start from our homepage.</span>
-                                                        <input class="search-submit" type="submit" value="Search" />
+                                                  
                                                     </form>                                                                           
                                                 </div>
                                             </div>
