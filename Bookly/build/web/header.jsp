@@ -207,10 +207,7 @@
                                 </li>
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="books-media-gird-view-v2.jsp">Books</a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="books-media-detail-v2.jsp">Books &amp; Media Detail V2</a></li>
-                                    </ul>
+                                   
                                 </li>
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="news-events-list-view.jsp">Events</a>

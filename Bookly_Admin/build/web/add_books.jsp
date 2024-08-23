@@ -76,7 +76,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="bookLength">Discount</label>
-                                                <input type="text" class="form-control" id="bookLength" name="bookDiscount" required>
+                                                <input type="text" class="form-control" id="bookLength" name="bookDiscount">
                                             </div>
                                             <div class="form-group">
                                                 <label for="bookLength">Pages</label>

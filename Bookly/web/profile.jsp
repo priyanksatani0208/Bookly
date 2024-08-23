@@ -117,9 +117,7 @@
     </div>
     <!-- End: Profile Section -->
     
-    <!-- Start: Social Network -->
-        <%@include file="followUs.jsp" %>
-    <!-- End: Social Network -->
+    <br><br><br><br><br><br><br><br><br><br>
     
     <!-- Start: Footer -->
          <%@include file="footer.jsp" %>

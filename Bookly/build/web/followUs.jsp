@@ -22,27 +22,27 @@
                             </span>
                         </a>
                     </li>
-                    <li>
+<!--                    <li>
                         <a class="twitter" href="#" target="_blank">
                             <span>
                                 <i class="fa fa-twitter"></i>
                             </span>
                         </a>
-                    </li>
-                    <li>
+                    </li>-->
+<!--                    <li>
                         <a class="google" href="#" target="_blank">
                             <span>
                                 <i class="fa fa-google-plus"></i>
                             </span>
                         </a>
-                    </li>
-                    <li>
+                    </li>-->
+<!--                    <li>
                         <a class="rss" href="#" target="_blank">
                             <span>
                                 <i class="fa fa-rss"></i>
                             </span>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
                         <a class="linkedin" href="#" target="_blank">
                             <span>

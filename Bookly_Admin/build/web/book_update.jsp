@@ -83,7 +83,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="bookDiscount">Discount</label>
-                                                <input type="text" class="form-control" id="bookDiscount" name="bookDiscount" value="<%= book.getBookDiscount() %>" required>
+                                                <input type="text" class="form-control" id="bookDiscount" name="bookDiscount" value="<%= book.getBookDiscount() %>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="bookLength">Length</label>
