@@ -49,12 +49,12 @@ public class Booksdao {
         try {
             StringBuilder query = new StringBuilder();
             query.append("SELECT * FROM books");
-            
+
             if (null != categoryId) {
                 query.append(" catId=" + categoryId + " ");
             }
             query.append(" LIMIT ? OFFSET ? ");
-            System.out.println(query);
+
             PreparedStatement ps = con.prepareStatement(query.toString());
             ps.setInt(1, total);  // Number of records to fetch
             ps.setInt(2, start);  // Starting point (offset)
@@ -208,6 +208,22 @@ public class Booksdao {
         return list;
     }
 
+    // function from fetch the All languages 
+    public List<String> getAllBookLanguages() {
+        List<String> languages = new ArrayList<>();
+        try {
+            String query = "SELECT DISTINCT BookLanguage FROM Books";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                languages.add(rs.getString("BookLanguage"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return languages;
+    }
+
 // Method to fetch books by category ID
     public List<Books> getBooksByCategory(int categoryId) {
         List<Books> list = new ArrayList<>();
@@ -240,5 +256,28 @@ public class Booksdao {
         }
         return list;
     }
+
+    //book price range function 
+    public List<Books> getBooksByPriceRange(int minPrice, int maxPrice) {
+        List<Books> booksList = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM books WHERE book_price BETWEEN ? AND ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, minPrice);
+            pstmt.setInt(2, maxPrice);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Books book = new Books();
+                // Populate book object with data from the result set
+                booksList.add(book);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return booksList;
+    }
+    
+    
 
 }

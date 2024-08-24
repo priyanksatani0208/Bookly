@@ -9,16 +9,20 @@
     Booksdao booksDao = new Booksdao(ConnectionProvider.getConnection());
     Categorydao categorydao = new Categorydao(ConnectionProvider.getConnection());
 
+    String language1 = request.getParameter("language");
     String selectedCategoryId = request.getParameter("categoryId");
     List<Books> booksList;
 
-    if (selectedCategoryId != null && !selectedCategoryId.isEmpty()) {
-        booksList = booksDao.getBooksByPage(0, 10,selectedCategoryId);
+    if (language1 != null && !language1.isEmpty()) {
+        booksList = booksDao.getBooksByLanguage(language1);
+    } else if (selectedCategoryId != null && !selectedCategoryId.isEmpty()) {
+        booksList = booksDao.getBooksByPage(0, 10, selectedCategoryId);
         booksList = booksDao.getBooksByCategory(Integer.parseInt(selectedCategoryId)); // Assuming getBooksByCategory method exists
     } else {
-        booksList = booksDao.getBooksByPage(0, 10,null); // Default list
+        booksList = booksDao.getBooksByPage(0, 10, null); // Default list
     }
 
+    List<String> languages = booksDao.getAllBookLanguages();
     List<Category> categoryList = categorydao.getAllCategories();
 %>
 <!DOCTYPE html>
@@ -172,32 +176,30 @@
                                         <div class="widget widget_related_search open" data-accordion>
                                             <h4 class="widget-title" data-control>Price Range</h4>
                                             <div data-content>
-                                                <input type="range" id="priceRange" name="priceRange" min="100" max="1000" value="100" oninput="updatePriceValue(this.value)">
-                                                <p>Price: Rs <span id="priceValue">100</span></p>
-                                                <script>
-                                                    function updatePriceValue(value) {
-                                                        document.getElementById('priceValue').textContent = value;
-                                                    }
-                                                </script>
+                                                <ul>
+                                                    <li><a href="?priceRange=0-100" class="price-range-link">Under Rs.100</a></li>
+                                                    <li><a href="?priceRange=100-200" class="price-range-link">Rs. 100 - Rs.200</a></li>
+                                                    <li><a href="?priceRange=200-500" class="price-range-link">Rs.200 - Rs.500</a></li>
+                                                    <li><a href="?priceRange=500-1000" class="price-range-link">Rs. 500 - Rs. 1000</a></li>
+                                                    <li><a href="?priceRange=1000-" class="price-range-link">Over Rs. 1000</a></li>
+                                                </ul>
                                             </div>
                                         </div>
 
-                                        <!-- Language Checkboxes -->
+
+                                        <!-- Language Links -->
                                         <div class="widget widget_related_search open" data-accordion>
                                             <h4 class="widget-title" data-control>Languages</h4>
                                             <div data-content>
                                                 <div class="widget_categories">
                                                     <ul>
-                                                        <li><label><input type="checkbox" name="language" value="English"> English</label></li>
-                                                        <li><label><input type="checkbox" name="language" value="Spanish"> Hindi</label></li>
-                                                        <li><label><input type="checkbox" name="language" value="French"> French</label></li>
-                                                        <li><label><input type="checkbox" name="language" value="German"> German</label></li>
-                                                        <li><label><input type="checkbox" name="language" value="Chinese"> Chinese</label></li>
-                                                    </ul>
+                                                        <% for (String language : languages) {%>
+                                                        <li><a href="?language=<%= language%>"><%= language%></a></li>
+                                                            <% }%>
+                                                    </ul>   
                                                 </div>
                                             </div>
                                         </div>
-
                                     </aside>
                                 </div>
 
@@ -271,38 +273,89 @@
         <script type="text/javascript" src="js/main.js"></script>
 
         <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const links = document.querySelectorAll('.category-link');
+            document.addEventListener('DOMContentLoaded', function () {
+                const languageLinks = document.querySelectorAll('.widget_categories a');
+                const categoryLinks = document.querySelectorAll('.category-link');
 
-            links.forEach(link => {
-                link.addEventListener('click', function (event) {
-                    event.preventDefault(); // Prevent the default link behavior
+                // Handle Language Links
+                languageLinks.forEach(link => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent the page from reloading
 
-                    const categoryId = this.getAttribute('data-category-id');
-                    console.log('Category ID:', categoryId); // Log the ID
+                        const language = this.textContent.trim();
+                        const url = "?language=" + encodeURIComponent(language); // Create the URL for the AJAX request
 
-                    const url = "?categoryId=".concat(categoryId);
-                    console.log('Fetch URL:', url); // Log the URL
+                        fetch(url)
+                                .then(response => response.text())
+                                .then(data => {
+                                    const parser = new DOMParser();
+                                    const doc = parser.parseFromString(data, 'text/html');
+                                    const newBookList = doc.querySelector('#book-display-container');
 
-                    fetch(url)
-                            .then(response => response.text())
-                            .then(data => {
-                                console.log('Response Data:', data); // Log the response
+                                    if (newBookList) {
+                                        document.getElementById('book-display-container').innerHTML = newBookList.innerHTML;
+                                    } else {
+                                        console.error('Error: #book-display-container not found in the response.');
+                                    }
+                                })
+                                .catch(error => console.error('Error fetching books:', error));
+                    });
+                });
 
-                                const parser = new DOMParser();
-                                const doc = parser.parseFromString(data, 'text/html');
-                                const newBookList = doc.querySelector('#book-display-container');
+                // Handle Category Links (works as before)
+                categoryLinks.forEach(link => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent the page from reloading
 
-                                if (newBookList) {
-                                    document.getElementById('book-display-container').innerHTML = newBookList.innerHTML;
-                                } else {
-                                    console.error('Error: #book-display-container not found in the response.');
-                                }
-                            })
-                            .catch(error => console.error('Error fetching books:', error));
+                        const categoryId = this.getAttribute('data-category-id');
+                        const url = "?categoryId=" + encodeURIComponent(categoryId); // Create the URL for the AJAX request
+
+                        fetch(url)
+                                .then(response => response.text())
+                                .then(data => {
+                                    const parser = new DOMParser();
+                                    const doc = parser.parseFromString(data, 'text/html');
+                                    const newBookList = doc.querySelector('#book-display-container');
+
+                                    if (newBookList) {
+                                        document.getElementById('book-display-container').innerHTML = newBookList.innerHTML;
+                                    } else {
+                                        console.error('Error: #book-display-container not found in the response.');
+                                    }
+                                })
+                                .catch(error => console.error('Error fetching books:', error));
+                    });
                 });
             });
-        });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const priceRangeLinks = document.querySelectorAll('.price-range-link');
+
+                priceRangeLinks.forEach(link => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent the page from reloading
+
+                        const priceRange = this.getAttribute('href').split('=')[1];
+                        const url = "?priceRange=" + encodeURIComponent(priceRange); // Create the URL for the AJAX request
+
+                        fetch(url)
+                                .then(response => response.text())
+                                .then(data => {
+                                    const parser = new DOMParser();
+                                    const doc = parser.parseFromString(data, 'text/html');
+                                    const newBookList = doc.querySelector('#book-display-container');
+
+                                    if (newBookList) {
+                                        document.getElementById('book-display-container').innerHTML = newBookList.innerHTML;
+                                    } else {
+                                        console.error('Error: #book-display-container not found in the response.');
+                                    }
+                                })
+                                .catch(error => console.error('Error fetching books:', error));
+                    });
+                });
+            });
+
 
         </script>
 
