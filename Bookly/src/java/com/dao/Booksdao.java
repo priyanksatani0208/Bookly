@@ -44,11 +44,18 @@ public class Booksdao {
     }
 
     // Method to fetch all categories
-    public List<Books> getBooksByPage(int start, int total) {
+    public List<Books> getBooksByPage(int start, int total, String categoryId) {
         List<Books> list = new ArrayList<>();
         try {
-            String query = "SELECT * FROM books LIMIT ? OFFSET ?";
-            PreparedStatement ps = con.prepareStatement(query);
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT * FROM books");
+            
+            if (null != categoryId) {
+                query.append(" catId=" + categoryId + " ");
+            }
+            query.append(" LIMIT ? OFFSET ? ");
+            System.out.println(query);
+            PreparedStatement ps = con.prepareStatement(query.toString());
             ps.setInt(1, total);  // Number of records to fetch
             ps.setInt(2, start);  // Starting point (offset)
             ResultSet rs = ps.executeQuery();
@@ -169,36 +176,69 @@ public class Booksdao {
     }
 
     // Method to fetch books by language
-public List<Books> getBooksByLanguage(String language) {
-    List<Books> list = new ArrayList<>();
-    try {
-        String query = "SELECT * FROM books WHERE BookLanguage = ?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, language);
-        ResultSet rs = ps.executeQuery();
+    public List<Books> getBooksByLanguage(String language) {
+        List<Books> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM books WHERE BookLanguage = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, language);
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            int bookId = rs.getInt("bookId");
-            int catId = rs.getInt("catId");
-            String bookName = rs.getString("bookName");
-            String bookAuthor = rs.getString("bookAuthor");
-            String bookEdition = rs.getString("bookEdition");
-            String bookPublisher = rs.getString("bookPublisher");
-            int bookPrice = rs.getInt("bookPrice");
-            int bookDiscount = rs.getInt("bookDiscount");
-            String bookLength = rs.getString("bookLength");
-            String BookLanguage = rs.getString("BookLanguage");
-            String BookTopic = rs.getString("BookTopic");
-            String bookDescription = rs.getString("bookDescription");
-            String bookImg = rs.getString("bookImg");
+            while (rs.next()) {
+                int bookId = rs.getInt("bookId");
+                int catId = rs.getInt("catId");
+                String bookName = rs.getString("bookName");
+                String bookAuthor = rs.getString("bookAuthor");
+                String bookEdition = rs.getString("bookEdition");
+                String bookPublisher = rs.getString("bookPublisher");
+                int bookPrice = rs.getInt("bookPrice");
+                int bookDiscount = rs.getInt("bookDiscount");
+                String bookLength = rs.getString("bookLength");
+                String BookLanguage = rs.getString("BookLanguage");
+                String BookTopic = rs.getString("BookTopic");
+                String bookDescription = rs.getString("bookDescription");
+                String bookImg = rs.getString("bookImg");
 
-            Books book = new Books(bookId, catId, bookName, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, BookLanguage, BookTopic, bookDescription, bookImg);
-            list.add(book);
+                Books book = new Books(bookId, catId, bookName, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, BookLanguage, BookTopic, bookDescription, bookImg);
+                list.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
+
+// Method to fetch books by category ID
+    public List<Books> getBooksByCategory(int categoryId) {
+        List<Books> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM books WHERE catId=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int bookId = rs.getInt("bookId");
+                int catId = rs.getInt("catId");
+                String bookname = rs.getString("bookName");
+                String bookAuthor = rs.getString("bookAuthor");
+                String bookEdition = rs.getString("bookEdition");
+                String bookPublisher = rs.getString("bookPublisher");
+                int bookPrice = rs.getInt("bookPrice");
+                int bookDiscount = rs.getInt("bookDiscount");
+                String bookLength = rs.getString("bookLength");
+                String BookLanguage = rs.getString("BookLanguage");
+                String BookTopic = rs.getString("BookTopic");
+                String bookDescription = rs.getString("bookDescription");
+                String bookImg = rs.getString("bookImg");
+
+                Books books = new Books(bookId, catId, bookname, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, BookLanguage, BookTopic, bookDescription, bookImg);
+                list.add(books);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
 }

@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="zxx">
-    
-    
-
 <head>        
         
         <!-- Meta -->
@@ -29,12 +26,25 @@
         <!-- Stylesheet -->
         <link href="style.css" rel="stylesheet" type="text/css" />
         
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.min.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
+        <!------>
+        
+         <!-- Custom Theme files -->
+    <!--<link href="css/check_out_bootstrap.css" type="text/css" rel="stylesheet" media="all">-->
+    <!-- shop css -->
+    <link href="css/check_out_shop.css" type="text/css" rel="stylesheet" media="all">
+    <!-- checkout css -->
+    <link href="css/checkout.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/check_out_style.css" type="text/css" rel="stylesheet" media="all">
+    <!-- font-awesome icons -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- //Custom Theme files -->
+    <!-- online-fonts -->
+    
+    <!-- titles -->
+    <link href="//fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+    <!-- body -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <!-- //online-fonts -->
         
     </head>
     
@@ -63,232 +73,164 @@
         <!-- End: Page Banner -->
         <!-- Start: Cart Section -->
         <div id="content" class="site-content">
-            <div id="primary" class="content-area">
-                <main id="main" class="site-main">
-                    <div class="cart-main">
-                        <div class="container">
-                            <div class="row">
-                                <div class="cart-head">
-                                    <div class="col-xs-12 col-sm-6 account-option">
-                                        <strong>Scott Fitzgerald</strong>
-                                        <ul>
-                                            <li><a href="#">Edit Account</a></li>
-                                            <li class="divider">|</li>
-                                            <li><a href="#">Edit Pin </a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 library-info">
-                                        <ul>
-                                            <li>
-                                                <strong>Home Library:</strong>
-                                                Stephen A. Schwarzman Building
-                                            </li>
-                                            <li>
-                                                <strong>Email:</strong>
-                                                <a href="mailto:scottfitzgerald@gmail.com">scottfitzgerald@gmail.com</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="page type-page status-publish hentry">
-                                        <div class="entry-content">
-                                            <div class="woocommerce table-tabs" id="responsiveTabs">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active"><b class="arrow-up"></b><a data-toggle="tab" href="#sectionA">Book Bag</a></li>
-                                                    <li><b class="arrow-up"></b><a data-toggle="tab" href="#sectionB">Holds (4)</a></li>
-                                                    <li><b class="arrow-up"></b><a data-toggle="tab" href="#sectionC">My Checkouts (0)</a></li>
-                                                    <li><b class="arrow-up"></b><a data-toggle="tab" href="#sectionD">My eBooks (1)</a></li>
-                                                    <li><b class="arrow-up"></b><a data-toggle="tab" href="#sectionE">My Lists</a></li>
-                                                    <li><b class="arrow-up"></b><a data-toggle="tab" href="#sectionF">Fines/Fees ($0.00)</a></li>
-                                                </ul>
-                                                <div class="tab-content">
-                                                    <div id="sectionA" class="tab-pane fade in active">
-                                                        <form method="post" action="http://libraria.demo.presstigers.com/cart-page.html">
-                                                            <table class="table table-bordered shop_table cart">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th class="product-name">&nbsp;</th>
-                                                                        <th class="product-name">Title</th>
-                                                                        <th class="product-quantity">Action</th>
-                                                                        <th class="product-price">Pickup Location </th>                                                                
-                                                                        <th class="product-subtotal">&nbsp;</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr class="cart_item">
-                                                                        <td data-title="cbox" class="product-cbox">
-                                                                            <span>
-                                                                                <input type="checkbox" id="cbox3" value="first_checkbox">
-                                                                            </span>
-                                                                        </td>
-                                                                        <td data-title="Product" class="product-name">
-                                                                            <span class="product-thumbnail">
-                                                                                <a href="#"><img src="images/cart/cart-product-1.jpg" alt="cart-product-1"></a>
-                                                                            </span>
-                                                                            <span class="product-detail">
-                                                                                <a href="#"><strong>The Great Gatsby</strong></a>
-                                                                                <span><strong>Author:</strong> F. Scott Fitzgerald</span>
-                                                                                <span><strong>ISBN:</strong> 9781581573268</span>
-                                                                                <span><strong>Fees:</strong> <em>$10</em></span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td data-title="action" class="product-action">
-                                                                            <div class="dropdown">
-                                                                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Edit Hold <b class="caret"></b></a>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li><a href="#">Edit Hold</a></li>
-                                                                                    <li><a href="#">Cancel Hold</a></li>
-                                                                                    <li><a href="#">Add Another Hold</a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="addition-action">
-                                                                                <small>Additional Actions:</small>
-                                                                                <ul>
-                                                                                    <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i></a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td data-title="Price" class="product-price">
-                                                                            <p><a href="#">Available </a> at 53rd Street Fiction (CLASSICS FIC MORRISON) plus 4 more <a href="#"> see all </a></p>
-                                                                        </td>
-                                                                        <td class="product-remove">
-                                                                            You've placed this item on hold. This item is in your book bag <a href="#">remove</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="cart_item">
-                                                                        <td>
-                                                                            <span data-title="cbox" class="product-cbox">
-                                                                                <input type="checkbox" id="cbox1" value="first_checkbox">
-                                                                            </span>
-                                                                        </td>
-                                                                        <td data-title="Product" class="product-name">
-                                                                            <span class="product-thumbnail">
-                                                                                <a href="#"><img src="images/cart/cart-product-2.jpg" alt="cart-product-2"></a>
-                                                                            </span>
-                                                                            <span class="product-detail">
-                                                                                <a href="#"><strong>The Great Gatsby</strong></a>
-                                                                                <span><strong>Author:</strong> F. Scott Fitzgerald</span>
-                                                                                <span><strong>ISBN:</strong> 9781581573268</span>
-                                                                                <span><strong>Fees:</strong> <em>$10</em></span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td data-title="action" class="product-action">
-                                                                            <div class="dropdown">
-                                                                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Edit Hold <b class="caret"></b></a>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li><a href="#">Edit Hold</a></li>
-                                                                                    <li><a href="#">Cancel Hold</a></li>
-                                                                                    <li><a href="#">Add Another Hold</a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="addition-action">
-                                                                                <small>Additional Actions:</small>
-                                                                                <ul>
-                                                                                    <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i></a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td data-title="Price" class="product-price">
-                                                                            <p><a href="#">Available </a> at 53rd Street Fiction (CLASSICS FIC MORRISON) plus 4 more <a href="#"> see all </a></p>
-                                                                        </td>
-                                                                        <td class="product-remove">
-                                                                            You've placed this item on hold. This item is in your book bag <a href="#">remove</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="cart_item">
-                                                                        <td>
-                                                                            <span data-title="cbox" class="product-cbox">
-                                                                                <input type="checkbox" id="cbox2" value="first_checkbox">
-                                                                            </span>
-                                                                        </td>
-                                                                        <td data-title="Product" class="product-name">
-                                                                            <span class="product-thumbnail">
-                                                                                <a href="#"><img src="images/cart/cart-product-3.jpg" alt="cart-product-3"></a>
-                                                                            </span>
-                                                                            <span class="product-detail">
-                                                                                <a href="#"><strong>The Great Gatsby</strong></a>
-                                                                                <span><strong>Author:</strong> F. Scott Fitzgerald</span>
-                                                                                <span><strong>ISBN:</strong> 9781581573268</span>
-                                                                                <span><strong>Fees:</strong> <em>$10</em></span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td data-title="action" class="product-action">
-                                                                            <div class="dropdown">
-                                                                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Edit Hold <b class="caret"></b></a>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li><a href="#">Edit Hold</a></li>
-                                                                                    <li><a href="#">Cancel Hold</a></li>
-                                                                                    <li><a href="#">Add Another Hold</a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="addition-action">
-                                                                                <small>Additional Actions:</small>
-                                                                                <ul>
-                                                                                    <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                                                                    <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i></a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td data-title="Price" class="product-price">
-                                                                            <p><a href="#">Available </a> at 53rd Street Fiction (CLASSICS FIC MORRISON) plus 4 more <a href="#"> see all </a></p>
-                                                                        </td>
-                                                                        <td class="product-remove">
-                                                                            You've placed this item on hold. This item is in your book bag <a href="#">remove</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </form>
-                                                    </div>
-                                                    <div id="sectionB" class="tab-pane fade in">
-                                                        <h5>Lorem Ipsum Dolor</h5>
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                                    </div>
-                                                    <div id="sectionC" class="tab-pane fade in">
-                                                        <h5>Lorem Ipsum Dolor</h5>
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                                    </div>
-                                                    <div id="sectionD" class="tab-pane fade in">
-                                                        <h5>Lorem Ipsum Dolor</h5>
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                                    </div>                                                    
-                                                    <div id="sectionE" class="tab-pane fade in">
-                                                        <h5>Lorem Ipsum Dolor</h5>
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                                    </div>                                                    
-                                                    <div id="sectionF" class="tab-pane fade in">
-                                                        <h5>Lorem Ipsum Dolor</h5>
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
+             <div id="home">
+        <!-- header -->
+        
+       
+        <!--checkout-->
+        <div class="innerf-pages section">
+            <div class="container">
+                <div class="privacy about">
+                    
+                    <div class="checkout-right">
+                        <h4>Your shopping cart contains:
+                            <span>3 Products</span>
+                        </h4>
+                        <table class="timetable_sub table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Product Name</th>
+
+                                    <th>Price</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="rem1">
+                                    <td class="invert">1</td>
+                                    <td class="invert-image">
+                                        <a href="single_product.html">
+                                            <img src="images/lib8.jpg" alt=" " class="img-responsive">
+                                        </a>
+                                    </td>
+                                    <td class="invert">
+                                        <div class="quantity">
+                                            <div class="quantity-select">
+                                                <div class="entry value-minus">&nbsp;</div>
+                                                <div class="entry value">
+                                                    <span>1</span>
+                                                </div>
+                                                <div class="entry value-plus active">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="invert">Be Creative</td>
+
+                                    <td class="invert">$100.00</td>
+                                    <td class="invert">
+                                        <div class="rem">
+                                            <div class="close1"> </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="checkout-left">
+                        <div class="col-md-4 checkout-left-basket">
+                            <h4>Continue to basket</h4>
+                            <ul>
+                                <li>Be Creative
+                                    <i>-</i>
+                                    <span>$100.00 </span>
+                                </li>
+                                <li>Work From Home
+                                    <i>-</i>
+                                    <span>$80.00 </span>
+                                </li>
+                                <li>E-Commerce
+                                    <i>-</i>
+                                    <span>$120.00 </span>
+                                </li>
+                                <li>Total Service Charges
+                                    <i>-</i>
+                                    <span>$55.00</span>
+                                </li>
+                                <li>Total
+                                    <i>-</i>
+                                    <span>$355.00</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-8 address_form">
+                            <h4>Billing Address</h4>
+                            <form action="payment.html" method="post" class="creditly-card-form shopf-sear-headinfo_form">
+                                <div class="creditly-wrapper wrapper">
+                                    <div class="information-wrapper">
+                                        <div class="first-row form-group">
+                                            <div class="controls">
+                                                <label class="control-label">Full name: </label>
+                                                <input class="billing-address-name form-control" type="text" name="name" placeholder="Full name">
+                                            </div>
+                                            <div class="card_number_grids">
+                                                <div class="card_number_grid_left">
+                                                    <div class="controls">
+                                                        <label class="control-label">Mobile number:</label>
+                                                        <input class="form-control" type="text" placeholder="Mobile number">
                                                     </div>
                                                 </div>
+                                                <div class="card_number_grid_right">
+                                                    <div class="controls">
+                                                        <label class="control-label">Landmark: </label>
+                                                        <input class="form-control" type="text" placeholder="Landmark">
+                                                    </div>
+                                                </div>
+                                                <div class="clear"> </div>
                                             </div>
-                                        </div><!-- .entry-content -->
+                                            <div class="controls">
+                                                <label class="control-label">Town/City: </label>
+                                                <input class="form-control" type="text" placeholder="Town/City">
+                                            </div>
+                                            <div class="controls">
+                                                <label class="control-label">Address type: </label>
+                                                <select class="form-control option-fieldf">
+                                                    <option>Office</option>
+                                                    <option>Home</option>
+                                                    <option>Commercial</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button class="submit check_out">place order</button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
+
                         </div>
+
+                        <div class="clearfix"> </div>
+
                     </div>
-                </main>
+
+                </div>
+
             </div>
+        </div>
+        <!--//checkout-->
+       
+        
+    <!-- //home -->
+
+    <!-- Common js -->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <!--// Common js -->
+   
+   <!-- cart-js -->
+    <script src="js/minicart.js"></script>
+   
+    <script src="js/SmoothScroll.min.js"></script>
+    <!-- //smooth-scrolling-of-move-up -->
+   
+  
+    <script src="js/bootstrap.js"></script>
         </div>
         <!-- End: Cart Section -->
         
-        <!-- Start: Social Network -->
-           <%@include file="followUs.jsp" %>
-        <!-- End: Social Network -->
+       
         
          <!-- Start: Footer -->
              <%@include file="footer.jsp" %>

@@ -4,15 +4,21 @@
 <%@page import="com.helper.ConnectionProvider"%>
 <%@ page import="com.dao.Categorydao" %>
 <%@ page import="com.entities.Category" %>
-<%@ page import="java.util.List" %>
-
-
 
 <%
     Booksdao booksDao = new Booksdao(ConnectionProvider.getConnection());
-    List<Books> booksList = booksDao.getBooksByPage(0, 10); // Adjust page size and start index as needed
-
     Categorydao categorydao = new Categorydao(ConnectionProvider.getConnection());
+
+    String selectedCategoryId = request.getParameter("categoryId");
+    List<Books> booksList;
+
+    if (selectedCategoryId != null && !selectedCategoryId.isEmpty()) {
+        booksList = booksDao.getBooksByPage(0, 10,selectedCategoryId);
+        booksList = booksDao.getBooksByCategory(Integer.parseInt(selectedCategoryId)); // Assuming getBooksByCategory method exists
+    } else {
+        booksList = booksDao.getBooksByPage(0, 10,null); // Default list
+    }
+
     List<Category> categoryList = categorydao.getAllCategories();
 %>
 <!DOCTYPE html>
@@ -91,8 +97,9 @@
                             <div class="row">
                                 <div class="col-md-9 col-md-push-3">
                                     <div class="books-gird">
-                                        <ul class="row">
-                                            <% for (Books book : booksList) {%>
+                                        <ul class="row" id="book-display-container">
+                                            <%                                                for (Books book : booksList) {
+                                            %>
                                             <li class="col-md-4">
                                                 <a href="books-media-detail-v2.jsp?bookId=<%= book.getBookId()%>" style="text-decoration: none; color: inherit;">
                                                     <div class="card-deck">
@@ -143,30 +150,30 @@
                                     <aside id="secondary" class="sidebar widget-area" data-accordion-group>
 
                                         <!-- Category Checkboxes -->
-                                       <div class="widget widget_related_search open" data-accordion>
-    <h4 class="widget-title" data-control>Categories</h4>
-    <div data-content>
-        <div class="widget_categories">
-            <ul>
-                <% for (Category category : categoryList) { %>
-                    <li>
-                        <label>
-                            <a href="yourLinkPage.jsp?categoryId=<%= category.getCatId() %>"><%= category.getCatName() %></a>
-                        </label>
-                    </li>
-                <% } %>
-            </ul>
-        </div>
-    </div>
-</div>
+                                        <div class="widget widget_related_search open" data-accordion>
+                                            <h4 class="widget-title" data-control>Categories</h4>
+                                            <div data-content>
+                                                <div class="widget_categories">
+                                                    <ul>
+                                                        <% for (Category category : categoryList) {%>
+                                                        <li>
+                                                            <label>
+                                                                <a href="?categoryId=<%= category.getCatId()%>" class="category-link" data-category-id="<%= category.getCatId()%>"><%= category.getCatName()%></a>
+                                                            </label>
+                                                        </li>
+                                                        <% }%>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
 
 
                                         <!-- Price Range -->
                                         <div class="widget widget_related_search open" data-accordion>
                                             <h4 class="widget-title" data-control>Price Range</h4>
                                             <div data-content>
-                                                <input type="range" id="priceRange" name="priceRange" min="0" max="1000" oninput="updatePriceValue(this.value)">
-                                                <p>Price: Rs <span id="priceValue">500</span></p>
+                                                <input type="range" id="priceRange" name="priceRange" min="100" max="1000" value="100" oninput="updatePriceValue(this.value)">
+                                                <p>Price: Rs <span id="priceValue">100</span></p>
                                                 <script>
                                                     function updatePriceValue(value) {
                                                         document.getElementById('priceValue').textContent = value;
@@ -262,6 +269,43 @@
 
         <!-- Custom Scripts -->
         <script type="text/javascript" src="js/main.js"></script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const links = document.querySelectorAll('.category-link');
+
+            links.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent the default link behavior
+
+                    const categoryId = this.getAttribute('data-category-id');
+                    console.log('Category ID:', categoryId); // Log the ID
+
+                    const url = "?categoryId=".concat(categoryId);
+                    console.log('Fetch URL:', url); // Log the URL
+
+                    fetch(url)
+                            .then(response => response.text())
+                            .then(data => {
+                                console.log('Response Data:', data); // Log the response
+
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(data, 'text/html');
+                                const newBookList = doc.querySelector('#book-display-container');
+
+                                if (newBookList) {
+                                    document.getElementById('book-display-container').innerHTML = newBookList.innerHTML;
+                                } else {
+                                    console.error('Error: #book-display-container not found in the response.');
+                                }
+                            })
+                            .catch(error => console.error('Error fetching books:', error));
+                });
+            });
+        });
+
+        </script>
+
 
     </body>
 
