@@ -1,62 +1,33 @@
-const inputs = document.querySelectorAll(".otp-field > input");
-const button = document.querySelector(".btn");
+document.addEventListener("DOMContentLoaded", function () {
 
-window.addEventListener("load", () => inputs[0].focus());
-button.setAttribute("disabled", "disabled");
-
-inputs[0].addEventListener("paste", function (event) {
-    event.preventDefault();
-
-    const pastedValue = (event.clipboardData || window.clipboardData).getData("text");
-    const otpLength = inputs.length;
-
-    for (let i = 0; i < otpLength; i++) {
-        if (i < pastedValue.length) {
-            inputs[i].value = pastedValue[i];
-            inputs[i].removeAttribute("disabled");
-            inputs[i].focus();
-        } else {
-            inputs[i].value = "";
-            inputs[i].focus();
-        }
-    }
-});
-
-inputs.forEach((input, index1) => {
-    input.addEventListener("keyup", (e) => {
-        const currentInput = input;
-        const nextInput = input.nextElementSibling;
-        const prevInput = input.previousElementSibling;
-
-        if (currentInput.value.length > 1) {
-            currentInput.value = "";
-            return;
-        }
-
-        if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
-            nextInput.removeAttribute("disabled");
-            nextInput.focus();
-        }
-
-        if (e.key === "Backspace") {
-            inputs.forEach((input, index2) => {
-                if (index1 <= index2 && prevInput) {
-                    input.setAttribute("disabled", true);
-                    input.value = "";
-                    prevInput.focus();
+    function OTPInput() {
+        const inputs = document.querySelectorAll('#otp > *[id]');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('keydown', function (event) {
+                if (event.key === "Backspace") {
+                    inputs[i].value = '';
+                    if (i !== 0) {
+                        inputs[i - 1].focus();
+                    }
+                } else {
+                    if (i === inputs.length - 1 && inputs[i].value !== '') {
+                        return true;
+                    } else if (event.keyCode > 47 && event.keyCode < 58) {
+                        inputs[i].value = event.key;
+                        if (i !== inputs.length - 1) {
+                            inputs[i + 1].focus();
+                        }
+                        event.preventDefault();
+                    } else if (event.keyCode > 64 && event.keyCode < 91) {
+                        inputs[i].value = String.fromCharCode(event.keyCode);
+                        if (i !== inputs.length - 1) {
+                            inputs[i + 1].focus();
+                        }
+                        event.preventDefault();
+                    }
                 }
             });
         }
-
-        button.classList.remove("active");
-        button.setAttribute("disabled", "disabled");
-
-        const inputsNo = inputs.length;
-        if (!inputs[inputsNo - 1].disabled && inputs[inputsNo - 1].value !== "") {
-            button.classList.add("active");
-            button.removeAttribute("disabled");
-
-            return;
-        }
-    });
+    }
+    OTPInput();
 });

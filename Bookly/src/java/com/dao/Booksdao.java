@@ -51,10 +51,10 @@ public class Booksdao {
             query.append("SELECT * FROM books");
 
             if (null != categoryId) {
-                query.append(" catId=" + categoryId + " ");
+                query.append(" catId=").append(categoryId).append(" ");
             }
             query.append(" LIMIT ? OFFSET ? ");
-
+            System.out.println(query);
             PreparedStatement ps = con.prepareStatement(query.toString());
             ps.setInt(1, total);  // Number of records to fetch
             ps.setInt(2, start);  // Starting point (offset)
@@ -84,6 +84,9 @@ public class Booksdao {
         return list;
     }
 
+    
+    
+    
     //fethch Book Id
     public Books getCategoryById(int bookId) {
         Books books = null;

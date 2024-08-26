@@ -1,0 +1,135 @@
+/* Reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+ol, ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+a {
+    text-decoration: none;
+}
+img {
+    max-width: 100%;
+}
+
+/* Main Styles */
+body {
+    font-family: 'Ropa Sans', sans-serif;
+    background-color: silver;
+    text-align: center;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.w3-main {
+    background: #fff;
+    width: 53%;
+    margin: 3em auto;
+    box-shadow: 20px 25px 41px -9px rgba(0,0,0,0.45);
+    padding: 30px;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    width: 150px; /* Adjust this size as needed */
+    height: auto;
+}
+
+.agile-info {
+    padding: 20px 0px;
+}
+
+.agile-info h1 {
+    font-size: 3.0em;
+    color: black;
+    font-weight: 700;
+    margin-bottom: 1em;
+}
+
+.agile-info p {
+    font-size: 1em;
+    color: rgba(0, 0, 0, 0.71);
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    margin-bottom: 3em;
+    margin-top: 2em;
+}
+
+.agile-info a {
+    font-size: 1em;
+    text-transform: uppercase;
+    color: white;
+    width: 18%;
+    padding: 12px 0px;
+    letter-spacing: 2px;
+    display: inline-block;
+    background: #962258;
+    transition: 0.5s all;
+}
+
+.agile-info a:hover {
+    background: #3859a0;
+    transition: 0.5s all;
+}
+
+/* Responsive Styles */
+@media(max-width: 1024px) {
+    .w3-main {
+        width: 70%;
+    }
+    .logo-container img {
+        width: 120px;
+    }
+}
+
+@media(max-width: 768px) {
+    .w3-main {
+        width: 85%;
+    }
+}
+
+@media(max-width: 480px) {
+    .agile-info h1 {
+        font-size: 3em;
+    }
+    .w3-main {
+        width: 91%;
+    }
+    .logo-container img {
+        width: 100px;
+    }
+}
+
+@media(max-width: 320px) {
+    .agile-info h1 {
+        font-size: 2.5em;
+    }
+    .logo-container img {
+        width: 80px;
+    }
+}

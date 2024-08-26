@@ -56,8 +56,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 text-center">
-                                        <br><br><button type="submit" class="btn btn-primary">Update</button>
-                                    </div>
+                                            <br><br><button type="cancel" class="btn btn-primary">cancel</button> <button type="submit" class="btn btn-success">Update</button>                                         
+                                        </div>
                                 </div>
                             </form>
                         </div>

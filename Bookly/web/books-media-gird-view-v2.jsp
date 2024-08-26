@@ -11,6 +11,13 @@
 
     String language1 = request.getParameter("language");
     String selectedCategoryId = request.getParameter("categoryId");
+    String minPriceParam = request.getParameter("min");
+    String maxPriceParam = request.getParameter("max");
+
+    // Default values
+    int minPrice = minPriceParam != null && !minPriceParam.isEmpty() ? Integer.parseInt(minPriceParam) : 0;
+    int maxPrice = maxPriceParam != null && !maxPriceParam.isEmpty() ? Integer.parseInt(maxPriceParam) : Integer.MAX_VALUE;
+
     List<Books> booksList;
 
     if (language1 != null && !language1.isEmpty()) {
@@ -18,7 +25,8 @@
     } else if (selectedCategoryId != null && !selectedCategoryId.isEmpty()) {
         booksList = booksDao.getBooksByPage(0, 10, selectedCategoryId);
         booksList = booksDao.getBooksByCategory(Integer.parseInt(selectedCategoryId)); // Assuming getBooksByCategory method exists
-    } else {
+    }  
+    else {
         booksList = booksDao.getBooksByPage(0, 10, null); // Default list
     }
 
@@ -102,10 +110,11 @@
                                 <div class="col-md-9 col-md-push-3">
                                     <div class="books-gird">
                                         <ul class="row" id="book-display-container">
-                                            <%                                                for (Books book : booksList) {
+                                            <%                                
+                                                for (Books book : booksList) {
                                             %>
                                             <li class="col-md-4">
-                                                <a href="books-media-detail-v2.jsp?bookId=<%= book.getBookId()%>" style="text-decoration: none; color: inherit;">
+                                                <a href="books_detail.jsp?bookId=<%= book.getBookId()%>" style="text-decoration: none; color: inherit;">
                                                     <div class="card-deck">
                                                         <div class="card shadow-sm" style="max-width: 200px; max-height: 450px; border-radius: 10px; overflow: hidden;">
                                                             <img src="http://localhost:8080/Bookly_Admin/books_img/<%= book.getBookImg()%>" class="card-img-top" alt="<%= book.getBookName()%>" style="width: 100%; height: 278px; object-fit: cover;">
@@ -138,18 +147,20 @@
                                     </div>
 
 
-                                    <nav class="navigation pagination text-center">
-                                        <h2 class="screen-reader-text">Posts navigation</h2>
-                                        <div class="nav-links">
-                                            <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
-                                            <a class="page-numbers" href="#.">1</a>
-                                            <span class="page-numbers current">2</span>
-                                            <a class="page-numbers" href="#.">3</a>
-                                            <a class="page-numbers" href="#.">4</a>
-                                            <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </nav>
+                                    <!--                                    <nav class="navigation pagination text-center">
+                                                                            <h2 class="screen-reader-text">Posts navigation</h2>
+                                                                            <div class="nav-links">
+                                                                                <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
+                                                                                <a class="page-numbers" href="#.">1</a>
+                                                                                <span class="page-numbers current">2</span>
+                                                                                <a class="page-numbers" href="#.">3</a>
+                                                                                <a class="page-numbers" href="#.">4</a>
+                                                                                <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
+                                                                            </div>
+                                                                        </nav>-->
                                 </div>
+
+
                                 <div class="col-md-3 col-md-pull-9">
                                     <aside id="secondary" class="sidebar widget-area" data-accordion-group>
 
@@ -177,11 +188,11 @@
                                             <h4 class="widget-title" data-control>Price Range</h4>
                                             <div data-content>
                                                 <ul>
-                                                    <li><a href="?priceRange=0-100" class="price-range-link">Under Rs.100</a></li>
-                                                    <li><a href="?priceRange=100-200" class="price-range-link">Rs. 100 - Rs.200</a></li>
-                                                    <li><a href="?priceRange=200-500" class="price-range-link">Rs.200 - Rs.500</a></li>
-                                                    <li><a href="?priceRange=500-1000" class="price-range-link">Rs. 500 - Rs. 1000</a></li>
-                                                    <li><a href="?priceRange=1000-" class="price-range-link">Over Rs. 1000</a></li>
+                                                    <li><a href="?min=0&max=100" class="price-range-link">Under Rs. 100</a></li>
+                                                    <li><a href="?min=100&max=200" class="price-range-link">Rs. 100 - Rs. 200</a></li>
+                                                    <li><a href="?min=200&max=500" class="price-range-link">Rs. 200 - Rs. 500</a></li>
+                                                    <li><a href="?min=500&max=1000" class="price-range-link">Rs. 500 - Rs. 1000</a></li>
+                                                    <li><a href="?min=1000&max=" class="price-range-link">Over Rs. 1000</a></li>
                                                 </ul>
                                             </div>
                                         </div>

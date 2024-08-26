@@ -6,7 +6,7 @@
 <%@page errorPage="error_400.jsp" %>
 <%
     int pageid = 1;
-    int total = 10; // Records per page
+    int total = 5; // Records per page
     if (request.getParameter("page") != null) {
         pageid = Integer.parseInt(request.getParameter("page"));
     }
@@ -78,7 +78,7 @@
                                 <div class="box_right d-flex lms_block" >
                                     <input type="text" id="searchInput" placeholder="Search by Categories" class="form-control">
                                     <div class="add_button">
-                                        <a href="add_books" class="btn_1"style="margin-left: 730%;">Add New</a>
+                                        <a href="add_categories" class="btn_1" style="margin-left: 730%;">Add New</a>
                                     </div>
                                 </div>
                             </div>

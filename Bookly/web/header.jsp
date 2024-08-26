@@ -77,58 +77,7 @@
                                         <div class="col-sm-6">
                                             <div class="topbar-links">
                                                 <a href="sign-in.jsp"><i class="fa fa-lock"></i>Login / Register</a>
-                                                <span>|</span>
-                                                <div class="header-cart dropdown">
-                                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                                        <i class="fa fa-shopping-cart"></i>
-                                                        <small>0</small>
-                                                    </a>
-                                                    <div class="dropdown-menu cart-dropdown">
-                                                        <ul>
-                                                            <li class="clearfix">
-                                                                <img src="images/header-cart-image-01.jpg" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a href="#">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                                <img src="images/header-cart-image-02.jpg" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a href="#">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                                <img src="images/header-cart-image-03.jpg" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a href="#">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="cart-total">
-                                                            <div class="title">SubTotal</div>
-                                                            <div class="price">$30.00</div>
-                                                        </div>
-                                                        <div class="cart-buttons">
-                                                            <a href="cart.jsp" class="btn btn-dark-gray">View Cart</a>
-                                                            <a href="checkout.jsp" class="btn btn-primary">Checkout</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -160,36 +109,10 @@
                                                         </div>
                                                         <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
                                                     </li>
-                                                    <li class="clearfix">
-                                                        <img src="images/header-cart-image-02.jpg" alt="cart item" />
-                                                        <div class="item-info">
-                                                            <div class="name">
-                                                                <a href="#">The Great Gatsby</a>
-                                                            </div>
-                                                            <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                            <div class="price">1 X $10.00</div>
-                                                        </div>
-                                                        <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                    </li>
-                                                    <li class="clearfix">
-                                                        <img src="images/header-cart-image-03.jpg" alt="cart item" />
-                                                        <div class="item-info">
-                                                            <div class="name">
-                                                                <a href="#">The Great Gatsby</a>
-                                                            </div>
-                                                            <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                            <div class="price">1 X $10.00</div>
-                                                        </div>
-                                                        <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                    </li>
                                                 </ul>
-                                                <div class="cart-total">
-                                                    <div class="title">SubTotal</div>
-                                                    <div class="price">$30.00</div>
-                                                </div>
                                                 <div class="cart-buttons">
-                                                    <a href="cart.jsp" class="btn btn-dark-gray">View Cart</a>
-                                                    <a href="checkout.jsp" class="btn btn-primary">Checkout</a>
+                                                    <a href="cart_booking.jsp" class="btn btn-dark-gray">View Cart</a>
+                                                 
                                                 </div>
                                             </div>
                                         </div>

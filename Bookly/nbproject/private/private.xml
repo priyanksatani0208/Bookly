@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/project/projects/Bookly/src/java/com/dao/Booksdao.java</file>
-            <file>file:/D:/project/projects/Bookly/web/cart.jsp</file>
-            <file>file:/D:/project/projects/Bookly/web/css/checkout.css</file>
-            <file>file:/D:/project/projects/Bookly/web/books-media-gird-view-v2.jsp</file>
-            <file>file:/D:/project/projects/Bookly/web/css/check_out_shop.css</file>
-            <file>file:/D:/project/projects/Bookly/web/css/check_out_style.css</file>
+            <file>file:/D:/project/projects/Bookly/web/books_detail.jsp</file>
+            <file>file:/D:/project/projects/Bookly/web/header.jsp</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/dao/Add_cartdao.java</file>
+            <file>file:/D:/project/projects/Bookly/web/cart_booking.jsp</file>
         </group>
     </open-files>
 </project-private>
