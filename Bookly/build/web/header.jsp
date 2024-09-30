@@ -1,3 +1,6 @@
+<%@page import="com.helper.ConnectionProvider"%>
+<%@page import="com.sun.jdi.connect.spi.Connection"%>
+<%@page import="com.dao.Categorydao"%>
 <%@page import="com.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -35,7 +38,7 @@
         }
 
         .navbar-nav > li {
-            margin-left: auto; /* Add space between menu items if needed */
+            margin-left: -5px; /* Add space between menu items if needed */
         }
         </style>
     </head>
@@ -90,31 +93,12 @@
                                     <div class="topbar-links">
                                         <a href="profile.jsp"><i class="fa fa-user"></i>Profile</a>&nbsp;&nbsp;
                                         <a href="LogoutServlet"><i class="fa fa-sign-out"></i>Logout</a>
+                                        
+                                        
+                                      
                                         <span>|</span>
                                         <div class="header-cart dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                                <i class="fa fa-shopping-cart"></i>
-                                                <small>0</small>
-                                            </a>
-                                            <div class="dropdown-menu cart-dropdown">
-                                                <ul>
-                                                    <li class="clearfix">
-                                                        <img src="images/header-cart-image-01.jpg" alt="cart item" />
-                                                        <div class="item-info">
-                                                            <div class="name">
-                                                                <a href="#">The Great Gatsby</a>
-                                                            </div>
-                                                            <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                            <div class="price">1 X $10.00</div>
-                                                        </div>
-                                                        <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                    </li>
-                                                </ul>
-                                                <div class="cart-buttons">
-                                                    <a href="cart_booking.jsp" class="btn btn-dark-gray">View Cart</a>
-                                                 
-                                                </div>
-                                            </div>
+                                            <a  href="cart_booking.jsp"><i class="fa fa-shopping-cart"></i></a>                                           
                                         </div>
                                     </div>
                                 </div>
@@ -142,6 +126,7 @@
                                 </li>
                                 <li><a href="services.jsp">Services</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
+                                <li><a href="#">View Order</a></li>
                             </ul>
                         </div>
                 </div>

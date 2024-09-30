@@ -4,9 +4,14 @@
 <%@page import="com.helper.ConnectionProvider"%>
 <%@page import="java.sql.SQLException"%>
 <%
+
     User user = (User) session.getAttribute("currentUser");
+
     // Get the book ID from the request
     String bookIdParam = request.getParameter("bookId");
+    String categoryIdParam = request.getParameter("categoryId");
+
+    System.out.println(categoryIdParam);
     Books book = null;
 
     if (bookIdParam != null && !bookIdParam.isEmpty()) {
@@ -129,35 +134,36 @@
                                             <p><strong>Discount Price :</strong>  &#8377;<%= discountedPrice%></p>
                                             <p><strong>Book Rating   :</strong><span style="color: gold; font-size: 1.2em;">&#9733; &#9733; &#9733; &#9733; &#9734;</span></p>
                                             <p><strong>Payment Mode :</strong> COD</p>
-                                           
-                                            <%  
+
+                                            <%
                                                 if (user == null) {
-                                           %>
-                                                
-                                           <form action="sign-in.jsp" method="POST">                                                
+                                            %>
+
+                                            <form action="sign-in.jsp" method="POST">                                                
                                                 <button type="submit" class="btn btn-dark-gray">Add to Cart</button>
                                                 <button type="submit" class="btn btn-dark-gray">Buy</button>
                                             </form>
-                                             
-                                            
+
+
                                             <%
-                                                }else{
+                                            } else {
                                             %>
                                             <form action="AddCartServlet" method="POST">
                                                 <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
                                                 <input type="hidden" name="userId" value="<%= user.getuId()%>">
-                                                
+
                                                 <button type="submit" class="btn btn-dark-gray">Add to Cart</button>
                                             </form>
-                                            <a href="buy_booking.jsp" class="btn btn-dark-gray">Buy</a> 
-                                            
+
+                                            <!-- Buy Button -->
+                                            <a href="buy_booking.jsp?bookId=<%= book.getBookId()%>&userId=<%= user.getuId()%>%>" class="btn btn-dark-gray">Buy</a> 
+
                                             <%
                                                 }
                                             %>
-                                            
-                                            
+
                                             <a href="books-media-gird-view-v2.jsp" class="btn btn-dark-gray">Cancel</a>
-                                      
+
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -235,7 +241,7 @@
         <!-- Custom Scripts -->
         <script type="text/javascript" src="js/main.js"></script>
 
-     
+
 
     </body>
 

@@ -53,7 +53,6 @@ public class CategoryServlet extends HttpServlet {
             String catImg =  part.getSubmittedFileName();
             
            
-            
             Category category = new Category(catName, catImg);
             Categorydao categorydao = new Categorydao(ConnectionProvider.getConnection());
             

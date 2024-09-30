@@ -125,11 +125,12 @@
                         <div class="privacy about">
 
                             <div class="checkout-right">
-                                <h4>Your shopping cart contains:
-                                    <span><%= cartItems.size()%> Products</span>
-                                </h4>
-                                <table class="timetable_sub table-responsive">
 
+                                <% if (cartItems.size() == 0) { %>
+                                <p><h4>Your shopping cart contains : No books selected.</h4></p>
+                                <% } else {%>
+                                <span> <h4>Your shopping cart contains : <%= cartItems.size()%> Products</h4></span>
+                                <table class="timetable_sub table-responsive">
                                     <thead>
                                         <tr>
                                             <th>SL No.</th>
@@ -165,12 +166,11 @@
                                                 </div>
                                             </td>
                                             <td class="invert"><%= book.getBookName()%></td>
-                                            <td class="invert"><%= book.getBookPrice()%></td>
+                                            <td class="invert">&#8377; <%= book.getBookPrice()%></td>
                                             <td class="invert">
                                                 <div class="rem">
                                                     <a href="javascript:void(0);" class="remove-item" data-cartid="<%= item.getCartId()%>">Remove</a>
                                                 </div>
-
                                             </td>
                                         </tr>
                                         <%
@@ -179,9 +179,12 @@
                                         %>
                                     </tbody>
                                 </table>
+                                <% } %>
                             </div>
 
+
                             <div class="checkout-left">
+                                <% if (cartItems.size() > 0) { %>
                                 <div class="col-md-4 checkout-left-basket">
                                     <h4>Continue to basket</h4>
                                     <ul>
@@ -204,47 +207,69 @@
                                         </li>
                                     </ul>
                                 </div>
+
                                 <div class="col-md-8 address_form">
                                     <h4>Billing Address</h4>
-                                    <form action="otp.jsp" method="post" class="creditly-card-form shopf-sear-headinfo_form">
+                                    <form action="CartBookingServlet" method="post" class="creditly-card-form shopf-sear-headinfo_form">
                                         <div class="creditly-wrapper wrapper">
                                             <div class="information-wrapper">
                                                 <div class="first-row form-group">
+                                                    <input type="hidden"  name="uID" value="<%= user.getuId()%>">
+                                                    <input type="hidden"  name="total_amount" value="<%= totalPrice %>">
+
+                                                    <%
+                                                        for (Add_cart item : cartItems) {
+                                                    %>
+                                                    <input type="hidden" name="bookId[]" value="<%= item.getBookId()%>">
+                                                    <%
+                                                        }
+                                                    %>
                                                     <div class="controls">
                                                         <label class="control-label">Customer name: </label>
-                                                        <input class="billing-address-name form-control" type="text" name="name" placeholder="Full name">
+                                                        <input class="billing-address-name form-control" type="text" name="name" 
+                                                               value="<%= user.getUName()%>" placeholder="Full name" readonly>
                                                     </div>
                                                     <div class="card_number_grids">
                                                         <div class="card_number_grid_left">
                                                             <div class="controls">
                                                                 <label class="control-label">Mobile number:</label>
-                                                                <input class="form-control" type="text" placeholder="Mobile number">
+                                                                <input class="form-control" type="text" name="phone" 
+                                                                       value="<%= user.getuPhone()%>" placeholder="Mobile number" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="card_number_grid_right">
                                                             <div class="controls">
-                                                                <label class="control-label">Landmark: </label>
-                                                                <input class="form-control" type="text" placeholder="Landmark">
+                                                                <label class="control-label">Email Address:</label>
+                                                                <input class="form-control" type="text" name="email" 
+                                                                       value="<%= user.getUemail()%>" placeholder="Email Address" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="clear"> </div>
                                                     </div>
-                                                    <div class="controls">
-                                                        <label class="control-label">Town/City: </label>
-                                                        <input class="form-control" type="text" placeholder="Town/City">
-                                                    </div>
 
+                                                    <div class="controls">
+                                                        <label class="control-label">Payment Type</label>
+                                                        <input class="form-control" type="text" name="bookingType" value="COD" placeholder="COD" readonly>
+                                                    </div>
+                                                    <div class="controls">
+                                                        <label class="control-label">User Address: </label>
+                                                        <input class="form-control" type="text" name="userAddress" 
+                                                               value="<%= user.getuAddress()%>" placeholder="User Address" readonly>
+                                                    </div>
+                                                    <div class="controls">
+                                                        <label class="control-label">Shipping Address: </label>
+                                                        <input class="form-control" type="text" name="shippingAddress" placeholder="">
+                                                    </div>
                                                 </div>
-                                                <button class="submit check_out">place order</button>
+                                                <button class="submit check_out">Place Order</button>
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
-
+                                <% }%>
                                 <div class="clearfix"> </div>
-
                             </div>
+
 
                         </div>
 
@@ -356,15 +381,9 @@
                         });
                     });
                 });
-                
-                
+
+
             </script>
-
-
-
-
-
-
     </body>
 
 

@@ -1,3 +1,29 @@
+<%@page import="com.helper.ConnectionProvider"%>
+<%@page import="com.entities.Books"%>
+<%@page import="com.dao.Booksdao"%>
+<%@page import="com.entities.User"%>
+<%@page import="com.dao.Userdao"%>
+<%
+    // Fetch the current user from the session
+    User user = (User) session.getAttribute("currentUser");
+
+    // If the user is not logged in, redirect to the sign-in page
+    if (user == null) {
+        response.sendRedirect("sign-in.jsp");
+        return;
+    }
+
+    // Fetch book details
+    Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
+    String bookIdParam = request.getParameter("bookId");
+    Books book = null;
+
+    if (bookIdParam != null) {
+        int bookId = Integer.parseInt(bookIdParam);
+        book = booksdao.getCategoryById(bookId); // Fetch book details using the bookId
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="zxx">
     <head>        
@@ -16,7 +42,7 @@
         <!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i%7CLato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet" />-->
         <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-        
+
         <!-- Stylesheet -->
         <link href="style.css" rel="stylesheet" type="text/css" />
 
@@ -87,7 +113,6 @@
                                             <th>Product</th>
                                             <th>Quantity</th>
                                             <th>Product Name</th>
-
                                             <th>Price</th>
                                             <th>Remove</th>
                                         </tr>
@@ -96,184 +121,211 @@
                                         <tr class="rem1">
                                             <td class="invert">1</td>
                                             <td class="invert-image">
-                                                <a href="single_product.html">
-                                                    <img src="http://localhost:8080/Bookly_Admin/books_img/HUMSAFAR.jpg" alt=" " class="img-responsive" style="width: 150px; height: 180px;">
-                                                </a>
+                                                <img src="http://localhost:8080/Bookly_Admin/books_img/<%= book.getBookImg()%>" alt=" " class="img-responsive"  style="width: 150px; height: 180px;">
                                             </td>
-
                                             <td class="invert">
                                                 <div class="quantity">
-                                                    <div class="quantity-select">
-                                                        <div class="entry value-minus">&nbsp;</div>
-                                                        <div class="entry value">
-                                                            <span>1</span>
-                                                        </div>
-                                                        <div class="entry value-plus active">&nbsp;</div>
-                                                    </div>
+                                                    <span>1</span> <!-- Assuming default quantity is 1 -->
                                                 </div>
                                             </td>
-                                            <td class="invert">Be Creative</td>
-
-                                            <td class="invert">$100.00</td>
+                                            <td class="invert"><%= book.getBookName()%></td>
+                                            <td class="invert">&#8377; <%= book.getBookPrice()%></td>
                                             <td class="invert">
                                                 <div class="rem">
-                                                    <i class="fa fa-close" style="font-size:25px;color:red"></i>
+                                                    <a href="books-media-gird-view-v2.jsp" class="remove-item" data-cartid="">Cancel</a>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="checkout-left">
-                                <div class="col-md-4 checkout-left-basket">
-                                    <h4>Continue to basket</h4>
-                                    <ul>
-                                        <li>Be Creative
-                                            <i>-</i>
-                                            <span>$100.00 </span>
-                                        </li>
-                                        <li>Work From Home
-                                            <i>-</i>
-                                            <span>$80.00 </span>
-                                        </li>
-                                        <li>E-Commerce
-                                            <i>-</i>
-                                            <span>$120.00 </span>
-                                        </li>
-                                        <li>Total Service Charges
-                                            <i>-</i>
-                                            <span>$55.00</span>
-                                        </li>
-                                        <li>Total
-                                            <i>-</i>
-                                            <span>$355.00</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-8 address_form">
-                                    <h4>Billing Address</h4>
+                            <div>
+                                <!-- Billing Address Form -->
+                                <div class="checkout-left" style="padding: 30px;">
+                                    <h2 style="color: red; text-align: center;">Billing Address</h2>
                                     <form action="otp.jsp" method="post" class="creditly-card-form shopf-sear-headinfo_form">
                                         <div class="creditly-wrapper wrapper">
                                             <div class="information-wrapper">
-                                                <div class="first-row form-group">
-                                                    <div class="controls">
-                                                        <label class="control-label">Customer name: </label>
-                                                        <input class="billing-address-name form-control" type="text" name="name" placeholder="Full name">
-                                                    </div>
-                                                    <div class="card_number_grids">
-                                                        <div class="card_number_grid_left">
-                                                            <div class="controls">
-                                                                <label class="control-label">Mobile number:</label>
-                                                                <input class="form-control" type="text" placeholder="Mobile number">
+                                                <div class="container">
+                                                    <!-- Customer Details -->
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <label class="control-label">Customer Name:</label>
+                                                                    <input class="billing-address-name form-control" type="text" name="customer_name" value="<%= user.getUName()%>" placeholder="Enter your full name" readonly>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="card_number_grid_right">
-                                                            <div class="controls">
-                                                                <label class="control-label">Landmark: </label>
-                                                                <input class="form-control" type="text" placeholder="Landmark">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <label class="control-label">Mobile Number:</label>
+                                                                    <input class="form-control" type="text" name="mobile_number" value="<%= user.getuPhone()%>" placeholder="Enter your mobile number" readonly>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="clear"> </div>
-                                                    </div>
-                                                    <div class="controls">
-                                                        <label class="control-label">Town/City: </label>
-                                                        <input class="form-control" type="text" placeholder="Town/City">
                                                     </div>
 
+                                                    <div class="row justify-content-center mt-3">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <label class="control-label">Email Address:</label>
+                                                                    <input class="form-control" type="email" name="email" value="<%= user.getUemail()%>" placeholder="Enter your email" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <label class="control-label">Payment Type</label>
+                                                                    <input class="form-control" type="text" name="landmark" value="COD" placeholder="COD" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- User Address Input Field -->
+                                                    <div class="row justify-content-center mt-3">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <label class="control-label">User Address:</label>
+                                                                    <input class="form-control" type="text" id="userAddress" name="shipping_address" value="<%= user.getuAddress()%>" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                              
+                                                                   
+                                                    <!-- Shipping Address Input Field -->
+                                                    <div class="row justify-content-center mt-3">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    
+                                                                    <label class="control-label">Shipping Address:</label>
+                                                                    <input class="form-control" type="text" id="shippingAddress" name="shipping_address" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- JavaScript Function to Copy Address -->
+                                                    <script>
+                                                        function copyAddress() {
+                                                            var userAddress = document.getElementById('userAddress').value;
+                                                            var checkbox = document.getElementById('sameAsUserAddress');
+                                                            var shippingAddressField = document.getElementById('shippingAddress');
+
+                                                            if (checkbox.checked) {
+                                                                shippingAddressField.value = userAddress; // Copy User Address to Shipping Address
+                                                            } else {
+                                                                shippingAddressField.value = ''; // Clear Shipping Address if unchecked
+                                                            }
+                                                        }
+                                                    </script>
+                                                    
+                                                    
+                                                    <!-- Hidden Inputs to Pass Book Details -->
+                                                    <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
+                                                    <input type="hidden" name="bookPrice" value="<%= book.getBookPrice()%>">
+
+                                                    <!-- Place Order Button (Centered) -->
+                                                    <div class="row justify-content-center mt-4">
+                                                        <div class="col-12 text-center">
+                                                            <button class="submit check_out" type="submit">Place Order</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <button class="submit check_out">place order</button>
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
-
-                                <div class="clearfix"> </div>
 
                             </div>
 
                         </div>
-
                     </div>
+                    <!--//checkout-->
+
+
+                    <!-- //home -->
+
+                    <!-- Common js -->
+                    <script src="js/jquery-2.2.3.min.js"></script>
+                    <!--// Common js -->
+
+                    <!-- cart-js -->
+                    <script src="js/minicart.js"></script>
+
+                    <script src="js/SmoothScroll.min.js"></script>
+                    <!-- //smooth-scrolling-of-move-up -->
+
+
+                    <script src="js/bootstrap.js"></script>
                 </div>
-                <!--//checkout-->
-
-
-                <!-- //home -->
-
-                <!-- Common js -->
-                <script src="js/jquery-2.2.3.min.js"></script>
-                <!--// Common js -->
-
-                <!-- cart-js -->
-                <script src="js/minicart.js"></script>
-
-                <script src="js/SmoothScroll.min.js"></script>
-                <!-- //smooth-scrolling-of-move-up -->
-
-
-                <script src="js/bootstrap.js"></script>
-            </div>
-            <!-- End: Cart Section -->
+                <!-- End: Cart Section -->
 
 
 
-            <!-- Start: Footer -->
-            <%@include file="footer.jsp" %>
-            <!-- End: Footer -->
+                <!-- Start: Footer -->
+                <%@include file="footer.jsp" %>
+                <!-- End: Footer -->
 
-            <!-- jQuery Latest Version 1.x -->
-            <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+                <!-- jQuery Latest Version 1.x -->
+                <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 
-            <!-- jQuery UI -->
-            <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+                <!-- jQuery UI -->
+                <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 
-            <!-- jQuery Easing -->
-            <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+                <!-- jQuery Easing -->
+                <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 
-            <!-- Bootstrap -->
-            <script type="text/javascript" src="js/bootstrap.min.js"></script>
+                <!-- Bootstrap -->
+                <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
-            <!-- Mobile Menu -->
-            <script type="text/javascript" src="js/mmenu.min.js"></script>
+                <!-- Mobile Menu -->
+                <script type="text/javascript" src="js/mmenu.min.js"></script>
 
-            <!-- Harvey - State manager for media queries -->
-            <script type="text/javascript" src="js/harvey.min.js"></script>
+                <!-- Harvey - State manager for media queries -->
+                <script type="text/javascript" src="js/harvey.min.js"></script>
 
-            <!-- Waypoints - Load Elements on View -->
-            <script type="text/javascript" src="js/waypoints.min.js"></script>
+                <!-- Waypoints - Load Elements on View -->
+                <script type="text/javascript" src="js/waypoints.min.js"></script>
 
-            <!-- Facts Counter -->
-            <script type="text/javascript" src="js/facts.counter.min.js"></script>
+                <!-- Facts Counter -->
+                <script type="text/javascript" src="js/facts.counter.min.js"></script>
 
-            <!-- MixItUp - Category Filter -->
-            <script type="text/javascript" src="js/mixitup.min.js"></script>
+                <!-- MixItUp - Category Filter -->
+                <script type="text/javascript" src="js/mixitup.min.js"></script>
 
-            <!-- Owl Carousel -->
-            <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+                <!-- Owl Carousel -->
+                <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 
-            <!-- Accordion -->
-            <script type="text/javascript" src="js/accordion.min.js"></script>
+                <!-- Accordion -->
+                <script type="text/javascript" src="js/accordion.min.js"></script>
 
-            <!-- Responsive Tabs -->
-            <script type="text/javascript" src="js/responsive.tabs.min.js"></script>
+                <!-- Responsive Tabs -->
+                <script type="text/javascript" src="js/responsive.tabs.min.js"></script>
 
-            <!-- Responsive Table -->
-            <script type="text/javascript" src="js/responsive.table.min.js"></script>
+                <!-- Responsive Table -->
+                <script type="text/javascript" src="js/responsive.table.min.js"></script>
 
-            <!-- Masonry -->
-            <script type="text/javascript" src="js/masonry.min.js"></script>
+                <!-- Masonry -->
+                <script type="text/javascript" src="js/masonry.min.js"></script>
 
-            <!-- Carousel Swipe -->
-            <script type="text/javascript" src="js/carousel.swipe.min.js"></script>
+                <!-- Carousel Swipe -->
+                <script type="text/javascript" src="js/carousel.swipe.min.js"></script>
 
-            <!-- bxSlider -->
-            <script type="text/javascript" src="js/bxslider.min.js"></script>
+                <!-- bxSlider -->
+                <script type="text/javascript" src="js/bxslider.min.js"></script>
 
-            <!-- Custom Scripts -->
-            <script type="text/javascript" src="js/main.js"></script> 
+                <!-- Custom Scripts -->
+                <script type="text/javascript" src="js/main.js"></script> 
 
-    </body>
+                </body>
 
 
 </html>

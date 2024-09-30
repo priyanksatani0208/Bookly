@@ -164,6 +164,24 @@ public class Categorydao {
     }
     return categoryName;
 }
+    
+    //login user particular category count
+    public int getUserCategoryCount(int userId) {
+    int userCategoryCount = 0;
+    try {
+        String query = "SELECT COUNT(*) AS total FROM category WHERE userId=?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            userCategoryCount = rs.getInt("total");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return userCategoryCount;
+}
+
 
 
 }
