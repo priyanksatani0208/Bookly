@@ -1,42 +1,33 @@
 package com.dao;
 
 import com.entities.BookingDetail;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class BookingDetaildao {
-
     private Connection con;
 
     public BookingDetaildao(Connection con) {
-        this.con = con;
+        this.con = con; // Use the connection passed from the servlet
     }
 
     public boolean saveBookingDetail(BookingDetail bookingDetail) {
-        boolean isSaved = false;
-        PreparedStatement ps = null; // Declare outside try
+        boolean success = false;
         try {
-            String query = "INSERT INTO booking_detail (book_id, bookingId) VALUES (?, ?)";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, bookingDetail.getBook_id());
-            ps.setInt(2, bookingDetail.getBookingId());
+            String query = "INSERT INTO booking_detail(book_id, bookingId) VALUES (?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, bookingDetail.getBook_id());
+            pstmt.setInt(2, bookingDetail.getBookingId());
 
-            int result = ps.executeUpdate();
-            if (result > 0) {
-                isSaved = true;
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                success = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close(); // Close PreparedStatement
-                }
-                // Don't close the connection here to allow further operations
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
-
-        return isSaved;
+        // DO NOT close the connection here
+        return success;
     }
 }

@@ -14,20 +14,24 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class CartBookingServlet extends HttpServlet {
 
    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    Connection con = null; // Declare connection here
-    try (PrintWriter out = response.getWriter()) {
-        con = ConnectionProvider.getConnection(); // Get the connection once
-        
+        response.setContentType("text/html;charset=UTF-8");
 
-         int uid = Integer.parseInt(request.getParameter("uID"));
-            String[] bookIdParams = request.getParameterValues("bookId");
+        Connection con = null; // Declare connection here
+        try (PrintWriter out = response.getWriter()) {
+            // Get a single connection at the start
+            con = ConnectionProvider.getConnection(); 
+            con.setAutoCommit(false); // Begin transaction
+
+            // Retrieve form parameters
+            int uid = Integer.parseInt(request.getParameter("uID"));
+            String[] bookIdParams = request.getParameterValues("bookId[]");
             List<Integer> bookIdList = new ArrayList<>(); // Changed from Long to Integer
 
             if (bookIdParams != null) {
@@ -35,6 +39,11 @@ public class CartBookingServlet extends HttpServlet {
                     bookIdList.add(Integer.parseInt(bookIdParam)); // Changed from Long to Integer
                 }
             }
+System.out.println(bookIdList);
+
+
+
+
 
             String bookingType = request.getParameter("bookingType");
             String shippingAddress = request.getParameter("shippingAddress");
@@ -42,73 +51,60 @@ public class CartBookingServlet extends HttpServlet {
 
             // Get the current date and time for the booking
             Date bookingDate = new Date();
-            
-           
 
-//            // Create a new Booking object and set the bookingDate
+            // Create a new Booking object
             Booking booking = new Booking(uid, shippingAddress, totalAmount, bookingType, bookingDate);
 
-//            // Insert the booking into the database using DAO and get the generated booking ID
-            Bookingdao bookingdao = new Bookingdao(ConnectionProvider.getConnection());
-            int bookingId = bookingdao.saveBooking(booking);  // Corrected this line
+            // Insert the booking into the database using the same connection
+            Bookingdao bookingdao = new Bookingdao(con); 
+            int bookingId = bookingdao.saveBooking(booking);  // Use the same connection
 
             if (bookingId > 0) {
-                // Save booking details
-                BookingDetaildao bookingDetaildao = new BookingDetaildao(ConnectionProvider.getConnection());
-
+//                // Save booking details using the same connection
+                BookingDetaildao bookingDetaildao = new BookingDetaildao(con);
+                
                 for (Integer bookId : bookIdList) {
                     BookingDetail bookingDetail = new BookingDetail(bookId, bookingId);
                     bookingDetaildao.saveBookingDetail(bookingDetail);
                 }
-
-                // Redirect to success page
+//
+                // Commit transaction if everything is successful
+                con.commit();
                 response.sendRedirect("otp.jsp");
             } else {
-                // Handle failure
+//                // Handle failure by rolling back transaction
+                con.rollback();
                 response.sendRedirect("404.jsp");
             }
+        } catch (Exception e) {
+            if (con != null) {
+                try {
+                    con.rollback(); // Rollback transaction on exception
+                } catch (SQLException se) {
+                    se.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+            response.sendRedirect("404.jsp");
+        } 
     }
-}
 
+    // HTTP methods (GET and POST) calling processRequest()
 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
