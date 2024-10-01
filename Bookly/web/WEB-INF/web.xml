@@ -29,8 +29,8 @@
         <servlet-class>com.servlet.AddCartServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CartBookingServlet</servlet-name>
-        <servlet-class>com.servlet.CartBookingServlet</servlet-class>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>com.servlet.BookingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ContactServlet</servlet-name>
@@ -61,8 +61,8 @@
         <url-pattern>/AddCartServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CartBookingServlet</servlet-name>
-        <url-pattern>/CartBookingServlet</url-pattern>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/BookingServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

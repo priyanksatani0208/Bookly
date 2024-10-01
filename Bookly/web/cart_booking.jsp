@@ -210,7 +210,7 @@
 
                                 <div class="col-md-8 address_form">
                                     <h4>Billing Address</h4>
-                                    <form action="CartBookingServlet" method="post" class="creditly-card-form shopf-sear-headinfo_form">
+                                    <form action="BookingServlet" method="post" class="creditly-card-form shopf-sear-headinfo_form">
                                         <div class="creditly-wrapper wrapper">
                                             <div class="information-wrapper">
                                                 <div class="first-row form-group">

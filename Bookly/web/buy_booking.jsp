@@ -1,3 +1,6 @@
+<%@page import="com.dao.Add_cartdao"%>
+<%@page import="com.entities.Add_cart"%>
+<%@page import="java.util.List"%>
 <%@page import="com.helper.ConnectionProvider"%>
 <%@page import="com.entities.Books"%>
 <%@page import="com.dao.Booksdao"%>
@@ -13,6 +16,8 @@
         return;
     }
 
+    Add_cartdao add_cartdao = new Add_cartdao(ConnectionProvider.getConnection());
+
     // Fetch book details
     Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
     String bookIdParam = request.getParameter("bookId");
@@ -22,6 +27,10 @@
         int bookId = Integer.parseInt(bookIdParam);
         book = booksdao.getCategoryById(bookId); // Fetch book details using the bookId
     }
+
+    List<Add_cart> cartItems = add_cartdao.getCartItems(user.getuId());
+
+    double totalPrice = 0.0;
 %>
 
 <!DOCTYPE html>
@@ -45,8 +54,6 @@
 
         <!-- Stylesheet -->
         <link href="style.css" rel="stylesheet" type="text/css" />
-
-        <!------>
 
         <!-- Custom Theme files -->
         <!--<link href="css/check_out_bootstrap.css" type="text/css" rel="stylesheet" media="all">-->
@@ -143,8 +150,14 @@
                                 <!-- Billing Address Form -->
                                 <div class="checkout-left" style="padding: 30px;">
                                     <h2 style="color: red; text-align: center;">Billing Address</h2>
-                                    <form action="otp.jsp" method="post" class="creditly-card-form shopf-sear-headinfo_form">
+                                    <form action="BookingServlet" method="post" class="creditly-card-form shopf-sear-headinfo_form">
                                         <div class="creditly-wrapper wrapper">
+                                            <input type="hidden"  name="uID" value="<%= user.getuId()%>">
+                                            <input type="hidden"  name="total_amount" value="<%= totalPrice%>">
+
+                                            <!-- Send only the selected bookId -->
+                                            <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
+                                            
                                             <div class="information-wrapper">
                                                 <div class="container">
                                                     <!-- Customer Details -->
@@ -180,7 +193,7 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label class="control-label">Payment Type</label>
-                                                                    <input class="form-control" type="text" name="landmark" value="COD" placeholder="COD" readonly>
+                                                                    <input class="form-control" type="text" name="bookingType" value="COD" placeholder="COD" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -192,21 +205,21 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label class="control-label">User Address:</label>
-                                                                    <input class="form-control" type="text" id="userAddress" name="shipping_address" value="<%= user.getuAddress()%>" required>
+                                                                    <input class="form-control" type="text" id="userAddress" name="" value="<%= user.getuAddress()%>" required>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                              
-                                                                   
+
+
                                                     <!-- Shipping Address Input Field -->
                                                     <div class="row justify-content-center mt-3">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <div class="controls">
-                                                                    
+
                                                                     <label class="control-label">Shipping Address:</label>
-                                                                    <input class="form-control" type="text" id="shippingAddress" name="shipping_address" required>
+                                                                    <input class="form-control" type="text" id="shippingAddress" name="shippingAddress" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -226,11 +239,8 @@
                                                             }
                                                         }
                                                     </script>
-                                                    
-                                                    
-                                                    <!-- Hidden Inputs to Pass Book Details -->
-                                                    <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
-                                                    <input type="hidden" name="bookPrice" value="<%= book.getBookPrice()%>">
+
+
 
                                                     <!-- Place Order Button (Centered) -->
                                                     <div class="row justify-content-center mt-4">
@@ -328,4 +338,4 @@
                 </body>
 
 
-</html>
+                </html>
