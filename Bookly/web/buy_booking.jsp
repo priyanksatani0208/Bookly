@@ -30,7 +30,7 @@
 
     List<Add_cart> cartItems = add_cartdao.getCartItems(user.getuId());
 
-    double totalPrice = 0.0;
+   
 %>
 
 <!DOCTYPE html>
@@ -153,7 +153,7 @@
                                     <form action="BookingServlet" method="post" class="creditly-card-form shopf-sear-headinfo_form">
                                         <div class="creditly-wrapper wrapper">
                                             <input type="hidden"  name="uID" value="<%= user.getuId()%>">
-                                            <input type="hidden"  name="total_amount" value="<%= totalPrice%>">
+                                            <input type="hidden"  name="total_amount" value="<%= book.getBookPrice() %>">
 
                                             <!-- Send only the selected bookId -->
                                             <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
@@ -336,6 +336,4 @@
                 <script type="text/javascript" src="js/main.js"></script> 
 
                 </body>
-
-
-                </html>
+</html>

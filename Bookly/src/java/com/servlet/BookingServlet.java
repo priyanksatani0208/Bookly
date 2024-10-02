@@ -2,6 +2,7 @@ package com.servlet;
 
 import com.dao.BookingDetaildao;
 import com.dao.Bookingdao;
+import com.dao.Userdao;
 import com.entities.Booking;
 import com.entities.BookingDetail;
 import com.helper.ConnectionProvider;
@@ -25,6 +26,7 @@ public class BookingServlet extends HttpServlet {
 
         Connection con = null; // Declare connection here
         try (PrintWriter out = response.getWriter()) {
+            
             // Get a single connection at the start
             con = ConnectionProvider.getConnection();
             con.setAutoCommit(false); // Begin transaction
@@ -52,9 +54,11 @@ public class BookingServlet extends HttpServlet {
 
                 // Check if request contains multiple book IDs (for cart)
                 String[] bookIdParams = request.getParameterValues("bookId[]");
-                if (bookIdParams != null) {
+                if (bookIdParams != null) 
+                {
                     // Case for multiple books (cart)
-                    for (String bookIdParam : bookIdParams) {
+                    for (String bookIdParam : bookIdParams) 
+                    {
                         bookIdList.add(Integer.parseInt(bookIdParam));
                     }
                 } else {
@@ -69,9 +73,27 @@ public class BookingServlet extends HttpServlet {
                     bookingDetaildao.saveBookingDetail(bookingDetail);
                 }
 
-                // Commit transaction if everything is successful
-                con.commit();
-                response.sendRedirect("otp.jsp");
+               // Generate OTP for user
+                Userdao userdao = new Userdao(con);
+                int generatedOtp = userdao.generateOTP(); // Generate OTP
+                boolean otpSaved = userdao.saveOtp(uid, generatedOtp); // Save OTP to the user table
+
+                if (otpSaved) {
+                    // Commit transaction if everything is successful
+                    con.commit();
+                    con.setAutoCommit(true); // Reset auto-commit
+                    
+                    // Send OTP to the user via email or other methods
+                    // For example: emailService.sendOtp(userEmail, generatedOtp);
+
+                    // Redirect to OTP verification page
+                    response.sendRedirect("otp.jsp");
+                    
+                } else {
+                    // Handle failure by rolling back transaction
+                    con.rollback();
+                    response.sendRedirect("404.jsp");
+                }
             } else {
                 // Handle failure by rolling back transaction
                 con.rollback();
@@ -86,7 +108,7 @@ public class BookingServlet extends HttpServlet {
                 }
             }
             e.printStackTrace();
-            response.sendRedirect("404.jsp");
+       
         }
     }
 
@@ -94,7 +116,7 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request , response);
     }
 
     @Override

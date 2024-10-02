@@ -156,7 +156,7 @@
                                             </form>
 
                                             <!-- Buy Button -->
-                                            <a href="buy_booking.jsp?bookId=<%= book.getBookId()%>&userId=<%= user.getuId()%>%>" class="btn btn-dark-gray">Buy</a> 
+                                            <a href="buy_booking.jsp?bookId=<%= book.getBookId() %>&userId=<%= user.getuId() %>" class="btn btn-dark-gray">Buy</a> 
 
                                             <%
                                                 }

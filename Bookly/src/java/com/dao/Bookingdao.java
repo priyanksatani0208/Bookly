@@ -40,4 +40,21 @@ public class Bookingdao {
         // DO NOT close the connection here
         return bookingId;
     }
+    
+    //update the booking status after OTP validation
+    public boolean updateBookingStatus(int userId, int status) {
+    boolean result = false;
+    String query = "UPDATE booking SET booking_status = ? WHERE userId = ?";
+    try (PreparedStatement ps = con.prepareStatement(query)) 
+    {
+        ps.setInt(1, status);  // 1 for confirmed booking
+        ps.setInt(2, userId);
+        ps.executeUpdate();
+        result = true;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return result;
+}
+
 }

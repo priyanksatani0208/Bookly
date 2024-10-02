@@ -3,10 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/project/projects/Bookly/src/java/com/servlet/BuyBookingServlet.java</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/dao/Booksdao.java</file>
+            <file>file:/D:/project/projects/Bookly/web/WEB-INF/web.xml</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/entities/User.java</file>
             <file>file:/D:/project/projects/Bookly/web/buy_booking.jsp</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/dao/Bookingdao.java</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/servlet/BookingServlet.java</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/dao/Userdao.java</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/dao/Categorydao.java</file>
             <file>file:/D:/project/projects/Bookly/web/cart_booking.jsp</file>
-            <file>file:/D:/project/projects/Bookly/src/java/com/servlet/CartBookingServlet.java</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/servlet/OtpServlet.java</file>
+            <file>file:/D:/project/projects/Bookly/src/java/com/dao/BookingDetaildao.java</file>
+            <file>file:/D:/project/projects/Bookly/web/otp.jsp</file>
         </group>
     </open-files>
 </project-private>

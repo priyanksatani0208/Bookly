@@ -43,39 +43,52 @@ public class Booksdao {
         return success;
     }
 
-    // Method to fetch all categories
+    // Method to fetch books by page with optional category filtering
     public List<Books> getBooksByPage(int start, int total, String categoryId) {
         List<Books> list = new ArrayList<>();
         try {
             StringBuilder query = new StringBuilder();
             query.append("SELECT * FROM books");
 
-            if (null != categoryId) {
-                query.append(" catId=").append(categoryId).append(" ");
+            // Add category filter if categoryId is provided
+            if (categoryId != null && !categoryId.isEmpty()) {
+                query.append(" WHERE catId = ? ");
             }
             query.append(" LIMIT ? OFFSET ? ");
-            System.out.println(query);
+
+            
+
             PreparedStatement ps = con.prepareStatement(query.toString());
-            ps.setInt(1, total);  // Number of records to fetch
-            ps.setInt(2, start);  // Starting point (offset)
+
+            int paramIndex = 1;
+
+            // Set categoryId if present
+            if (categoryId != null && !categoryId.isEmpty()) {
+                ps.setString(paramIndex++, categoryId);
+            }
+
+            // Set limit and offset
+            ps.setInt(paramIndex++, total);  // Number of records to fetch
+            ps.setInt(paramIndex, start);    // Starting point (offset)
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 int bookId = rs.getInt("bookId");
                 int catId = rs.getInt("catId");
-                String bookname = rs.getString("bookName");
+                String bookName = rs.getString("bookName");
                 String bookAuthor = rs.getString("bookAuthor");
                 String bookEdition = rs.getString("bookEdition");
                 String bookPublisher = rs.getString("bookPublisher");
                 int bookPrice = rs.getInt("bookPrice");
                 int bookDiscount = rs.getInt("bookDiscount");
                 String bookLength = rs.getString("bookLength");
-                String BookLanguage = rs.getString("BookLanguage");
-                String BookTopic = rs.getString("BookTopic");
+                String bookLanguage = rs.getString("bookLanguage");
+                String bookTopic = rs.getString("bookTopic");
                 String bookDescription = rs.getString("bookDescription");
                 String bookImg = rs.getString("bookImg");
 
-                Books books = new Books(bookId, catId, bookname, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, BookLanguage, BookTopic, bookDescription, bookImg);
+                Books books = new Books(bookId, catId, bookName, bookAuthor, bookEdition, bookPublisher, bookPrice, bookDiscount, bookLength, bookLanguage, bookTopic, bookDescription, bookImg);
                 list.add(books);
             }
         } catch (SQLException e) {
@@ -84,9 +97,6 @@ public class Booksdao {
         return list;
     }
 
-    
-    
-    
     //fethch Book Id
     public Books getCategoryById(int bookId) {
         Books books = null;
@@ -280,7 +290,5 @@ public class Booksdao {
         }
         return booksList;
     }
-    
-    
 
 }

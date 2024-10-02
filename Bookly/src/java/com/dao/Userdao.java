@@ -2,6 +2,8 @@ package com.dao;
 
 import com.entities.User;
 import java.sql.*;
+import java.util.Date;
+import java.util.Random;
 
 public class Userdao {
     
@@ -132,6 +134,68 @@ public class Userdao {
         }
         
         return f;
+    }
+    
+    // Save the OTP and the timestamp in the user's record
+    public boolean saveOtp(int userId, int otp) {
+        boolean result = false;
+        String query = "UPDATE user SET otp = ?, otp_date = ? WHERE uId = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, otp);
+            ps.setTimestamp(2, new Timestamp(new Date().getTime()));  // Save current time as OTP timestamp
+            ps.setInt(3, userId);
+            ps.executeUpdate();
+            result = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    // Fetch the OTP and validate
+    public boolean validateOtp(int userId, String enteredOtp) {
+        boolean valid = false;
+        String query = "SELECT otp, otp_date FROM user WHERE uId = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String savedOtp = rs.getString("otp");
+                    Timestamp otpDate = rs.getTimestamp("otp_date");
+
+                    // Check if the OTP is correct and valid within 10 minutes (600000 ms)
+                    if (savedOtp != null && savedOtp.equals(enteredOtp) &&
+                        (new Date().getTime() - otpDate.getTime() <= 600000)) {
+                        valid = true;
+                        
+                        System.out.println("step - 1");
+                        // If OTP is valid, set OTP and OTP date to null
+                        clearOtp(userId);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return valid;
+    }
+
+    // Clear OTP after successful validation
+    public void clearOtp(int userId) {
+        String query = "UPDATE user SET otp = NULL, otp_date = NULL WHERE uId = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Method to generate OTP
+    public int generateOTP() {
+        Random random = new Random();
+        int otp = 1000 + random.nextInt(9000); // Generates a 4-digit OTP
+        return otp;
     }
         
     

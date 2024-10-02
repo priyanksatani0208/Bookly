@@ -1,3 +1,8 @@
+<%@page import="com.entities.User"%>
+<%
+    // Fetch the current user from the session
+    User user = (User) session.getAttribute("currentUser");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +19,7 @@
         .logo-container img {
             max-width: 150px; /* Adjust width to medium-small size */
             max-height: 150px; /* Adjust height to keep the aspect ratio */
-            margin-bottom:30px;;  /*Center the image horizontally*/ 
+            margin-bottom: 30px; /* Center the image horizontally */ 
             display: block; /* Ensure the image is a block-level element for proper centering */
         }
     </style>
@@ -29,16 +34,24 @@
                     <img src="images/white bookly logo.png" alt="Bookly Logo" class="img-fluid">
                 </div>
                 
-                <h6>Please enter the one time password <br> to verify your account</h6>
+                <h6>Please enter the one-time password <br> to verify your account</h6>
                 <div> <span>A code has been sent to</span> <small>pri*******23@gmail.com</small> </div>
-                <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> 
-                    <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" />
-                    <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" disabled />
-                    <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" disabled /> 
-                </div>
-                <div class="mt-4"> 
-                    <button class="btn btn-danger px-4 validate">Validate</button> 
-                </div>
+
+                <!-- OTP Input Form -->
+                <form id="otp-form" action="OtpServlet" method="POST" >
+                    <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> 
+                        <input type="hidden" name="uid" value="<%= user.getuId() %>"> <!-- Pass user ID here -->
+
+                        <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" name="otp1" required />
+                        <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" disabled name="otp2" />
+                        <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" disabled name="otp3" />
+                        <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" disabled name="otp4" />
+                    </div>
+                    <div class="mt-4"> 
+                        <button type="submit" class="btn btn-danger px-4 validate">Validate</button> 
+                    </div>
+                </form>
+
                 <div class="mt-3">
                     <a href="thanks.jsp" class="resend-otp">Resend OTP</a>
                 </div>
@@ -48,10 +61,10 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function (event) {
-
             const first = document.getElementById("first");
             const second = document.getElementById("second");
             const third = document.getElementById("third");
+            const fourth = document.getElementById("fourth");
 
             first.addEventListener('input', function () {
                 if (first.value) {
@@ -60,6 +73,7 @@
                 } else {
                     second.disabled = true;
                     third.disabled = true;
+                    fourth.disabled = true;
                 }
             });
 
@@ -69,6 +83,16 @@
                     third.focus();
                 } else {
                     third.disabled = true;
+                    fourth.disabled = true;
+                }
+            });
+
+            third.addEventListener('input', function () {
+                if (third.value) {
+                    fourth.disabled = false;
+                    fourth.focus();
+                } else {
+                    fourth.disabled = true;
                 }
             });
 
@@ -81,7 +105,7 @@
                         if (index !== 0) {
                             inputs[index - 1].focus();
                         }
-                        if (index < 2) {
+                        if (index < 3) { // Adjust the condition for 4 OTP digits
                             inputs[index + 1].disabled = true;
                         }
                     }
@@ -90,4 +114,5 @@
         });
     </script>
 </body>
+
 </html>

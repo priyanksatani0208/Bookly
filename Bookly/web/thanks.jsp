@@ -19,7 +19,7 @@
         <div class="agile-info">
             <h1>Thank You for Your Order!</h1>
             <p><b>Your order will be delivered in 2-3 working days! Don't hesitate to contact us at support@bookly.com.</b></p>
-            <a href="index">Go Home</a>
+            <a href="index.jsp">Go Home</a>
         </div>
     </div>
 </body>
