@@ -105,30 +105,34 @@
         <!-- End: Slider Section -->
 
 
-        <!-- Start: Card Section -->
-    <center><br><br><h1>Categories</h1></center><br><br>
-    <div class="container mt-5">          
-        <div class="row row-cols-1 row-cols-md-3 g-4" style="display: flex; justify-content: center;">
-            <%           
-             for (Category category : categoryList) {
-            %>
-            <div class="col-md-3">
-                <a href="books-media-gird-view-v2.jsp?categoryId=<%= category.getCatId()%>">
-                    <div class="card">
-                        <img src="http://localhost:8080/Bookly_Admin/category_img/<%= category.getCatImg()%>" class="card-img-top"
-                             alt="<%= category.getCatName()%>" style="width: 100%; height: auto; max-width: 200px; object-fit: cover;">
-                        <div class="card-body">
-                            <center><br> <h5 class="card-title"><%= category.getCatName()%></h5></center>
-                        </div>
+      
+
+<!-- Start: Card Section -->
+<center><br><br><h1>Categories</h1></center><br><br>
+<div class="container mt-5">          
+    <div class="row g-4">
+        <%           
+         for (Category category : categoryList) {
+        %>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a href="books-media-gird-view-v2.jsp?categoryId=<%= category.getCatId()%>">
+                <div class="card text-center" style="width: 100%;">
+                    <img src="http://localhost:8080/Bookly_Admin/category_img/<%= category.getCatImg()%>" 
+                         class="card-img-top" 
+                         alt="<%= category.getCatName()%>" 
+                         style="width: 100%; height: 100px; object-fit: contain; border-radius: 0;">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= category.getCatName()%></h5> <br><br>
                     </div>
-                </a>
-            </div>
-            <%
-                }
-            %>
+                </div>
+            </a>
         </div>
+        <%
+            }
+        %>
     </div>
-    <!-- End: Card Section -->
+</div>
+<!-- End: Card Section -->
 
 
     <br><center><h1> Add Features</h1></center>

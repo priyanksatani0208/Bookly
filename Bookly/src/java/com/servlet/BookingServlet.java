@@ -76,6 +76,8 @@ public class BookingServlet extends HttpServlet {
                // Generate OTP for user
                 Userdao userdao = new Userdao(con);
                 int generatedOtp = userdao.generateOTP(); // Generate OTP
+                String email = "mihirbhuva2711@gmail.com";
+                userdao.sendEmail(email, "Mihir Bhuva", generatedOtp);
                 boolean otpSaved = userdao.saveOtp(uid, generatedOtp); // Save OTP to the user table
 
                 if (otpSaved) {
