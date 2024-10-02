@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2024 at 05:20 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.0.19
+-- Generation Time: Oct 02, 2024 at 07:04 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,14 +32,15 @@ CREATE TABLE `add_cart` (
   `uId` int(11) NOT NULL,
   `bookId` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `add_cart`
 --
 
 INSERT INTO `add_cart` (`cartId`, `uId`, `bookId`, `quantity`) VALUES
-(1, 9, 5, 1);
+(1, 9, 5, 1),
+(2, 9, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -52,7 +53,7 @@ CREATE TABLE `admin` (
   `admin_name` varchar(30) NOT NULL,
   `admin_email` varchar(100) NOT NULL,
   `admin_password` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
@@ -69,12 +70,40 @@ INSERT INTO `admin` (`admin_id`, `admin_name`, `admin_email`, `admin_password`) 
 
 CREATE TABLE `booking` (
   `bookingID` int(11) NOT NULL,
-  `catId` int(11) NOT NULL,
-  `bookId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
+  `shipping_address` varchar(255) NOT NULL,
+  `total_amount` double DEFAULT NULL,
   `bookingDate` datetime NOT NULL,
-  `bookingType` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `bookingType` varchar(25) NOT NULL,
+  `booking_status` bigint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`bookingID`, `userId`, `shipping_address`, `total_amount`, `bookingDate`, `bookingType`, `booking_status`) VALUES
+(1, 9, '123', 897, '2024-10-02 10:00:42', 'COD', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking_detail`
+--
+
+CREATE TABLE `booking_detail` (
+  `id` int(11) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `bookingId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `booking_detail`
+--
+
+INSERT INTO `booking_detail` (`id`, `book_id`, `bookingId`) VALUES
+(1, 5, 1),
+(2, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -96,7 +125,7 @@ CREATE TABLE `books` (
   `BookTopic` varchar(50) NOT NULL,
   `bookDescription` text NOT NULL,
   `bookImg` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `books`
@@ -119,15 +148,23 @@ CREATE TABLE `category` (
   `catId` int(11) NOT NULL,
   `catName` varchar(30) NOT NULL,
   `catImg` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`catId`, `catName`, `catImg`) VALUES
-(22, 'Yoga', 'Yoga.jpg'),
-(23, 'Romance', 'Romance.jpg');
+(22, 'Yoga', 'yoga.svg'),
+(23, 'Romance', 'Rommance.svg'),
+(25, 'Horror', 'horror.svg'),
+(26, 'Businessman', 'businessman.svg'),
+(27, 'Kids', 'Kids.svg'),
+(28, 'spiritual', 'om.svg'),
+(29, 'Cooking', 'cook.svg'),
+(30, 'Fitness', 'fitness(2).svg'),
+(31, 'Employee', 'employee.svg'),
+(32, 'Magic', 'magic-potion.svg');
 
 -- --------------------------------------------------------
 
@@ -142,7 +179,7 @@ CREATE TABLE `contact` (
   `contEmail` varchar(30) NOT NULL,
   `contPhone` int(12) NOT NULL,
   `contMessage` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `contact`
@@ -167,7 +204,7 @@ CREATE TABLE `feedback` (
   `cust_id` int(11) NOT NULL,
   `bookId` int(11) NOT NULL,
   `feed_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -181,7 +218,7 @@ CREATE TABLE `payment` (
   `bookId` int(11) NOT NULL,
   `paymentAmount` int(11) NOT NULL,
   `paymentDate` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -198,16 +235,18 @@ CREATE TABLE `user` (
   `uAddress` varchar(255) NOT NULL,
   `uabout` varchar(255) DEFAULT NULL,
   `uProfile` varchar(255) NOT NULL DEFAULT 'default.png',
-  `upassword` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `upassword` varchar(30) NOT NULL,
+  `otp` int(4) NOT NULL,
+  `otp_date` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`uId`, `uName`, `uemail`, `uPhone`, `ugender`, `uAddress`, `uabout`, `uProfile`, `upassword`) VALUES
-(9, 'Priyank  Satani', 'priyank@gmail.com', 1234567898, 'Male', 'Ahmadabad', 'hi', 'img2.jpg', '123'),
-(15, 'Divya Rathod', 'divya@gmail.com', 1234567895, 'Female', 'Ahmadabad', 'Hi , i am a java developer.', 'IMG_4051.jpg', '123');
+INSERT INTO `user` (`uId`, `uName`, `uemail`, `uPhone`, `ugender`, `uAddress`, `uabout`, `uProfile`, `upassword`, `otp`, `otp_date`) VALUES
+(9, 'Priyank  Satani', 'priyank@gmail.com', 1234567898, 'Male', 'Ahmadabad', 'hi', 'img2.jpg', '123', 0, NULL),
+(15, 'Divya Rathod', 'divya@gmail.com', 1234567895, 'Female', 'Ahmadabad', 'Hi , i am a java developer.', 'IMG_4051.jpg', '123', 0, NULL);
 
 --
 -- Indexes for dumped tables
@@ -232,9 +271,15 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `booking`
   ADD PRIMARY KEY (`bookingID`),
-  ADD KEY `catId` (`catId`),
-  ADD KEY `userId` (`userId`),
-  ADD KEY `bookId` (`bookId`);
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `booking_detail`
+--
+ALTER TABLE `booking_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `book_id` (`book_id`),
+  ADD KEY `bookingId` (`bookingId`);
 
 --
 -- Indexes for table `books`
@@ -285,7 +330,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `add_cart`
 --
 ALTER TABLE `add_cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -297,7 +342,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `bookingID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `booking_detail`
+--
+ALTER TABLE `booking_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `books`
@@ -309,7 +360,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -350,9 +401,14 @@ ALTER TABLE `add_cart`
 -- Constraints for table `booking`
 --
 ALTER TABLE `booking`
-  ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`catId`) REFERENCES `category` (`catId`),
-  ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`uId`),
-  ADD CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
+  ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`uId`);
+
+--
+-- Constraints for table `booking_detail`
+--
+ALTER TABLE `booking_detail`
+  ADD CONSTRAINT `booking_detail_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`bookId`),
+  ADD CONSTRAINT `booking_detail_ibfk_2` FOREIGN KEY (`bookingId`) REFERENCES `booking` (`bookingID`);
 
 --
 -- Constraints for table `books`
