@@ -5,6 +5,7 @@
 <%@page import="com.helper.ConnectionProvider"%>
 <%@page import="com.dao.Add_cartdao"%>
 <%@page import="com.entities.User"%>
+
 <%
     User user = (User) session.getAttribute("currentUser");
 

@@ -5,6 +5,7 @@ import com.dao.Bookingdao;
 import com.dao.Userdao;
 import com.entities.Booking;
 import com.entities.BookingDetail;
+import com.entities.User;
 import com.helper.ConnectionProvider;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,11 +13,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.mail.Session;
+
 
 public class BookingServlet extends HttpServlet {
 
@@ -26,91 +30,107 @@ public class BookingServlet extends HttpServlet {
 
         Connection con = null; // Declare connection here
         try (PrintWriter out = response.getWriter()) {
-            
-            // Get a single connection at the start
-            con = ConnectionProvider.getConnection();
-            con.setAutoCommit(false); // Begin transaction
 
-            // Retrieve form parameters
-            int uid = Integer.parseInt(request.getParameter("uID"));
-            String bookingType = request.getParameter("bookingType");
-            String shippingAddress = request.getParameter("shippingAddress");
-            double totalAmount = Double.parseDouble(request.getParameter("total_amount"));
+            // Get the HttpSession object and retrieve the logged-in user
+            HttpSession session = request.getSession(false);  // Get the existing session without creating a new one
+            if (session != null) {
+                User user = (User) session.getAttribute("currentUser");  // Assume "currentUser" is the session attribute set during login
 
-            // Get the current date and time for the booking
-            Date bookingDate = new Date();
+                if (user != null) {
+                    // Get the user ID and other necessary details from the User object
+                    int uid = user.getuId();
+                    String userName = user.getUName();
+                    String userEmail = user.getUemail();
 
-            // Create a new Booking object
-            Booking booking = new Booking(uid, shippingAddress, totalAmount, bookingType, bookingDate);
+                    // Get a single connection at the start
+                    con = ConnectionProvider.getConnection();
+                    con.setAutoCommit(false);  // Begin transaction
 
-            // Insert the booking into the database using the same connection
-            Bookingdao bookingdao = new Bookingdao(con);
-            int bookingId = bookingdao.saveBooking(booking);  // Use the same connection
+                    // Retrieve form parameters for the booking
+                    String bookingType = request.getParameter("bookingType");
+                    String shippingAddress = request.getParameter("shippingAddress");
+                    double totalAmount = Double.parseDouble(request.getParameter("total_amount"));
 
-            if (bookingId > 0) {
-                // Save booking details using the same connection
-                BookingDetaildao bookingDetaildao = new BookingDetaildao(con);
-                List<Integer> bookIdList = new ArrayList<>(); // List to hold book IDs
+                    // Get the current date and time for the booking
+                    Date bookingDate = new Date();
 
-                // Check if request contains multiple book IDs (for cart)
-                String[] bookIdParams = request.getParameterValues("bookId[]");
-                if (bookIdParams != null) 
-                {
-                    // Case for multiple books (cart)
-                    for (String bookIdParam : bookIdParams) 
-                    {
-                        bookIdList.add(Integer.parseInt(bookIdParam));
+                    // Create a new Booking object
+                    Booking booking = new Booking(uid, shippingAddress, totalAmount, bookingType, bookingDate);
+
+                    // Insert the booking into the database using the same connection
+                    Bookingdao bookingdao = new Bookingdao(con);
+                    int bookingId = bookingdao.saveBooking(booking);  // Use the same connection
+
+                    if (bookingId > 0) {
+                        // Save booking details using the same connection
+                        BookingDetaildao bookingDetaildao = new BookingDetaildao(con);
+                        List<Integer> bookIdList = new ArrayList<>(); // List to hold book IDs
+
+                        // Check if request contains multiple book IDs (for cart)
+                        String[] bookIdParams = request.getParameterValues("bookId[]");
+                        if (bookIdParams != null) {
+                            // Case for multiple books (cart)
+                            for (String bookIdParam : bookIdParams) {
+                                bookIdList.add(Integer.parseInt(bookIdParam));
+                            }
+                        } else {
+                            // Case for a single book (buy)
+                            int bookId = Integer.parseInt(request.getParameter("bookId"));
+                            bookIdList.add(bookId);
+                        }
+
+                        // Insert all booking details
+                        for (Integer bookId : bookIdList) {
+                            BookingDetail bookingDetail = new BookingDetail(bookId, bookingId);
+                            bookingDetaildao.saveBookingDetail(bookingDetail);
+                        }
+
+                        // Generate OTP for the user
+                        Userdao userdao = new Userdao(con);
+                        int generatedOtp = userdao.generateOTP();  // Generate OTP
+
+                        // Send OTP to the user's email
+                        userdao.sendEmail(userEmail, userName, generatedOtp);
+
+                        // Save OTP to the user table
+                        boolean otpSaved = userdao.saveOtp(uid, generatedOtp);
+
+                        if (otpSaved) {
+                            // Commit the transaction if everything is successful
+                            con.commit();
+                            con.setAutoCommit(true);  // Reset auto-commit
+
+                            // Redirect to OTP verification page
+                            response.sendRedirect("otp.jsp");
+
+                        } else {
+                            // Handle failure by rolling back transaction
+                            con.rollback();
+                            response.sendRedirect("404.jsp");
+                        }
+                    } else {
+                        // Handle failure by rolling back transaction
+                        con.rollback();
+                        response.sendRedirect("404.jsp");
                     }
                 } else {
-                    // Case for a single book (buy)
-                    int bookId = Integer.parseInt(request.getParameter("bookId"));
-                    bookIdList.add(bookId);
-                }
-
-                // Insert all booking details
-                for (Integer bookId : bookIdList) {
-                    BookingDetail bookingDetail = new BookingDetail(bookId, bookingId);
-                    bookingDetaildao.saveBookingDetail(bookingDetail);
-                }
-
-               // Generate OTP for user
-                Userdao userdao = new Userdao(con);
-                int generatedOtp = userdao.generateOTP(); // Generate OTP
-                String email = "mihirbhuva2711@gmail.com";
-                userdao.sendEmail(email, "Mihir Bhuva", generatedOtp);
-                boolean otpSaved = userdao.saveOtp(uid, generatedOtp); // Save OTP to the user table
-
-                if (otpSaved) {
-                    // Commit transaction if everything is successful
-                    con.commit();
-                    con.setAutoCommit(true); // Reset auto-commit
-                    
-                    // Send OTP to the user via email or other methods
-                    // For example: emailService.sendOtp(userEmail, generatedOtp);
-
-                    // Redirect to OTP verification page
-                    response.sendRedirect("otp.jsp");
-                    
-                } else {
-                    // Handle failure by rolling back transaction
-                    con.rollback();
-                    response.sendRedirect("404.jsp");
+                    // If no user is in session, redirect to login page
+                    response.sendRedirect("login.jsp");
                 }
             } else {
-                // Handle failure by rolling back transaction
-                con.rollback();
-                response.sendRedirect("404.jsp");
+                // If no session exists, redirect to login page
+                response.sendRedirect("login.jsp");
             }
+
         } catch (Exception e) {
             if (con != null) {
                 try {
-                    con.rollback(); // Rollback transaction on exception
+                    con.rollback();  // Rollback transaction on exception
                 } catch (SQLException se) {
                     se.printStackTrace();
                 }
             }
             e.printStackTrace();
-       
         }
     }
 
@@ -118,7 +138,7 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request , response);
+        processRequest(request, response);
     }
 
     @Override

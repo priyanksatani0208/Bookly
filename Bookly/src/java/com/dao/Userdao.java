@@ -276,5 +276,29 @@ public class Userdao {
             e.printStackTrace();
         }
     }
+    
+    
+     // Fetch user by userId to get their name and email
+    public User getUserById(int uId) {
+        User user = null;
+        try {
+            String query = "SELECT UName, uemail FROM users WHERE uId = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, uId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String userName = rs.getString("UName");
+                String userEmail = rs.getString("uemail");
+
+                user = new User();
+                user.setUName(userName);
+                user.setUemail(userEmail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 
 }
