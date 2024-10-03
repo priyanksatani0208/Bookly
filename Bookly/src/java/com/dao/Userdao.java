@@ -187,7 +187,7 @@ public class Userdao {
     }
 
     //sending email    
-    public static void sendEmail(String recipientEmail,String userName, int otp) {
+    public static void sendEmail(String recipientEmail, String userName, int otp) {
         // SMTP server properties
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -228,7 +228,7 @@ public class Userdao {
                     + "                    </tr>\n"
                     + "                    <tr>\n"
                     + "                        <td align=\"center\" style=\"padding-bottom: 10px;\">\n"
-                    + "                            <p style=\"font-size: 18px; color: #666;\">Hi "+ userName +",</p>\n"
+                    + "                            <p style=\"font-size: 18px; color: #666;\">Hi " + userName + ",</p>\n"
                     + "                            <p style=\"font-size: 18px; color: #666;\">Thank you for placing an order for the following book:</p>\n"
                     + "                        </td>\n"
                     + "                    </tr>\n"
@@ -240,7 +240,7 @@ public class Userdao {
                     + "                    <tr>\n"
                     + "                        <td align=\"center\" style=\"padding: 20px;\">\n"
                     + "                            <div style=\"display: inline-block; background-color: #333; color: #ffffff; font-size: 24px; font-weight: bold; padding: 10px 20px; border-radius: 5px;\">\n"
-                    + "                                "+ otp +"\n"
+                    + "                                " + otp + "\n"
                     + "                            </div>\n"
                     + "                        </td>\n"
                     + "                    </tr>\n"
@@ -276,9 +276,80 @@ public class Userdao {
             e.printStackTrace();
         }
     }
-    
-    
-     // Fetch user by userId to get their name and email
+
+    // In your Userdao class
+    public static void sendBookingConfirmationEmail(String recipientEmail, String userName) {
+        // SMTP server properties
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");  // Change as needed
+        properties.put("mail.smtp.port", "587");
+
+        // Sender's email credentials
+        final String senderEmail = "priyanksatani0208@gmail.com";  // Replace with your email
+        final String password = "ysev xwab hvqz xokx";  // Replace with your email password
+
+        // Create a session with an authenticator
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(senderEmail, password);
+            }
+        });
+
+        try {
+            // Create a new email message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(senderEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+            message.setSubject("Order Confirmation - Bookly");
+
+            // Set the email content (HTML)
+            String htmlContent = "<body style=\"margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;\">\n"
+                    + "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"background-color: #f4f4f4; padding: 20px;\">\n"
+                    + "        <tr>\n"
+                    + "            <td align=\"center\">\n"
+                    + "                <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"600\" style=\"background-color: #ffffff; border-radius: 10px; padding: 20px;\">\n"
+                    + "                    <tr>\n"
+                    + "                        <td align=\"center\" style=\"padding-bottom: 20px;\">\n"
+                    + "                            <h1 style=\"color: #333; font-size: 24px;\">Order Confirmed</h1>\n"
+                    + "                        </td>\n"
+                    + "                    </tr>\n"
+                    + "                    <tr>\n"
+                    + "                        <td align=\"center\" style=\"padding-bottom: 10px;\">\n"
+                    + "                            <p style=\"font-size: 18px; color: #666;\">Hi " + userName + ",</p>\n"
+                    + "                            <p style=\"font-size: 18px; color: #666;\">Your order has been confirmed.</p>\n" // Updated line
+                    + "                        </td>\n"
+                    + "                    </tr>\n"
+                    + "                    <tr>\n"
+                    + "                        <td align=\"center\" style=\"padding-bottom: 20px;\">\n"
+                    + "                            <p style=\"font-size: 16px; color: #666;\">We will notify you when your order is ready for shipping.</p>\n"
+                    + "                        </td>\n"
+                    + "                    </tr>\n"
+                    + "                    <tr>\n"
+                    + "                        <td align=\"center\" style=\"padding-top: 20px;\">\n"
+                    + "                            <p style=\"font-size: 14px; color: #999;\">Thank you for choosing Bookly!</p>\n"
+                    + "                        </td>\n"
+                    + "                    </tr>\n"
+                    + "                </table>\n"
+                    + "            </td>\n"
+                    + "        </tr>\n"
+                    + "    </table>\n"
+                    + "</body>";
+
+            message.setContent(htmlContent, "text/html");
+
+            // Send the email
+            Transport.send(message);
+            System.out.println("Order confirmation email sent successfully!");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Fetch user by userId to get their name and email
     public User getUserById(int uId) {
         User user = null;
         try {

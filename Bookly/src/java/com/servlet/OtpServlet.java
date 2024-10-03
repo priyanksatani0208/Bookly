@@ -2,11 +2,13 @@ package com.servlet;
 
 import com.dao.Bookingdao;
 import com.dao.Userdao;
+import com.entities.User;
 import com.helper.ConnectionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,9 +25,9 @@ public class OtpServlet extends HttpServlet {
             // Get OTP inputs from the request
             int userId = Integer.parseInt(request.getParameter("uid"));
             String enteredOtp = request.getParameter("otp1") + request.getParameter("otp2")
-                                + request.getParameter("otp3") + request.getParameter("otp4");
+                    + request.getParameter("otp3") + request.getParameter("otp4");
 
-              System.out.println(enteredOtp);
+            System.out.println(enteredOtp);
             // Establish the connection
             con = ConnectionProvider.getConnection();
             Userdao userDao = new Userdao(con);
@@ -39,6 +41,15 @@ public class OtpServlet extends HttpServlet {
                 Bookingdao bookingDao = new Bookingdao(con);
                 bookingDao.updateBookingStatus(userId, 1); // Set booking status to 1 (confirmed)
 
+                // Fetch user details from the session
+                HttpSession session = request.getSession();
+                User user = (User) session.getAttribute("currentUser");  // Retrieve user object from the session
+
+                // Send order confirmation email using session details
+                if (user != null) {
+                    Userdao.sendBookingConfirmationEmail(user.getUemail(), user.getUName()); // Send email without book name
+                }
+
                 response.sendRedirect("thanks.jsp");  // Redirect to thank you page
             } else {
                 // OTP is invalid, redirect to OTP page with an error
@@ -47,7 +58,7 @@ public class OtpServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("404.jsp");
-        } 
+        }
     }
 
     @Override

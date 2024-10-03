@@ -30,7 +30,7 @@
 
     List<Add_cart> cartItems = add_cartdao.getCartItems(user.getuId());
 
-   
+
 %>
 
 <!DOCTYPE html>
@@ -72,6 +72,41 @@
         <!-- body -->
         <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
         <!-- //online-fonts -->
+
+        <style>
+            /* Loader Styles */
+            #loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.8);
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .loader-spinner {
+                border: 8px solid #FF6600; /* Light grey */
+                border-top: 8px solid #FFFFFF; /* Blue */
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+        </style>
 
     </head>
 
@@ -153,11 +188,11 @@
                                     <form action="BookingServlet" method="post" class="creditly-card-form shopf-sear-headinfo_form">
                                         <div class="creditly-wrapper wrapper">
                                             <input type="hidden"  name="uID" value="<%= user.getuId()%>">
-                                            <input type="hidden"  name="total_amount" value="<%= book.getBookPrice() %>">
+                                            <input type="hidden"  name="total_amount" value="<%= book.getBookPrice()%>">
 
                                             <!-- Send only the selected bookId -->
                                             <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
-                                            
+
                                             <div class="information-wrapper">
                                                 <div class="container">
                                                     <!-- Customer Details -->
@@ -217,30 +252,12 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <div class="controls">
-
                                                                     <label class="control-label">Shipping Address:</label>
                                                                     <input class="form-control" type="text" id="shippingAddress" name="shippingAddress" required>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <!-- JavaScript Function to Copy Address -->
-                                                    <script>
-                                                        function copyAddress() {
-                                                            var userAddress = document.getElementById('userAddress').value;
-                                                            var checkbox = document.getElementById('sameAsUserAddress');
-                                                            var shippingAddressField = document.getElementById('shippingAddress');
-
-                                                            if (checkbox.checked) {
-                                                                shippingAddressField.value = userAddress; // Copy User Address to Shipping Address
-                                                            } else {
-                                                                shippingAddressField.value = ''; // Clear Shipping Address if unchecked
-                                                            }
-                                                        }
-                                                    </script>
-
-
 
                                                     <!-- Place Order Button (Centered) -->
                                                     <div class="row justify-content-center mt-4">
@@ -260,6 +277,16 @@
                     </div>
                     <!--//checkout-->
 
+                    <!-- Loader -->
+                    <div id="loader" style="display: none;">
+                        <div class="loader-spinner"></div>
+                    </div>
+
+                    <script>
+                        document.querySelector(".creditly-card-form").addEventListener("submit", function () {
+                            document.getElementById("loader").style.display = "flex"; // Show the loader
+                        });
+                    </script>
 
                     <!-- //home -->
 

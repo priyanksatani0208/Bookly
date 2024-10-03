@@ -87,6 +87,39 @@
                 padding: 10px;
                 border-top: 2px solid #ddd; /* Light border for separation */
             }
+
+            /* Loader Styles */
+            #loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.8);
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .loader-spinner {
+                border: 8px solid #FF6600; /* Light grey */
+                border-top: 8px solid #FFFFFF; /* Blue */
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
         </style>
 
     </head>
@@ -216,7 +249,7 @@
                                             <div class="information-wrapper">
                                                 <div class="first-row form-group">
                                                     <input type="hidden"  name="uID" value="<%= user.getuId()%>">
-                                                    <input type="hidden"  name="total_amount" value="<%= totalPrice %>">
+                                                    <input type="hidden"  name="total_amount" value="<%= totalPrice%>">
 
                                                     <%
                                                         for (Add_cart item : cartItems) {
@@ -278,7 +311,16 @@
                 </div>
                 <!--//checkout-->
 
+                <!-- Loader -->
+                <div id="loader" style="display: none;">
+                    <div class="loader-spinner"></div>
+                </div>
 
+                <script>
+                    document.querySelector(".creditly-card-form").addEventListener("submit", function () {
+                        document.getElementById("loader").style.display = "flex"; // Show the loader
+                    });
+                </script>
                 <!-- //home -->
 
                 <!-- Common js -->
@@ -356,32 +398,32 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
             <script>
-                $(document).ready(function () {
-                    $('.remove-item').click(function () {
-                        var cartId = $(this).data('cartid');
-                        var row = $(this).closest('tr'); // Get the row to remove it later
+                        $(document).ready(function () {
+                            $('.remove-item').click(function () {
+                                var cartId = $(this).data('cartid');
+                                var row = $(this).closest('tr'); // Get the row to remove it later
 
-                        $.ajax({
-                            url: 'cart_booking.jsp',
-                            method: 'GET',
-                            data: {cartId: cartId},
-                            success: function (response) {
-                                // If the item is successfully removed, remove the row from the table
-                                row.remove();
+                                $.ajax({
+                                    url: 'cart_booking.jsp',
+                                    method: 'GET',
+                                    data: {cartId: cartId},
+                                    success: function (response) {
+                                        // If the item is successfully removed, remove the row from the table
+                                        row.remove();
 
-                                // Reassign the serial numbers
-                                $('.timetable_sub tbody tr').each(function (index) {
-                                    $(this).find('td:first').text(index + 1); // Update the SL No
+                                        // Reassign the serial numbers
+                                        $('.timetable_sub tbody tr').each(function (index) {
+                                            $(this).find('td:first').text(index + 1); // Update the SL No
+                                        });
+
+                                        // You may want to update other parts of the page, like the cart total, here
+                                    },
+                                    error: function () {
+                                        alert('Error occurred while removing the item.');
+                                    }
                                 });
-
-                                // You may want to update other parts of the page, like the cart total, here
-                            },
-                            error: function () {
-                                alert('Error occurred while removing the item.');
-                            }
+                            });
                         });
-                    });
-                });
 
 
             </script>
