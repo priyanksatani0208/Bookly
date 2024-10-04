@@ -59,4 +59,26 @@ public class Userdao {
         }
         return totalUser;
     }
+    
+     // Method to get user details by userId
+    public User getUserById(int userId) {
+        User user = null;
+        try {
+            String query = "SELECT * FROM user WHERE uId = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setuId(rs.getInt("uId"));
+                user.setUName(rs.getString("UName"));
+                user.setUemail(rs.getString("uemail"));
+             
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

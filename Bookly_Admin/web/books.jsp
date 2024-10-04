@@ -91,9 +91,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%                                          
-                                            int pageid = 1;
-                                            int total = 10; // Records per page
+                                        <%                                            int pageid = 1;
+                                            int total = 5; // Records per page
                                             if (request.getParameter("page") != null) {
                                                 pageid = Integer.parseInt(request.getParameter("page"));
                                             }
@@ -138,20 +137,26 @@
                                 </table>             
                             </div>
 
-                            <!--pagination button-->        
+                            <!-- Pagination -->
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid - 1%>">Previous</a></li>
-                                        <%
-                                            int numberOfRecords = booksdao.getBooksByPage(start, total).size();
-                                            int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
-                                            for (int i = 1; i <= numberOfPages; i++) {
-                                        %>
-                                    <li class="page-item"><a class="page-link" href="books.jsp?page=<%= i%>"><%= i%></a></li>
-                                        <%
-                                            }
-                                        %>
-                                    <li class="page-item"><a class="page-link" href="books.jsp?page=<%= pageid + 1%>">Next</a></li>
+                                    <li class="page-item <%= pageid == 1 ? "disabled" : ""%>">
+                                        <a class="page-link" href="books.jsp?page=<%= pageid - 1%>">Previous</a>
+                                    </li>
+                                    <%
+                                        int numberOfRecords = booksdao.getTotalBooks(); // This should return the total number of books
+                                        int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                                        for (int i = 1; i <= numberOfPages; i++) {
+                                    %>
+                                    <li class="page-item <%= pageid == i ? "active" : ""%>">
+                                        <a class="page-link" href="books.jsp?page=<%= i%>"><%= i%></a>
+                                    </li>
+                                    <%
+                                        }
+                                    %>
+                                    <li class="page-item <%= pageid == numberOfPages ? "disabled" : ""%>">
+                                        <a class="page-link" href="books.jsp?page=<%= pageid + 1%>">Next</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>

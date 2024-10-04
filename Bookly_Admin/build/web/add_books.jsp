@@ -100,7 +100,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 text-center">
-                                            <br><br> <button type="submit" class="btn btn-primary">Submit</button>
+                                            <br><br><button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button> <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
                                 </form>

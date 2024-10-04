@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 text-center">
-                                            <br><br><button type="cancel" class="btn btn-primary">cancel</button> <button type="submit" class="btn btn-success">Update</button>                                         
+                                            <br><br><button type="button" onclick="window.history.back()" class="btn btn-primary">Cancel</button> <button type="submit" class="btn btn-success">Update</button>                                         
                                         </div>
                                 </div>
                             </form>

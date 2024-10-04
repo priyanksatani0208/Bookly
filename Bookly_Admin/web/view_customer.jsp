@@ -97,23 +97,28 @@
                             </table>
                         </div>
                                 
-                        <!-- Pagination controls -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item"><a class="page-link" href="view_customer.jsp?page=<%= pageid - 1%>">Previous</a></li>
-                                    <%
-                                        int numberOfRecords = userDao.getUsersByPage(start, total).size();
-                                        int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
-                                        for (int i = 1; i <= numberOfPages; i++) {
-                                    %>
-                                <li class="page-item"><a class="page-link" href="view_customer.jsp?page=<%= i%>"><%= i%></a></li>
-      
-                                    <%
-                                        }
-                                    %>
-                                <li class="page-item"><a class="page-link" href="view_customer.jsp?page=<%= pageid + 1%>">Next</a></li>
-                            </ul>
-                        </nav>
+                         <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item <%= pageid == 1 ? "disabled" : "" %>">
+                            <a class="page-link" href="view_customer.jsp?page=<%= pageid - 1 %>">Previous</a>
+                        </li>
+                        <%
+                            int numberOfRecords = userDao.getTotalUser(); // This should return the total number of customers
+                            int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                            for (int i = 1; i <= numberOfPages; i++) {
+                        %>
+                        <li class="page-item <%= pageid == i ? "active" : "" %>">
+                            <a class="page-link" href="view_customer.jsp?page=<%= i %>"><%= i %></a>
+                        </li>
+                        <%
+                            }
+                        %>
+                        <li class="page-item <%= pageid == numberOfPages ? "disabled" : "" %>">
+                            <a class="page-link" href="view_customer.jsp?page=<%= pageid + 1 %>">Next</a>
+                        </li>
+                    </ul>
+                </nav>
                     </div>
                 </div>
             </div>

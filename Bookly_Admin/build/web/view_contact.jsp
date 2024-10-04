@@ -64,11 +64,11 @@
 
                     <div class="col-12">
                         <div class="QA_section">
-                                                    <div class="white_box_tittle list_header">
-                            <div class="box_right d-flex lms_block">
-                                <input type="text" id="searchInput" placeholder="Search by Name, Email, or Phone" class="form-control">
+                            <div class="white_box_tittle list_header">
+                                <div class="box_right d-flex lms_block">
+                                    <input type="text" id="searchInput" placeholder="Search by Name, Email, or Phone" class="form-control">
+                                </div>
                             </div>
-                        </div>
                             <div class="QA_table mb_30 table-responsive">
                                 <table class="table">
                                     <thead>
@@ -83,21 +83,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%        
-                                            int pageid = 1;
+                                        <%                                            int pageid = 1;
                                             int total = 5; // Records per page
                                             if (request.getParameter("page") != null) {
                                                 pageid = Integer.parseInt(request.getParameter("page"));
                                             }
-                                            int start = (pageid - 1) * total;                                     
-                                            
-                                            
-                                            
-                                           
+                                            int start = (pageid - 1) * total;
+
                                             Contactdao contactdao = new Contactdao(ConnectionProvider.getConnection());
                                             List<Contact> contactList = contactdao.getContactsByPage(start, total);
-                                            
-                                            
+
                                             for (Contact c : contactList) {
                                         %>
                                         <tr>
@@ -117,22 +112,27 @@
                                 </table>
                             </div>
 
-                            <!-- Pagination controls -->
+                            <!-- Pagination -->
                             <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item"><a class="page-link" href="view_contact.jsp?page=<%= pageid - 1%>">Previous</a></li>
-                                            <%
-                                                int numberOfRecords = contactdao.getContactsByPage(start, total).size();
-                                                int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
-                                                for (int i = 1; i <= numberOfPages; i++) {
-                                            %>
-                                        <li class="page-item"><a class="page-link" href="view_contact.jsp.jsp?page=<%= i%>"><%= i%></a></li>
-          
-                                            <%
-                                                }
-                                            %>
-                                            <li class="page-item"><a class="page-link" href="view_contact.jsp?page=<%= pageid + 1%>">Next</a></li>
-                                    </ul>
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <%= pageid == 1 ? "disabled" : ""%>">
+                                        <a class="page-link" href="view_contact.jsp?page=<%= pageid - 1%>">Previous</a>
+                                    </li>
+                                    <%
+                                        int numberOfRecords = contactdao.getTotalContact() ; // This should return the total number of contacts
+                                        int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                                        for (int i = 1; i <= numberOfPages; i++) {
+                                    %>
+                                    <li class="page-item <%= pageid == i ? "active" : ""%>">
+                                        <a class="page-link" href="view_contact.jsp?page=<%= i%>"><%= i%></a>
+                                    </li>
+                                    <%
+                                        }
+                                    %>
+                                    <li class="page-item <%= pageid == numberOfPages ? "disabled" : ""%>">
+                                        <a class="page-link" href="view_contact.jsp?page=<%= pageid + 1%>">Next</a>
+                                    </li>
+                                </ul>
                             </nav>
 
                         </div>
@@ -141,9 +141,9 @@
             </div>
         </div>                                    
     </div>
-    
+
     <!--footer start-->
-        <%@include file="footer.jsp" %>
+    <%@include file="footer.jsp" %>
     <!--footer end-->
 
 
@@ -174,11 +174,11 @@
     <script src="vendors/text_editor/summernote-bs4.js"></script>
     <script src="vendors/apex_chart/apexcharts.js"></script>
     <script src="js/custom.js"></script>
-   
+
 
 
     <script>
-        
+
         //search by contact
         document.addEventListener('DOMContentLoaded', function () {
             var searchInput = document.getElementById('searchInput');
@@ -202,27 +202,26 @@
                 });
             });
         });
-        
+
         // Function to get URL parameter
-            function getUrlParameter(name) {
-                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-                var results = regex.exec(location.search);
-                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-            }
-            
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
         //delete code   
-        
+
         var msg = getUrlParameter('msg');
-         if (msg === 'ds') 
+        if (msg === 'ds')
         {
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Delete successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'success', title: 'Delete successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
+        } else if (msg === 'de')
+        {
+            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>");
         }
-        else if (msg === 'de') 
-        { 
-            document.write("<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'><\/script><script>Swal.fire({icon: 'error', title: 'Error', text: 'An error occurred', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, didOpen: (toast) => {toast.onmouseenter = Swal.stopTimer; toast.onmouseleave = Swal.resumeTimer;}});<\/script>"); 
-        }
-        
+
     </script>
 </body>
 

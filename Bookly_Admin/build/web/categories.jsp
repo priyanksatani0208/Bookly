@@ -109,25 +109,31 @@
                                         %>
                                     </tbody>
                                 </table>
-
-                                <!--pagination start-->
-                                <nav aria-label="Page navigation example">
-                                    <br> <ul class="pagination justify-content-center">
-                                        <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= pageid - 1%>">Previous</a></li>
-                                            <%
-                                                int numberOfRecords = categorydao.getCategoriesWithPagination(start, total).size();
-                                                int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
-                                                for (int i = 1; i <= numberOfPages; i++) {
-                                            %>
-                                        <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= i%>"><%= i%></a></li>
-                                            <%
-                                                }
-                                            %>
-                                        <li class="page-item"><a class="page-link" href="categories.jsp?page=<%= pageid + 1%>">Next</a></li>
-                                    </ul>
-                                </nav>
-                                <!--pagination end--> 
                             </div>
+
+                            <!-- Pagination -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <%= pageid == 1 ? "disabled" : ""%>">
+                                        <a class="page-link" href="categories.jsp?page=<%= pageid - 1%>">Previous</a>
+                                    </li>
+                                    <%
+                                        int numberOfRecords = categorydao.getTotalCategory(); // This should return the total number of categories
+                                        int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                                        for (int i = 1; i <= numberOfPages; i++) {
+                                    %>
+                                    <li class="page-item <%= pageid == i ? "active" : ""%>">
+                                        <a class="page-link" href="categories.jsp?page=<%= i%>"><%= i%></a>
+                                    </li>
+                                    <%
+                                        }
+                                    %>
+                                    <li class="page-item <%= pageid == numberOfPages ? "disabled" : ""%>">
+                                        <a class="page-link" href="categories.jsp?page=<%= pageid + 1%>">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--pagination end--> 
                         </div>
                     </div>
                 </div>

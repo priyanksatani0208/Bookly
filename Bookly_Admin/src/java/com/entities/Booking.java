@@ -12,7 +12,7 @@ public class Booking {
     private int total_amount;
     private LocalDateTime bookingDate;
     private String BookingType;
-    private boolean booking_satatus;
+    private boolean bookingStatus; 
 
     public Booking() {
     }
@@ -94,12 +94,12 @@ public class Booking {
         this.BookingType = BookingType;
     }
 
-    public boolean isBooking_satatus() {
-        return booking_satatus;
+    public boolean isBookingStatus() {
+        return bookingStatus;
     }
 
-    public void setBooking_satatus(boolean booking_satatus) {
-        this.booking_satatus = booking_satatus;
+    public void setBookingStatus(boolean bookingStatus) {
+        this.bookingStatus = bookingStatus;
     }
     
     

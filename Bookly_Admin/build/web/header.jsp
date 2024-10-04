@@ -54,8 +54,8 @@
                     </a>
                 </li>
                 
-                 <li class="<%= currentPage.contains("#") ? "mm-active" : ""%>">
-                    <a href="#" aria-expanded="false">
+                 <li class="<%= currentPage.contains("view_booking.jsp") ? "mm-active" : ""%>">
+                    <a href="view_booking.jsp" aria-expanded="false">
                         <img src="img/menu-icon/booking.svg" alt>
                         <span>View Booking</span>
                     </a>
