@@ -17,7 +17,7 @@ public class Bookingdao {
     }
 
     // Method to get booking details with pagination
-   public List<Booking> getBookingsByPage(int start, int total) {
+    public List<Booking> getBookingsByPage(int start, int total) {
         List<Booking> bookingList = new ArrayList<>();
         try {
             String query = "SELECT * FROM booking LIMIT ?, ?";
@@ -35,6 +35,7 @@ public class Bookingdao {
                 booking.setBookingDate(rs.getTimestamp("bookingDate").toLocalDateTime());
                 booking.setBookingType(rs.getString("bookingType"));
                 booking.setBookingStatus(rs.getInt("booking_status") == 1); // Corrected status logic
+                booking.setDeliverStatus(rs.getInt("deliver_status") == 1); //delivery status
 
                 bookingList.add(booking);
             }
@@ -43,7 +44,7 @@ public class Bookingdao {
         }
         return bookingList;
     }
-   
+
     // Method to get booking details by bookingId
     public List<BookingDetail> getBookingDetailsByBookingId(int bookingId) {
         List<BookingDetail> bookingDetailList = new ArrayList<>();
@@ -83,4 +84,52 @@ public class Bookingdao {
         }
         return count;
     }
+
+    //Update Deliver Status
+    public boolean updateDeliverStatus(int bookingId) {
+        try {
+            String query = "UPDATE booking SET deliver_status = TRUE WHERE bookingId = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, bookingId);
+            return pstmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public String getUserEmailByBookingId(int bookingId) {
+        String email = null;
+        String query = "SELECT u.uemail FROM booking b JOIN user u ON b.userId = u.uId WHERE b.bookingId = ?";
+
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, bookingId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    email = rs.getString("uemail");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider logging instead
+        }
+        return email;
+    }
+
+    public String getUserNameByBookingId(int bookingId) {
+        String userName = null;
+        String query = "SELECT u.uName FROM booking b JOIN user u ON b.userId = u.uId WHERE b.bookingId = ?";
+
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, bookingId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    userName = rs.getString("uName");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider logging instead
+        }
+        return userName;
+    }
+
 }

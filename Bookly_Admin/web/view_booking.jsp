@@ -64,7 +64,9 @@
                                             <th>Booking Date</th>
                                             <th>Booking Type</th>
                                             <th>Booking Status</th>
-                                            <th>Delete</th>
+                                            <th>Deliver Status</th>             
+                                            <th>Admin confirm</th>                                                        
+                                          
                                         </tr>
                                     </thead>
 
@@ -101,8 +103,9 @@
                                             <td><%= booking.getBookingDate()%></td>
                                             <td><%= booking.getBookingType()%></td>
                                             <td><%= booking.isBookingStatus() ? "Completed" : "Pending"%></td>
-                                            <td><a href="BookingServlet?action=delete&bid=<%= booking.getBookingId()%>" class="status_btn1">Delete</a></td>
-                                        </tr>
+                                            <td><%= booking.isDeliverStatus() ? "Delivered" : "Pending" %></td>
+                                           <td><a href="BookingServlet?action=confirmDelivery&bid=<%= booking.getBookingId() %>" class="status_btn1">Confirm Delivery</a></td>
+                                             </tr>
                                         <%
                                                 }
                                             }

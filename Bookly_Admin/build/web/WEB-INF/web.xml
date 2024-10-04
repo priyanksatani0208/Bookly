@@ -33,6 +33,10 @@
         <servlet-name>DeleteContactServlet</servlet-name>
         <servlet-class>com.servlet.DeleteContactServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>com.servlet.BookingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
@@ -145,6 +149,10 @@
     <servlet-mapping>
         <servlet-name>DeleteContactServlet</servlet-name>
         <url-pattern>/DeleteContactServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/BookingServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>

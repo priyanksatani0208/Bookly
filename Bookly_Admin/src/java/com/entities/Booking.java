@@ -13,6 +13,7 @@ public class Booking {
     private LocalDateTime bookingDate;
     private String BookingType;
     private boolean bookingStatus; 
+    private boolean deliverStatus;
 
     public Booking() {
     }
@@ -102,6 +103,13 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
     
+    public boolean isDeliverStatus() {
+        return deliverStatus;
+    }
+
+    public void setDeliverStatus(boolean deliverStatus) {
+        this.deliverStatus = deliverStatus;
+    }
     
     
 }
