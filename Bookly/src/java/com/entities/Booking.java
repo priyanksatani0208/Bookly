@@ -9,6 +9,8 @@ public class Booking {
     private double total_amount; 
     private String bookingType;
     private Date bookingDate;
+    private boolean bookingStatus; 
+    private boolean deliverStatus;
 
     public Booking() {}
 
@@ -66,5 +68,21 @@ public class Booking {
 
     public void setBookingDate(Date bookingDate) {
         this.bookingDate = bookingDate;
+    }
+    
+     public boolean isBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(boolean bookingStatus) {
+        this.bookingStatus = bookingStatus;
+    }
+    
+    public boolean isDeliverStatus() {
+        return deliverStatus;
+    }
+
+    public void setDeliverStatus(boolean deliverStatus) {
+        this.deliverStatus = deliverStatus;
     }
 }

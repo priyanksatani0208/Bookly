@@ -1,9 +1,9 @@
 package com.dao;
 
 import com.entities.BookingDetail;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookingDetaildao {
     private Connection con;
@@ -29,5 +29,24 @@ public class BookingDetaildao {
         }
         // DO NOT close the connection here
         return success;
+    }
+    
+    public List<BookingDetail> getBookingDetailsByBookingId(int bookingId) {
+        List<BookingDetail> details = new ArrayList<>();
+        String query = "SELECT * FROM booking_detail WHERE bookingId = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BookingDetail detail = new BookingDetail();
+                detail.setId(rs.getInt("id"));
+                detail.setBook_id(rs.getInt("book_id"));
+                detail.setBookingId(rs.getInt("bookingId"));
+                details.add(detail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return details;
     }
 }

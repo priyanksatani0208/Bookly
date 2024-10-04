@@ -24,22 +24,22 @@
                 top: -5px; /* Adjust this value to move the image upwards */
             }
 
-            
-          
-        /* Align the navbar-collapse to the right */
-        .navbar-collapse {
-            float: right; /* Aligns the navigation menu to the right */
-        }
 
-        /* Optional: Adjust margin/padding for better alignment */
-        .navbar-nav {
-            margin-right: 0;
-            padding-right: 0;
-        }
 
-        .navbar-nav > li {
-            margin-left: -5px; /* Add space between menu items if needed */
-        }
+            /* Align the navbar-collapse to the right */
+            .navbar-collapse {
+                float: right; /* Aligns the navigation menu to the right */
+            }
+
+            /* Optional: Adjust margin/padding for better alignment */
+            .navbar-nav {
+                margin-right: 0;
+                padding-right: 0;
+            }
+
+            .navbar-nav > li {
+                margin-left: -5px; /* Add space between menu items if needed */
+            }
         </style>
     </head>
     <body>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                
+
                                 <!-- Header Topbar -->
                                 <div class="header-topbar hidden-sm hidden-xs">
                                     <div class="row">
@@ -80,7 +80,7 @@
                                         <div class="col-sm-6">
                                             <div class="topbar-links">
                                                 <a href="sign-in.jsp"><i class="fa fa-lock"></i>Login / Register</a>
-                                               
+
                                             </div>
                                         </div>
                                     </div>
@@ -93,9 +93,9 @@
                                     <div class="topbar-links">
                                         <a href="profile.jsp"><i class="fa fa-user"></i>Profile</a>&nbsp;&nbsp;
                                         <a href="LogoutServlet"><i class="fa fa-sign-out"></i>Logout</a>
-                                        
-                                        
-                                      
+
+
+
                                         <span>|</span>
                                         <div class="header-cart dropdown">
                                             <a  href="cart_booking.jsp"><i class="fa fa-shopping-cart"></i></a>                                           
@@ -114,19 +114,31 @@
                                 </li>
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="books-media-gird-view-v2.jsp">Books</a>
-                                   
+
                                 </li>
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="news-events-list-view.jsp">Events</a>
-                                    
+
                                 </li>
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="blog.jsp">Blog</a>
-                                    
+
                                 </li>
                                 <li><a href="services.jsp">Services</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="#">View Order</a></li>
+                                    <%
+                                        User u1 = (User) session.getAttribute("currentUser");
+
+                                        if (u1 == null) {
+                                    %>
+                                <li><a href="sign-in.jsp">View Order</a></li>
+                                    <%
+                                    } else {
+                                    %>
+                                <li><a href="view_order.jsp">View Order</a></li>
+                                    <%
+                                        }
+                                    %>
                             </ul>
                         </div>
                 </div>

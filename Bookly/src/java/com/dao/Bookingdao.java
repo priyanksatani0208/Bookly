@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bookingdao {
     private Connection con;
@@ -56,5 +58,55 @@ public class Bookingdao {
     }
     return result;
 }
+    
+     //booking by user
+    public List<Booking> getBookingsByUser(int userId) {
+        List<Booking> bookings = new ArrayList<>();
+        String query = "SELECT * FROM booking WHERE userId = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("bookingId"));
+                booking.setUserId(rs.getInt("userId"));
+                booking.setShipping_address(rs.getString("shipping_address"));
+                booking.setTotal_amount(rs.getDouble("total_amount"));
+                booking.setBookingType(rs.getString("bookingType"));
+                booking.setBookingDate(rs.getDate("bookingDate"));
+                booking.setBookingStatus(rs.getBoolean("booking_status"));
+                booking.setDeliverStatus(rs.getBoolean("deliver_status"));
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookings;
+    }
+    
+     // Method to get booking by ID
+    public Booking getBookingById(int bookingId) {
+        Booking booking = null;
+        try {
+            String query = "SELECT * FROM bookings WHERE bookingId = ?";
+            PreparedStatement pstmt = this.con.prepareStatement(query);
+            pstmt.setInt(1, bookingId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Assuming the Booking class has the corresponding fields
+                booking = new Booking();
+                booking.setBookingId(rs.getInt("bookingId"));
+                booking.setUserId(rs.getInt("userId")); // Assuming you have userId in bookings table
+                booking.setBookingDate(rs.getTimestamp("bookingDate"));
+                booking.setTotal_amount(rs.getDouble("total_amount"));
+                booking.setBookingStatus(rs.getBoolean("bookingStatus"));
+                booking.setDeliverStatus(rs.getBoolean("deliveryStatus"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return booking;
+    }
 
 }

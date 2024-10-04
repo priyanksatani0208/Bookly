@@ -290,5 +290,36 @@ public class Booksdao {
         }
         return booksList;
     }
+    
+    //fethch Book Id
+    public Books getBookById(int bookId) {
+        Books books = null;
+        try {
+            String query = "SELECT * FROM books WHERE bookId=?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, bookId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                books = new Books(
+                        rs.getInt("bookId"), // Use commas to separate arguments
+                        rs.getInt("catId"),
+                        rs.getString("bookName"),
+                        rs.getString("bookAuthor"),
+                        rs.getString("bookEdition"),
+                        rs.getString("bookPublisher"),
+                        rs.getInt("bookPrice"),
+                        rs.getInt("bookDiscount"),
+                        rs.getString("bookLength"),
+                        rs.getString("BookLanguage"),
+                        rs.getString("BookTopic"),
+                        rs.getString("bookDescription"),
+                        rs.getString("bookImg")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
 
 }
