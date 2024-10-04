@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2024 at 07:04 AM
+-- Generation Time: Oct 04, 2024 at 07:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -39,8 +39,10 @@ CREATE TABLE `add_cart` (
 --
 
 INSERT INTO `add_cart` (`cartId`, `uId`, `bookId`, `quantity`) VALUES
-(1, 9, 5, 1),
-(2, 9, 6, 2);
+(5, 9, 9, 1),
+(10, 9, 6, 1),
+(11, 9, 8, 1),
+(12, 15, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +85,7 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`bookingID`, `userId`, `shipping_address`, `total_amount`, `bookingDate`, `bookingType`, `booking_status`) VALUES
-(1, 9, '123', 897, '2024-10-02 10:00:42', 'COD', 0);
+(112, 9, 'Ahmedabad', 199, '2024-10-04 10:05:37', 'COD', 1);
 
 -- --------------------------------------------------------
 
@@ -102,8 +104,7 @@ CREATE TABLE `booking_detail` (
 --
 
 INSERT INTO `booking_detail` (`id`, `book_id`, `bookingId`) VALUES
-(1, 5, 1),
-(2, 6, 1);
+(110, 8, 112);
 
 -- --------------------------------------------------------
 
@@ -209,20 +210,6 @@ CREATE TABLE `feedback` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payment`
---
-
-CREATE TABLE `payment` (
-  `paymentId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `bookId` int(11) NOT NULL,
-  `paymentAmount` int(11) NOT NULL,
-  `paymentDate` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
@@ -236,8 +223,8 @@ CREATE TABLE `user` (
   `uabout` varchar(255) DEFAULT NULL,
   `uProfile` varchar(255) NOT NULL DEFAULT 'default.png',
   `upassword` varchar(30) NOT NULL,
-  `otp` int(4) NOT NULL,
-  `otp_date` timestamp NULL DEFAULT NULL
+  `otp` int(4) DEFAULT NULL,
+  `otp_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -245,8 +232,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`uId`, `uName`, `uemail`, `uPhone`, `ugender`, `uAddress`, `uabout`, `uProfile`, `upassword`, `otp`, `otp_date`) VALUES
-(9, 'Priyank  Satani', 'priyank@gmail.com', 1234567898, 'Male', 'Ahmadabad', 'hi', 'img2.jpg', '123', 0, NULL),
-(15, 'Divya Rathod', 'divya@gmail.com', 1234567895, 'Female', 'Ahmadabad', 'Hi , i am a java developer.', 'IMG_4051.jpg', '123', 0, NULL);
+(9, 'Priyank  Satani', 'priyanksatani1234@gmail.com', 1234567898, 'Male', 'Ahmadabad India', 'hi', 'img1.jpg', '123', NULL, NULL),
+(15, 'Divya Rathod', 'divya@gmail.com', 1234567895, 'Female', 'Ahmadabad', 'Hi , i am a java developer.', 'IMG_4051.jpg', '123', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -309,14 +296,6 @@ ALTER TABLE `feedback`
   ADD KEY `feedback_ibfk_2` (`bookId`);
 
 --
--- Indexes for table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`paymentId`),
-  ADD KEY `userId` (`userId`),
-  ADD KEY `bookId` (`bookId`);
-
---
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -330,7 +309,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `add_cart`
 --
 ALTER TABLE `add_cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -342,13 +321,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `bookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `bookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT for table `booking_detail`
 --
 ALTER TABLE `booking_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `books`
@@ -360,7 +339,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -373,12 +352,6 @@ ALTER TABLE `contact`
 --
 ALTER TABLE `feedback`
   MODIFY `feed_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `paymentId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -422,13 +395,6 @@ ALTER TABLE `books`
 ALTER TABLE `feedback`
   ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `user` (`uId`),
   ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
-
---
--- Constraints for table `payment`
---
-ALTER TABLE `payment`
-  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`uId`),
-  ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
