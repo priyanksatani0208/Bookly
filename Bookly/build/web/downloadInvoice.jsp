@@ -132,6 +132,7 @@
             <!-- Company Info and Invoice Info -->
             <div class="header-section">
                 <div class="company-info">
+                    
                     <h1>Bookly</h1>
                     <p>123 Book Street, Knowledge City</p>
                     <p>Email: support@bookly.com</p>

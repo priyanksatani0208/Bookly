@@ -130,15 +130,18 @@
                                     </td>
 
                                     <td>
-                                        <% if (booking.isBookingStatus()) {%>
+                                        <% if (!booking.isBookingStatus()) { %>
+                                        <span>Order is canceled by the user</span>
+                                        <% } else if (booking.isDeliverStatus()) { %>
+                                        <span></span>
+                                        <% } else {%>
                                         <form action="CancelOrderServlet" method="post" style="display:inline;">
                                             <input type="hidden" name="bookingId" value="<%= booking.getBookingId()%>" />
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel</button>
                                         </form>
-                                        <% } else { %>
-                                        <span>Order is canceled by the user</span>
                                         <% } %>
                                     </td>
+
 
                                     <td>
                                         <% if (booking.isDeliverStatus()) {%>
@@ -158,8 +161,8 @@
                                     <td colspan="9">No orders found.</td>
                                 </tr>
                                 <%
-                                     } // End of user check
-                                %>
+                                    } // End of user check
+%>
                             </tbody>
 
                         </table>
