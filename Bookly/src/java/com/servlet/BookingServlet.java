@@ -34,14 +34,13 @@ public class BookingServlet extends HttpServlet {
             HttpSession session = request.getSession(false);  // Get the existing session without creating a new one
             if (session != null) {
                 User user = (User) session.getAttribute("currentUser");  // Assume "currentUser" is the session attribute set during login
-               
+
                 if (user != null) {
                     // Get the user ID and other necessary details from the User object
                     int uid = user.getuId();
                     String userName = user.getUName();
                     String userEmail = user.getUemail();
 
-                 
                     // Get a single connection at the start
                     con = ConnectionProvider.getConnection();
                     con.setAutoCommit(false);  // Begin transaction
@@ -61,33 +60,34 @@ public class BookingServlet extends HttpServlet {
                     Bookingdao bookingdao = new Bookingdao(con);
                     int bookingId = bookingdao.saveBooking(booking);  // Use the same connection
 
-                    //fetch the array type quantity
+                    // Fetch the array type quantity
                     String[] bookQuantities = request.getParameterValues("quantity[]");
+                    String singleQuantityParam = request.getParameter("quantity");  // For single book quantity
 
-                    if (bookingId > 0 && bookQuantities != null) {
+                    if (bookingId > 0) {
                         // Save booking details using the same connection
                         BookingDetaildao bookingDetaildao = new BookingDetaildao(con);
-                        
-                        List<Integer> bookIdList = new ArrayList<>(); // List to hold book IDs
+
+                        // List to hold book IDs
+                        List<Integer> bookIdList = new ArrayList<>();
 
                         // Check if request contains multiple book IDs (for cart)
                         String[] bookIdParams = request.getParameterValues("bookId[]");
 
-                        if (bookIdParams != null) {
-                            
+                        if (bookIdParams != null && bookQuantities != null) {
                             // Case for multiple books (cart)
                             for (int i = 0; i < bookIdParams.length; i++) {
-                                int bookId = Integer.parseInt(bookIdParams[i]); // Convert bookId to integer
-                                int quantity = Integer.parseInt(bookQuantities[i]); // Convert quantity to integer
+                                int bookId = Integer.parseInt(bookIdParams[i]);  // Convert bookId to integer
+                                int quantity = Integer.parseInt(bookQuantities[i]);  // Convert quantity to integer
 
                                 // Save booking details with the corresponding bookId and quantity
                                 BookingDetail bookingDetail = new BookingDetail(bookId, bookingId, quantity);
                                 bookingDetaildao.saveBookingDetail(bookingDetail);
                             }
-                        } else {
+                        } else if (singleQuantityParam != null) {
                             // Case for a single book (buy)
-                            int bookId = Integer.parseInt(request.getParameter("bookId"));
-                            int quantity = Integer.parseInt(request.getParameter("quantity")); // For single book
+                            int bookId = Integer.parseInt(request.getParameter("bookId"));  // For single book
+                            int quantity = Integer.parseInt(singleQuantityParam);  // Convert single quantity to integer
 
                             // Save booking details for single book
                             BookingDetail bookingDetail = new BookingDetail(bookId, bookingId, quantity);
@@ -97,10 +97,9 @@ public class BookingServlet extends HttpServlet {
                         // Continue with OTP generation and the rest of the flow
                         Userdao userdao = new Userdao(con);
                         int generatedOtp = userdao.generateOTP();  // Generate OTP
-                        
-                        // Send OTP to the user's email
-                        userdao.sendEmail(userEmail, userName, generatedOtp);
 
+                        // Send OTP to the user's email
+                        // userdao.sendEmail(userEmail, userName, generatedOtp);
                         // Save OTP to the user table
                         boolean otpSaved = userdao.saveOtp(uid, generatedOtp);
 
@@ -111,17 +110,13 @@ public class BookingServlet extends HttpServlet {
 
                             // Redirect to OTP verification page
                             response.sendRedirect("otp.jsp");
-
                         } else {
-                            // Handle failure by rolling back transaction
+                            // Handle failure by rolling back the transaction
                             con.rollback();
                             response.sendRedirect("404.jsp");
                         }
-                    } else {
-                        // Handle failure by rolling back transaction
-                        con.rollback();
-                        response.sendRedirect("404.jsp");
                     }
+
                 } else {
                     // If no user is in session, redirect to login page
                     response.sendRedirect("login.jsp");

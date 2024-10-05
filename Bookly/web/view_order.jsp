@@ -68,80 +68,106 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Booking ID</th>
-                                    <th scope="col">Book Name</th>
-                                    <th scope="col">Book Price</th>                                   
-                                    <th scope="col">Book Quantity</th>
-                                    <th scope="col">Total Amount</th>                                    
+                                    <th scope="col">Book Names</th>
+                                    <th scope="col">Total Quantity</th>
+                                    <th scope="col">Total Book Price</th>                             
                                     <th scope="col">Booking Date</th>
                                     <th scope="col">Booking Status</th>
                                     <th scope="col">Delivery Status</th>
-
+                                    <th scope="col">Order Cancel</th>
                                     <th scope="col">Invoice</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <%          // Assuming the same logic for fetching orders from the database
-                                    User user = (User) session.getAttribute("currentUser");
+    <% User user = (User) session.getAttribute("currentUser");
 
-                                    if (user != null) {
-                                        // Create DAO objects
-                                        Bookingdao bookingDao = new Bookingdao(ConnectionProvider.getConnection());
-                                        BookingDetaildao bookingDetailDao = new BookingDetaildao(ConnectionProvider.getConnection());
-                                        Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
+    if (user != null) {
+        Bookingdao bookingDao = new Bookingdao(ConnectionProvider.getConnection());
+        BookingDetaildao bookingDetailDao = new BookingDetaildao(ConnectionProvider.getConnection());
+        Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
 
-                                        // Fetch bookings for the user
-                                        List<Booking> userBookings = bookingDao.getBookingsByUser(user.getuId());
+        List<Booking> userBookings = bookingDao.getBookingsByUser(user.getuId());
 
-                                        for (Booking booking : userBookings) {
-                                            // Fetch details for each booking
-                                            List<BookingDetail> bookingDetails = bookingDetailDao.getBookingDetailsByBookingId(booking.getBookingId());
+        for (Booking booking : userBookings) {
+            List<BookingDetail> bookingDetails = bookingDetailDao.getBookingDetailsByBookingId(booking.getBookingId());
 
-                                            for (BookingDetail detail : bookingDetails) {
-                                                Books book = booksdao.getBookById(detail.getBook_id());
-                                %>
-                                <tr>
-                                    <td><%= booking.getBookingId()%></td>
-                                    <td><%= book.getBookName()%></td>                                    
-                                    <td>&#8377;<%= book.getBookPrice()%></td>
-                                    <td><%= detail.getBook_quantity()%></td>
-                                    <td>&#8377;<%= book.getBookPrice() * detail.getBook_quantity()%></td>
+            int totalQuantity = 0;
+            double totalPrice = 0.0;
+            StringBuilder bookNames = new StringBuilder();
 
-                                    <%
-                                        // Format booking date to "dd/MM/yyyy"
-                                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                                        String formattedDate = sdf.format(booking.getBookingDate());
-                                    %>
-                                    <td><%= formattedDate%></td>
-                                    <td><%= booking.isBookingStatus() ? "Confirmed" : "Pending"%></td>
-                                    <td><%= booking.isDeliverStatus() ? "Delivered" : "On the Way"%></td>
+            for (BookingDetail detail : bookingDetails) {
+                Books book = booksdao.getBookById(detail.getBook_id());
+                totalQuantity += detail.getBook_quantity();
+                totalPrice += book.getBookPrice() * detail.getBook_quantity();
+                bookNames.append(book.getBookName()).append(", ");
+            }
 
-                                    <td>
-                                        <% if (booking.isDeliverStatus()) {%>
-                                        <a href="downloadInvoice.jsp?bookingId=<%= booking.getBookingId()%>" class="btn btn-primary">Download</a>
-                                        <% } else { %>
-                                        After Deliver order then Generated Invoice
-                                        <% } %>
-                                    </td>
-                                </tr>
-                                <%
-                                        } // End of bookingDetails loop
-                                    } // End of userBookings loop
-                                } else {
-                                %>
-                                <tr>
-                                    <td colspan="8">No orders found.</td>
-                                </tr>
-                                <%
-                                    } // End of user check
-                                %>
-                            </tbody>
+            // Remove last comma and space
+            if (bookNames.length() > 0) {
+                bookNames.setLength(bookNames.length() - 2);
+            }
+    %>
+        <tr>
+            <td><%= booking.getBookingId() %></td>
+            <td><%= bookNames.toString() %></td>
+            <td><%= totalQuantity %></td>
+            <td>&#8377;<%= totalPrice %></td>
+
+            <%
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = sdf.format(booking.getBookingDate());
+            %>
+            <td><%= formattedDate %></td>
+            <td><%= booking.isBookingStatus() ? "Confirmed" : "Canceled" %></td>
+            <td>
+                <% if (!booking.isBookingStatus()) { %>
+                    Order Canceled
+                <% } else if (!booking.isDeliverStatus()) { %>
+                    Order is On the Way
+                <% } else { %>
+                    Order Delivered
+                <% } %>
+            </td>
+
+            <td>
+                <% if (booking.isBookingStatus()) { %>
+                    <form action="CancelOrderServlet" method="post" style="display:inline;">
+                        <input type="hidden" name="bookingId" value="<%= booking.getBookingId() %>" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel</button>
+                    </form>
+                <% } else { %>
+                    <span>Order is canceled by the user</span>
+                <% } %>
+            </td>
+
+            <td>
+                <% if (booking.isDeliverStatus()) { %>
+                    <a href="downloadInvoice.jsp?bookingId=<%= booking.getBookingId() %>" class="btn btn-primary">Download</a>
+                <% } else if (!booking.isBookingStatus()) { %>
+                    <span>Order is Canceled</span>
+                <% } else { %>
+                    <span>After Delivery, Invoice will be generated.</span>
+                <% } %>
+            </td>
+        </tr>
+    <%
+        } // End of userBookings loop
+    } else {
+    %>
+        <tr>
+            <td colspan="9">No orders found.</td>
+        </tr>
+    <%
+    } // End of user check
+    %>
+</tbody>
+
                         </table>
                     </div>
-
-
                 </div>
             </div>
         </div>
+
         <!-- End: Order Table Section -->
 
         <!-- Common Scripts -->

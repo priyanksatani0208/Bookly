@@ -11,6 +11,7 @@ public class Booking {
     private Date bookingDate;
     private boolean bookingStatus; 
     private boolean deliverStatus;
+    private boolean user_status;
 
     public Booking() {}
 

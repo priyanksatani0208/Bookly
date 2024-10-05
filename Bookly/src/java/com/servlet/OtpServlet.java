@@ -47,7 +47,7 @@ public class OtpServlet extends HttpServlet {
 
                 // Send order confirmation email using session details
                 if (user != null) {
-                    Userdao.sendBookingConfirmationEmail(user.getUemail(), user.getUName()); // Send email without book name
+//                    Userdao.sendBookingConfirmationEmail(user.getUemail(), user.getUName()); // Send email without book name
                 }
 
                 response.sendRedirect("thanks.jsp");  // Redirect to thank you page
