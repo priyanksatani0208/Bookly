@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2024 at 07:05 AM
+-- Generation Time: Oct 05, 2024 at 02:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -39,10 +39,10 @@ CREATE TABLE `add_cart` (
 --
 
 INSERT INTO `add_cart` (`cartId`, `uId`, `bookId`, `quantity`) VALUES
-(5, 9, 9, 1),
-(10, 9, 6, 1),
-(11, 9, 8, 1),
-(12, 15, 5, 1);
+(10, 9, 6, 2),
+(12, 15, 5, 1),
+(15, 9, 7, 1),
+(16, 9, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -77,15 +77,18 @@ CREATE TABLE `booking` (
   `total_amount` double DEFAULT NULL,
   `bookingDate` datetime NOT NULL,
   `bookingType` varchar(25) NOT NULL,
-  `booking_status` bigint(1) NOT NULL DEFAULT 0
+  `booking_status` bigint(1) NOT NULL DEFAULT 0,
+  `deliver_status` bigint(20) NOT NULL DEFAULT 0,
+  `user_status` text NOT NULL DEFAULT 'NULL'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booking`
 --
 
-INSERT INTO `booking` (`bookingID`, `userId`, `shipping_address`, `total_amount`, `bookingDate`, `bookingType`, `booking_status`) VALUES
-(112, 9, 'Ahmedabad', 199, '2024-10-04 10:05:37', 'COD', 1);
+INSERT INTO `booking` (`bookingID`, `userId`, `shipping_address`, `total_amount`, `bookingDate`, `bookingType`, `booking_status`, `deliver_status`, `user_status`) VALUES
+(165, 9, 'Ahmedabad', 499, '2024-10-05 11:34:12', 'COD', 1, 0, 'Cancelled'),
+(166, 9, 'Ahmedabad', 199, '2024-10-05 11:36:49', 'COD', 1, 0, 'NULL');
 
 -- --------------------------------------------------------
 
@@ -96,6 +99,7 @@ INSERT INTO `booking` (`bookingID`, `userId`, `shipping_address`, `total_amount`
 CREATE TABLE `booking_detail` (
   `id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
+  `book_quantity` int(11) NOT NULL DEFAULT 1,
   `bookingId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -103,8 +107,9 @@ CREATE TABLE `booking_detail` (
 -- Dumping data for table `booking_detail`
 --
 
-INSERT INTO `booking_detail` (`id`, `book_id`, `bookingId`) VALUES
-(110, 8, 112);
+INSERT INTO `booking_detail` (`id`, `book_id`, `book_quantity`, `bookingId`) VALUES
+(144, 5, 1, 165),
+(145, 6, 1, 166);
 
 -- --------------------------------------------------------
 
@@ -309,7 +314,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `add_cart`
 --
 ALTER TABLE `add_cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -321,13 +326,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `bookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `bookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- AUTO_INCREMENT for table `booking_detail`
 --
 ALTER TABLE `booking_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT for table `books`

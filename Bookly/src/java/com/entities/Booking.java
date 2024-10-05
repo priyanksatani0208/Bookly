@@ -23,6 +23,14 @@ public class Booking {
         this.bookingDate = bookingDate;
     }
 
+    public boolean isUser_status() {
+        return user_status;
+    }
+
+    public void setUser_status(boolean user_status) {
+        this.user_status = user_status;
+    }
+
     public int getBookingId() {
         return bookingId;
     }
