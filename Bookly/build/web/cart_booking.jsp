@@ -200,7 +200,7 @@
                                                 </div>
                                             </td>
                                             <td class="invert"><%= book.getBookName()%></td>
-                                            <td class="invert">&#8377; <%= book.getBookPrice()%></td>
+                                            <td class="invert">&#8377; <%= book.getBookPrice() * item.getQuantity() %></td>
                                             <td class="invert">
                                                 <div class="rem">
                                                     <a href="javascript:void(0);" class="remove-item" data-cartid="<%= item.getCartId()%>">Remove</a>
@@ -250,11 +250,12 @@
                                                 <div class="first-row form-group">
                                                     <input type="hidden"  name="uID" value="<%= user.getuId()%>">
                                                     <input type="hidden"  name="total_amount" value="<%= totalPrice%>">
-
+                                                    
                                                     <%
                                                         for (Add_cart item : cartItems) {
                                                     %>
                                                     <input type="hidden" name="bookId[]" value="<%= item.getBookId()%>">
+                                                    <input type="hidden" name="quantity[]" value="<%= item.getQuantity()%>">
                                                     <%
                                                         }
                                                     %>
@@ -425,6 +426,8 @@
                             });
                         });
 
+
+// ahiya thi baki che .
 
             </script>
     </body>

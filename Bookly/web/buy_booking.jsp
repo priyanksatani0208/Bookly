@@ -192,6 +192,7 @@
 
                                             <!-- Send only the selected bookId -->
                                             <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
+                                            <input type="hidden" name="quantity" value="1">
 
                                             <div class="information-wrapper">
                                                 <div class="container">

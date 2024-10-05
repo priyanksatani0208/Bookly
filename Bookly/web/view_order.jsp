@@ -69,11 +69,13 @@
                                 <tr>
                                     <th scope="col">Booking ID</th>
                                     <th scope="col">Book Name</th>
-                                    <th scope="col">Book Price</th>
+                                    <th scope="col">Book Price</th>                                   
+                                    <th scope="col">Book Quantity</th>
+                                    <th scope="col">Total Amount</th>                                    
                                     <th scope="col">Booking Date</th>
                                     <th scope="col">Booking Status</th>
                                     <th scope="col">Delivery Status</th>
-                                    <th scope="col">Total Amount</th>
+
                                     <th scope="col">Invoice</th>
                                 </tr>
                             </thead>
@@ -99,8 +101,11 @@
                                 %>
                                 <tr>
                                     <td><%= booking.getBookingId()%></td>
-                                    <td><%= book.getBookName()%></td>
+                                    <td><%= book.getBookName()%></td>                                    
                                     <td>&#8377;<%= book.getBookPrice()%></td>
+                                    <td><%= detail.getBook_quantity()%></td>
+                                    <td>&#8377;<%= book.getBookPrice() * detail.getBook_quantity()%></td>
+
                                     <%
                                         // Format booking date to "dd/MM/yyyy"
                                         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -109,7 +114,7 @@
                                     <td><%= formattedDate%></td>
                                     <td><%= booking.isBookingStatus() ? "Confirmed" : "Pending"%></td>
                                     <td><%= booking.isDeliverStatus() ? "Delivered" : "On the Way"%></td>
-                                    <td>&#8377;<%= booking.getTotal_amount()%></td>
+
                                     <td>
                                         <% if (booking.isDeliverStatus()) {%>
                                         <a href="downloadInvoice.jsp?bookingId=<%= booking.getBookingId()%>" class="btn btn-primary">Download</a>
@@ -127,8 +132,8 @@
                                     <td colspan="8">No orders found.</td>
                                 </tr>
                                 <%
-          } // End of user check
-%>
+                                    } // End of user check
+                                %>
                             </tbody>
                         </table>
                     </div>

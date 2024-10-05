@@ -15,10 +15,11 @@ public class BookingDetaildao {
     public boolean saveBookingDetail(BookingDetail bookingDetail) {
         boolean success = false;
         try {
-            String query = "INSERT INTO booking_detail(book_id, bookingId) VALUES (?, ?)";
+            String query = "INSERT INTO booking_detail(book_id,book_quantity, bookingId) VALUES (?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setInt(1, bookingDetail.getBook_id());
-            pstmt.setInt(2, bookingDetail.getBookingId());
+            pstmt.setInt(2, bookingDetail.getBook_quantity());
+            pstmt.setInt(3, bookingDetail.getBookingId());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -41,6 +42,7 @@ public class BookingDetaildao {
                 BookingDetail detail = new BookingDetail();
                 detail.setId(rs.getInt("id"));
                 detail.setBook_id(rs.getInt("book_id"));
+                detail.setBook_quantity(rs.getInt("book_quantity")); 
                 detail.setBookingId(rs.getInt("bookingId"));
                 details.add(detail);
             }
