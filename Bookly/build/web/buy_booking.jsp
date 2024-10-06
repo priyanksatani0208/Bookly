@@ -17,20 +17,22 @@
     }
 
     Add_cartdao add_cartdao = new Add_cartdao(ConnectionProvider.getConnection());
-
-    // Fetch book details
     Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
+
+    // Get the book ID from request parameters and retrieve book details
     String bookIdParam = request.getParameter("bookId");
     Books book = null;
-
     if (bookIdParam != null) {
         int bookId = Integer.parseInt(bookIdParam);
         book = booksdao.getCategoryById(bookId); // Fetch book details using the bookId
     }
 
+    // Calculate the discounted price
+    double originalPrice = book.getBookPrice();
+    double discount = book.getBookDiscount();
+    double discountedPrice = originalPrice - (originalPrice * discount / 100.0);
+
     List<Add_cart> cartItems = add_cartdao.getCartItems(user.getuId());
-
-
 %>
 
 <!DOCTYPE html>
@@ -146,7 +148,7 @@
 
                             <div class="checkout-right">
                                 <h4>Your shopping cart contains:
-                                    <span>3 Products</span>
+                                    <span>1 Products</span>
                                 </h4>
                                 <table class="timetable_sub table-responsive">
                                     <thead>
@@ -155,7 +157,7 @@
                                             <th>Product</th>
                                             <th>Quantity</th>
                                             <th>Product Name</th>
-                                            <th>Price</th>
+                                            <th>Discounted Price</th>
                                             <th>Remove</th>
                                         </tr>
                                     </thead>
@@ -163,7 +165,7 @@
                                         <tr class="rem1">
                                             <td class="invert">1</td>
                                             <td class="invert-image">
-                                                <img src="http://localhost:8080/Bookly_Admin/books_img/<%= book.getBookImg()%>" alt=" " class="img-responsive"  style="width: 150px; height: 180px;">
+                                                <img src="http://localhost:8080/Bookly_Admin/books_img/<%= book.getBookImg()%>" alt=" " class="img-responsive" style="width: 150px; height: 180px;">
                                             </td>
                                             <td class="invert">
                                                 <div class="quantity">
@@ -171,7 +173,7 @@
                                                 </div>
                                             </td>
                                             <td class="invert"><%= book.getBookName()%></td>
-                                            <td class="invert">&#8377; <%= book.getBookPrice()%></td>
+                                            <td class="invert">&#8377; <%= discountedPrice%></td>
                                             <td class="invert">
                                                 <div class="rem">
                                                     <a href="books-media-gird-view-v2.jsp" class="remove-item" data-cartid="">Cancel</a>
@@ -180,6 +182,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+
                             </div>
                             <div>
                                 <!-- Billing Address Form -->
@@ -188,7 +191,7 @@
                                     <form action="BookingServlet" method="post" class="creditly-card-form shopf-sear-headinfo_form">
                                         <div class="creditly-wrapper wrapper">
                                             <input type="hidden"  name="uID" value="<%= user.getuId()%>">
-                                            <input type="hidden"  name="total_amount" value="<%= book.getBookPrice()%>">
+                                            <input type="hidden"  name="total_amount" value="<%= discountedPrice %>">
 
                                             <!-- Send only the selected bookId -->
                                             <input type="hidden" name="bookId" value="<%= book.getBookId()%>">
@@ -364,4 +367,4 @@
                 <script type="text/javascript" src="js/main.js"></script> 
 
                 </body>
-</html>
+                </html>

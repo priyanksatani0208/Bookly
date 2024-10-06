@@ -180,6 +180,10 @@
                                             int slNo = 1;
                                             for (Add_cart item : cartItems) {
                                                 Books book = booksdao.getCategoryById(item.getBookId());
+                                                double discountAmount = (book.getBookPrice() * book.getBookDiscount()) / 100;
+                                                double discountedPrice = book.getBookPrice() - discountAmount;
+                                                double totalDiscountedPrice = discountedPrice * item.getQuantity();
+                                                double totalOriginalPrice = book.getBookPrice() * item.getQuantity();
                                         %>
                                         <tr class="rem1">
                                             <td class="invert"><%= slNo%></td>
@@ -200,7 +204,10 @@
                                                 </div>
                                             </td>
                                             <td class="invert"><%= book.getBookName()%></td>
-                                            <td class="invert">&#8377; <%= book.getBookPrice() * item.getQuantity() %></td>
+                                            <td class="invert">
+                                                <span style="text-decoration: line-through;">&#8377; <%= totalOriginalPrice%></span>
+                                                <span style="color: green;">&#8377; <%= totalDiscountedPrice%></span>
+                                            </td>
                                             <td class="invert">
                                                 <div class="rem">
                                                     <a href="javascript:void(0);" class="remove-item" data-cartid="<%= item.getCartId()%>">Remove</a>
@@ -212,6 +219,7 @@
                                             }
                                         %>
                                     </tbody>
+
                                 </table>
                                 <% } %>
                             </div>
@@ -223,23 +231,26 @@
                                     <h4>Continue to basket</h4>
                                     <ul>
                                         <%
-                                            // Iterate through cart items to display each book's name and price
+                                            double totalDiscountedPrice = 0.0; // Initialize the total outside the loop
                                             for (Add_cart item : cartItems) {
                                                 Books book = booksdao.getCategoryById(item.getBookId());
-                                                double itemTotalPrice = book.getBookPrice() * item.getQuantity();
-                                                totalPrice += itemTotalPrice;
-                                        %>
+                                                double discountAmount = (book.getBookPrice() * book.getBookDiscount()) / 100;
+                                                double discountedPrice = book.getBookPrice() - discountAmount;
+                                                double itemTotalDiscountedPrice = discountedPrice * item.getQuantity();
+                                                totalDiscountedPrice += itemTotalDiscountedPrice; // Accumulate the total discounted price
+%>
                                         <li>
                                             <%= book.getBookName()%> 
                                             <i>-</i> 
-                                            <span>&#8377; <%= book.getBookPrice()%> (x<%= item.getQuantity()%>)  &nbsp;&nbsp;= &#8377; <%= itemTotalPrice%></span>
+                                            <span>&#8377; <%= discountedPrice%> (x<%= item.getQuantity()%>)  &nbsp;&nbsp;= &#8377; <%= itemTotalDiscountedPrice%></span>
                                         </li>
                                         <% }%>
                                         <li class="checkout-total">Total
                                             <i>-</i>
-                                            <span>&#8377; <%= totalPrice%></span>
+                                            <span>&#8377; <%= totalDiscountedPrice%></span>
                                         </li>
                                     </ul>
+
                                 </div>
 
                                 <div class="col-md-8 address_form">
@@ -249,8 +260,8 @@
                                             <div class="information-wrapper">
                                                 <div class="first-row form-group">
                                                     <input type="hidden"  name="uID" value="<%= user.getuId()%>">
-                                                    <input type="hidden"  name="total_amount" value="<%= totalPrice%>">
-                                                    
+                                                    <input type="hidden"  name="total_amount" value="<%= totalDiscountedPrice %>">
+
                                                     <%
                                                         for (Add_cart item : cartItems) {
                                                     %>
@@ -399,32 +410,32 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
             <script>
-                        $(document).ready(function () {
-                            $('.remove-item').click(function () {
-                                var cartId = $(this).data('cartid');
-                                var row = $(this).closest('tr'); // Get the row to remove it later
+                    $(document).ready(function () {
+                        $('.remove-item').click(function () {
+                            var cartId = $(this).data('cartid');
+                            var row = $(this).closest('tr'); // Get the row to remove it later
 
-                                $.ajax({
-                                    url: 'cart_booking.jsp',
-                                    method: 'GET',
-                                    data: {cartId: cartId},
-                                    success: function (response) {
-                                        // If the item is successfully removed, remove the row from the table
-                                        row.remove();
+                            $.ajax({
+                                url: 'cart_booking.jsp',
+                                method: 'GET',
+                                data: {cartId: cartId},
+                                success: function (response) {
+                                    // If the item is successfully removed, remove the row from the table
+                                    row.remove();
 
-                                        // Reassign the serial numbers
-                                        $('.timetable_sub tbody tr').each(function (index) {
-                                            $(this).find('td:first').text(index + 1); // Update the SL No
-                                        });
+                                    // Reassign the serial numbers
+                                    $('.timetable_sub tbody tr').each(function (index) {
+                                        $(this).find('td:first').text(index + 1); // Update the SL No
+                                    });
 
-                                        // You may want to update other parts of the page, like the cart total, here
-                                    },
-                                    error: function () {
-                                        alert('Error occurred while removing the item.');
-                                    }
-                                });
+                                    // You may want to update other parts of the page, like the cart total, here
+                                },
+                                error: function () {
+                                    alert('Error occurred while removing the item.');
+                                }
                             });
                         });
+                    });
 
 
 // ahiya thi baki che .
