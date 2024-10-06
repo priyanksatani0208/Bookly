@@ -112,7 +112,7 @@ public class Bookingdao {
 
     //cancelBooking
     public boolean cancelBooking(int bookingId) {
-        String sql = "UPDATE booking SET user_status = 'Cancelled' WHERE bookingId = ?";
+        String sql = "UPDATE booking SET user_status = '1' WHERE bookingId = ?";
         try (PreparedStatement ps = this.con.prepareStatement(sql)) {
             ps.setInt(1, bookingId);
             int rowsAffected = ps.executeUpdate();

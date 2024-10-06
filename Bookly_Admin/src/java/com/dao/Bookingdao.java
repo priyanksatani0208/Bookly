@@ -58,6 +58,7 @@ public class Bookingdao {
                 BookingDetail bookingDetail = new BookingDetail();
                 bookingDetail.setBook_id(rs.getInt("book_Id"));  // Corrected setter
                 bookingDetail.setBookingId(rs.getInt("bookingId"));
+                bookingDetail.setBook_quntity(rs.getInt("book_quantity"));
 
                 // Adding bookingDetail to the list
                 bookingDetailList.add(bookingDetail);

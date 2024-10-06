@@ -57,8 +57,9 @@
                                     <thead>
                                         <tr>
                                             <th>Booking ID</th>
-                                            <th>User ID</th>
-                                            <th>Book Names (Booking Detail)</th>
+                                            <th>User Name</th>
+                                            <th>Book Names</th>
+                                            <th>Book Quantity</th>
                                             <th>Shipping Address</th>
                                             <th>Total Amount</th>
                                             <th>Booking Date</th>
@@ -66,7 +67,7 @@
                                             <th>Booking Status</th>
                                             <th>Deliver Status</th>             
                                             <th>Admin confirm</th>                                                        
-                                          
+
                                         </tr>
                                     </thead>
 
@@ -89,31 +90,44 @@
                                         <tr>
                                             <td><%= booking.getBookingId()%></td>
                                             <td><%= user != null ? user.getUName() : "Unknown User"%></td>
-                                            <td>
-                                                <%
-                                                    for (BookingDetail detail : bookingDetails) {
-                                                        Books book = booksdao.getCategoryById(detail.getBook_id());
-                                                        String bookName = book != null ? book.getBookName() : "Unknown Book";
-                                                %>
-                                                <%= bookName%><br>
-                                                <% }%>
-                                            </td>
+                                            <%
+                                                for (BookingDetail detail : bookingDetails) {
+                                                    Books book = booksdao.getCategoryById(detail.getBook_id());
+                                                    String bookName = book != null ? book.getBookName() : "Unknown Book";
+                                            %>
+                                            <td> <%= bookName%><br></td>
+                                            <td><%= detail.getBook_quntity()%> </td>                                          
+                                            <% }%>
                                             <td><%= booking.getShipping_address()%></td>
                                             <td><%= booking.getTotal_amount()%></td>
                                             <td><%= booking.getBookingDate()%></td>
                                             <td><%= booking.getBookingType()%></td>
                                             <td><%= booking.isBookingStatus() ? "Completed" : "Pending"%></td>
-                                            <td><%= booking.isDeliverStatus() ? "Delivered" : "Pending" %></td>
-                                           <td><a href="BookingServlet?action=confirmDelivery&bid=<%= booking.getBookingId() %>" class="status_btn1">Confirm Delivery</a></td>
-                                             </tr>
-                                        <%
+                                            <td>
+                                                <%= booking.isDeliverStatus() ? "Delivered" : "Pending"%>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    if (booking.isDeliverStatus()) {
+                                                %>
+                                                <span class="text-success"><b>Order is Delivered</b></span>
+                                                <%
+                                                } else {
+                                                %>
+                                                <a href="BookingServlet?action=confirmDelivery&bid=<%= booking.getBookingId()%>" class="status_btn1">Confirm Delivery</a>
+                                                <%
+                                                    }
+                                                %>
+                                            </td>
+                                        </tr>
+                                            <%
+                                                    }
                                                 }
-                                            }
-                                        %>
+                                            %>
                                     </tbody>
                                 </table>
                             </div>
-                                    
+
                             <!-- Pagination -->
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">

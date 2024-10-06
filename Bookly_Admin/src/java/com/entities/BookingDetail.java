@@ -5,6 +5,15 @@ public class BookingDetail {
         
     private int id;
     private int book_id;
+    private int book_quntity;
+
+    public int getBook_quntity() {
+        return book_quntity;
+    }
+
+    public void setBook_quntity(int book_quntity) {
+        this.book_quntity = book_quntity;
+    }
     private int bookingId;
 
     public BookingDetail() {
