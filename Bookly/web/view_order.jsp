@@ -6,7 +6,6 @@
 <%@page import="com.dao.BookingDetaildao"%>
 <%@page import="com.dao.Bookingdao"%>
 <%@page import="com.entities.User"%>
-<%--<%@ page contentType="text/html;charset=UTF-8" %>--%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -76,6 +75,8 @@
                                     <th scope="col">Delivery Status</th>
                                     <th scope="col">Order Cancel</th>
                                     <th scope="col">Invoice</th>
+
+                                    <th scope="col">Feedback</th> <!-- New Column for Feedback -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -142,7 +143,6 @@
                                         <% } %>
                                     </td>
 
-
                                     <td>
                                         <% if (booking.isDeliverStatus()) {%>
                                         <a href="downloadInvoice.jsp?bookingId=<%= booking.getBookingId()%>" class="btn btn-primary">Download</a>
@@ -152,13 +152,37 @@
                                         <span>After Delivery, Invoice will be generated.</span>
                                         <% } %>
                                     </td>
+
+                                    <td>
+                                        <%
+                                            if (booking.isDeliverStatus()) {
+                                                // Assuming there's only one book or you're choosing one book from the booking details
+                                                if (!bookingDetails.isEmpty()) {
+                                                    int bookId = bookingDetails.get(0).getBook_id(); // Get the bookId of the first item in booking details list
+%>
+                                        <a href="FeedbackForm.jsp?bookingId=<%= booking.getBookingId()%>&bookId=<%= bookId%>" class="btn btn-success">Give Feedback</a>
+                                        <%
+                                        } else {
+                                        %>
+                                        <span>No book found</span>
+                                        <%
+                                            }
+                                        } else {
+                                        %>
+                                        <span>N/A</span>
+                                        <%
+                                            }
+                                        %>
+                                    </td>
+
+
                                 </tr>
                                 <%
                                     } // End of userBookings loop
                                 } else {
                                 %>
                                 <tr>
-                                    <td colspan="9">No orders found.</td>
+                                    <td colspan="10">No orders found.</td>
                                 </tr>
                                 <%
                                     } // End of user check

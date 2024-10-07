@@ -30,13 +30,7 @@
     String formattedDate = sdf.format(booking.getBookingDate());
 
     // Calculate total price and quantity
-    double totalPrice = 0;
-    int totalQuantity = 0;
-    for (BookingDetail detail : bookingDetails) {
-        Books book = booksDao.getBookById(detail.getBook_id());
-        totalQuantity += detail.getBook_quantity();
-        totalPrice += book.getBookPrice() * detail.getBook_quantity();
-    }
+
 %>
 
 <!DOCTYPE html>
@@ -132,7 +126,7 @@
             <!-- Company Info and Invoice Info -->
             <div class="header-section">
                 <div class="company-info">
-                    
+
                     <h1>Bookly</h1>
                     <p>123 Book Street, Knowledge City</p>
                     <p>Email: support@bookly.com</p>
@@ -170,14 +164,28 @@
                     </thead>
                     <tbody>
                         <%
+                            double totalPrice = 0;
+                            int totalQuantity = 0;
                             for (BookingDetail detail : bookingDetails) {
                                 Books book = booksDao.getBookById(detail.getBook_id());
+                                totalQuantity += detail.getBook_quantity();
+
+                                double originalPrice = book.getBookPrice();
+                                double discountPercent = book.getBookDiscount();
+                                double discountedPrice = originalPrice * (1 - (discountPercent / 100.0));
+
+                                // Format discountedPrice to two decimal places
+                                discountedPrice = Double.parseDouble(String.format("%.2f", discountedPrice));
+                               
+                                // Format the discounted price to two decimal places
+                                totalPrice += Double.parseDouble(String.format("%.2f", discountedPrice * detail.getBook_quantity()));
+
                         %>
                         <tr>
                             <td><%= book.getBookName()%></td>
                             <td><%= detail.getBook_quantity()%></td>
-                            <td>&#8377;<%= book.getBookPrice()%></td>
-                            <td>&#8377;<%= book.getBookPrice() * detail.getBook_quantity()%></td>
+                            <td>&#8377;<%= discountedPrice%></td>
+                            <td>&#8377;<%= discountedPrice * detail.getBook_quantity()%></td>
                         </tr>
                         <%
                             }
