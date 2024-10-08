@@ -28,8 +28,8 @@ public class Feedbackdao {
                 feedback.setFeed_id(rs.getInt("feed_id"));
                 feedback.setFeed_rating(rs.getInt("feed_rating"));
                 feedback.setFeed_review(rs.getString("feed_review"));
-                feedback.setFeed_cust_id(rs.getInt("feed_cust_id"));
-                feedback.setFeed_bookId(rs.getInt("feed_bookId"));
+                feedback.setFeed_cust_id(rs.getInt("cust_id"));
+                feedback.setFeed_bookId(rs.getInt("bookId"));
                 feedback.setFeed_date(rs.getTimestamp("feed_date"));
                 list.add(feedback);
             }
@@ -39,21 +39,6 @@ public class Feedbackdao {
         return list;
     }
 
-    // Method to delete a Feedback by ID
-    public boolean deleteFeedback(int feed_id) {
-        boolean deleted = false;
-        try {
-            String query = "DELETE FROM feedback WHERE feed_id = ?";
-            PreparedStatement pstmt = this.con.prepareStatement(query);
-            pstmt.setInt(1, feed_id);
-            pstmt.executeUpdate();
-            deleted = true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return deleted;
-    }
-    
      //total Feedback method
     public int getTotalFeedback() {
         int totalfeedback = 0;
@@ -69,4 +54,8 @@ public class Feedbackdao {
         }
         return totalfeedback;
     }
+    
+    
+    
+    
 }

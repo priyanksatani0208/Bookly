@@ -1,6 +1,20 @@
+<%@page import="com.entities.Feedback"%>
+<%@page import="com.dao.Feedbackdao"%>
+<%@page import="com.entities.User"%>
+<%@page import="com.dao.Userdao"%>
+<%@page import="com.entities.Books"%>
+<%@page import="com.dao.Booksdao"%>
 <%@page import="com.helper.ConnectionProvider"%>
 <%@page import="java.util.List"%>
 <%@page errorPage="error_400.jsp" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+
+<%
+    Userdao userDao = new Userdao(ConnectionProvider.getConnection());
+    Booksdao booksdao = new Booksdao(ConnectionProvider.getConnection());
+    Feedbackdao feedbackDao = new Feedbackdao(ConnectionProvider.getConnection());
+%>
 <!DOCTYPE html>
 <html lang="zxx">
     <head>
@@ -58,11 +72,11 @@
                     <div class="col-12">
                         <div class="QA_section">
                             <div class="white_box_tittle list_header">
-<!--                                <div class="box_right d-flex lms_block">
-                                    <div class="add_button ms-2">
-                                        <a href="add_feedback.jsp" class="btn_1" style="margin-left: 900%;">Add New Feedback</a>               
-                                    </div>
-                                </div>-->
+                                <!--                                <div class="box_right d-flex lms_block">
+                                                                    <div class="add_button ms-2">
+                                                                        <a href="add_feedback.jsp" class="btn_1" style="margin-left: 900%;">Add New Feedback</a>               
+                                                                    </div>
+                                                                </div>-->
                             </div>
 
                             <div class="QA_table mb_30 table-responsive">
@@ -72,17 +86,72 @@
                                             <th>Feedback ID</th>
                                             <th>Rating</th>
                                             <th>Review</th>
-                                            <th>Customer ID</th>
-                                            <th>Book ID</th>
+                                            <th>Customer Name</th>
+                                            <th>Book Name</th>
                                             <th>Feedback Date</th>                                         
-                                            <th>Delete</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+                                        <%                                            
+                                            int pageid = 1;
+                                            int total = 10; // Records per page
+                                            if (request.getParameter("page") != null) {
+                                                pageid = Integer.parseInt(request.getParameter("page"));
+                                            }
+                                            int start = (pageid - 1) * total;
+
+                                            List<Feedback> feedbackList = feedbackDao.getFeedbacksByPage(start, total);
+
+                                            for (Feedback feedback : feedbackList) {
+                                                User user = userDao.getUserById(feedback.getFeed_cust_id());
+                                                Books book = booksdao.getCategoryById(feedback.getFeed_bookId());
+                                        %>
+                                        <tr>
+                                            <td><%= feedback.getFeed_id()%></td>
+                                            <td><%= feedback.getFeed_rating()%></td>
+                                            <td><%= feedback.getFeed_review()%></td>
+                                            <td><%=  user.getUName() %></td>
+                                            <td><%= book.getBookName()%></td>
+                                            <td>
+                                                <%
+                                                    Date feedbackDate = feedback.getFeed_date();
+                                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd - MM - yyyy");
+                                                    String formattedDate = feedbackDate != null ? dateFormat.format(feedbackDate) : "N/A";
+                                                %>
+                                                <%= formattedDate%>
+                                            </td>
+
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                             </div>
+                                     <!-- Pagination -->
+                            <!-- Pagination -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <%= pageid == 1 ? "disabled" : ""%>">
+                                        <a class="page-link" href="view_Feedback.jsp?page=<%= pageid - 1%>">Previous</a>
+                                    </li>
+                                    <%
+                                        int numberOfRecords = feedbackDao.getTotalFeedback(); // This should return the total number of bookings
+                                        int numberOfPages = (int) Math.ceil(numberOfRecords / (double) total);
+                                        for (int i = 1; i <= numberOfPages; i++) {
+                                    %>
+                                    <li class="page-item <%= pageid == i ? "active" : ""%>">
+                                        <a class="page-link" href="view_Feedback.jsp?page=<%= i%>"><%= i%></a>
+                                    </li>
+                                    <%
+                                        }
+                                    %>
+                                    <li class="page-item <%= pageid == numberOfPages ? "disabled" : ""%>">
+                                        <a class="page-link" href="view_Feedback.jsp?page=<%= pageid + 1%>">Next</a>
+                                    </li>
+                                </ul>
+                            </nav> 
                         </div>
                     </div>
                 </div>

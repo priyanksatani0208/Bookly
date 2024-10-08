@@ -72,7 +72,8 @@
                                     </thead>
 
                                     <tbody>
-                                        <%                                        int pageid = 1;
+                                        <%                      
+                                            int pageid = 1;
                                             int total = 5; // Records per page
                                             if (request.getParameter("page") != null) {
                                                 pageid = Integer.parseInt(request.getParameter("page"));
