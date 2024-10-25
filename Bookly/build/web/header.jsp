@@ -38,7 +38,7 @@
             }
 
             .navbar-nav > li {
-                margin-left: -5px; /* Add space between menu items if needed */
+                margin-left: 10px; /* Add space between menu items if needed */
             }
         </style>
     </head>
@@ -116,10 +116,7 @@
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="books-media-gird-view-v2.jsp">Books</a>
 
                                 </li>
-                                <li class="dropdown">
-                                    <a data-toggle="dropdown" class="dropdown-toggle disabled" href="news-events-list-view.jsp">Events</a>
-
-                                </li>
+          
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="blog.jsp">Blog</a>
 

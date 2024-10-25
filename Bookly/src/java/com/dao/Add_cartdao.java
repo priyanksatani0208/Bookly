@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Add_cartdao {
-    
+
     private final Connection con;
 
     public Add_cartdao(Connection con) {
         this.con = con;
     }
-    
-   public boolean addOrUpdateBookInCart(int userId, int bookId) {
+
+    public boolean addOrUpdateBookInCart(int userId, int bookId) {
         boolean result = false;
 
         try {
@@ -48,8 +48,8 @@ public class Add_cartdao {
 
         return result;
     }
-    
-     public List<Add_cart> getCartItems(int userId) {
+
+    public List<Add_cart> getCartItems(int userId) {
         List<Add_cart> cartItems = new ArrayList<>();
         try {
             String query = "SELECT * FROM add_cart WHERE uId = ?";
@@ -70,9 +70,31 @@ public class Add_cartdao {
         }
         return cartItems;
     }
-     
-     
-      public boolean removeCartItem(int cartId) {
+    
+    // New method to retrieve a specific cart item by cartId
+    public Add_cart getCartItem(int cartId) {
+        Add_cart cartItem = null;
+        try {
+            String query = "SELECT * FROM add_cart WHERE cartId = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, cartId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                cartItem = new Add_cart(
+                        rs.getInt("cartId"),
+                        rs.getInt("uId"),
+                        rs.getInt("bookId"),
+                        rs.getInt("quantity")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cartItem;
+    }
+
+
+    public boolean removeCartItem(int cartId) {
         boolean success = false;
         try {
             String query = "DELETE FROM add_cart WHERE cartId = ?";
@@ -85,20 +107,22 @@ public class Add_cartdao {
         }
         return success;
     }
-      
-      public boolean updateCartItemQuantity(int cartId, int quantity) {
-    try {
-        String query = "UPDATE add_cart SET quantity = ? WHERE cartId = ?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setInt(1, quantity);
-        ps.setInt(2, cartId);
-        
-        int result = ps.executeUpdate();
-        return result > 0;
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+    public boolean updateCartItemQuantity(int cartId, int quantity) {
+        boolean updated = false;
+        try {
+            String query = "UPDATE add_cart SET quantity=? WHERE cartId=?";
+            PreparedStatement pstmt = this.con.prepareStatement(query);
+            pstmt.setInt(1, quantity);
+            pstmt.setInt(2, cartId);
+            int rows = pstmt.executeUpdate();
+            if (rows > 0) {
+                updated = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updated;
     }
-    return false;
-}
 
 }
