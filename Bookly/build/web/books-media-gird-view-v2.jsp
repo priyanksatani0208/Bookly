@@ -224,10 +224,6 @@
         </div>
         <!-- End: Products Section -->
 
-        <!-- Start: Social Network -->
-        <%@include file="followUs.jsp" %>
-        <!-- End: Social Network -->
-
         <!-- Start: Footer -->
         <%@include file="footer.jsp" %>
         <!-- End: Footer -->

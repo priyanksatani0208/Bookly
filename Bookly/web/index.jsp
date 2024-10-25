@@ -451,9 +451,6 @@
 
 
 
-    <!-- Start: Social Network -->
-    <%@include file="followUs.jsp" %>
-    <!-- End: Social Network -->
 
     <!-- Start: Footer -->
     <%@include file="footer.jsp" %>

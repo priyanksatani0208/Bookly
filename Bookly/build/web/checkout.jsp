@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
-
-    
+<html lang="zxx">  
 
 <head> 
         <!-- Meta -->

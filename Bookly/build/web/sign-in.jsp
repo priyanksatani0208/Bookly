@@ -37,9 +37,9 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 60vh;
+                height: 90vh;
                 background-color: #f8f8f8;
-                margin-top: 60px;
+                margin-top: 0px;
             }
             .signin-container {
                 background-color: #fff;
@@ -142,10 +142,7 @@
         <!-- End: Signin Section -->
 
 
-        <!-- Start: Social Network -->
-           <%@include file="followUs.jsp" %>
-        <!-- End: Social Network -->
-
+        
         <!-- Start: Footer -->
         <%@include file="footer.jsp" %>
         <!-- End: Footer -->
