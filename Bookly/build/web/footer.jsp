@@ -47,8 +47,8 @@
                                 <div class="menu-quick-links-container">
                                     <ul id="menu-quick-links" class="menu">
                                         <li><a href="index.jsp">Home</a></li>
-                                        <li><a href="books-media-list-view.jsp">Books &amp; Media</a></li>
-                                        <li><a href="news-events-list-view.jsp">News &amp; Events</a></li>
+                                        <li><a href="books-media-gird-view-v2.jsp">Books &amp; Media</a></li>
+                                        <li><a href="blog.jsp">Blog &amp; Events</a></li>
                                         <li><a href="services.jsp">Services</a></li>
                                         <li><a href="contact.jsp">Contact</a></li>
                                         <!--<li><a href="#">Annual Report</a></li>-->

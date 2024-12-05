@@ -522,7 +522,7 @@
     if (msg === 's') {
         swal('Login Successfully', 'Welcome to Bookly', 'success');
     } else if (msg === 'e') {
-        swal('Error', 'An error occurred', 'error');
+        swal('Login UnSuccessfully..', 'An error occurred', 'error');
     }
 </script>
 <script src="js/jquery1-3.4.1.min.js"></script>

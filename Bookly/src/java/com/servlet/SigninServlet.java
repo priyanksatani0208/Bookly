@@ -38,11 +38,9 @@ public class SigninServlet extends HttpServlet {
             
             if(user == null)
             {
-                out.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js' integrity='sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==' crossorigin='anonymous' referrerpolicy='no-referrer'></script>");
-                out.println("<script>swal('Login UnSuccessfully..', 'Please try agin', 'error')</script>");
-               
+              
                 
-                response.sendRedirect("sign-in.jsp");
+                response.sendRedirect("index.jsp?msg=e");
             }
             else
             {
